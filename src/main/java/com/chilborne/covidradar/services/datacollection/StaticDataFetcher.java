@@ -9,7 +9,7 @@ import java.io.FileReader;
 
 @Profile("test")
 @Service
-public class DataFetcherTest implements DataFetcher {
+public class StaticDataFetcher implements DataFetcher {
 
     private final DataProcessor dataProcessor;
 
@@ -17,7 +17,7 @@ public class DataFetcherTest implements DataFetcher {
     private FileReader dataReader;
     private String data = "";
 
-    public DataFetcherTest(DataProcessor dataProcessor)  {
+    public StaticDataFetcher(DataProcessor dataProcessor)  {
         this.dataProcessor = dataProcessor;
     }
 

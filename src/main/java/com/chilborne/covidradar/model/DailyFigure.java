@@ -1,10 +1,11 @@
 package com.chilborne.covidradar.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.time.LocalDateTime;
-import java.util.Objects;
+import java.time.LocalDate;
 
 /**
  * @Author Chris Hilborne
@@ -15,20 +16,23 @@ import java.util.Objects;
 public class DailyFigure {
     @Id
     private String _id;
-    private LocalDateTime date;
+    @JsonProperty("codigo_geometria")
     private String geoCode;
-    private int casesLastTwoWeeks;
+    @JsonProperty("municipio_distrito")
+    private String municipalDistrict;
+    @JsonProperty("tasa_incidencia_acumulada_ultimos_14dias")
+    private float infectionRateLastTwoWeeks;
+    @JsonProperty("tasa_incidencia_acumulada_total")
+    private float infectionRateTotal;
+    @JsonProperty("casos_confirmados_totales")
     private int totalCases;
+    @JsonProperty("casos_confirmados_ultimos_14dias")
+    private int casesLastTwoWeeks;
+    @JsonProperty("fecha_informe")
+    @JsonFormat(pattern = "yyyy/MM/dd HH:mm:ss")
+    private LocalDate dateReported;
 
-    public DailyFigure(ComunidadDailyData comunidadDailyData) {
-        this.date = comunidadDailyData.getFechaInforme();
-        this.geoCode = comunidadDailyData.getCodigoGeometria();
-        this.casesLastTwoWeeks = comunidadDailyData.getCasosConfirmadosUltimos14dias();
-        this.totalCases = comunidadDailyData.getCasosConfirmadosTotales();
-    }
-
-    public DailyFigure() {
-    }
+    public DailyFigure() {}
 
     public String get_id() {
         return _id;
@@ -38,28 +42,44 @@ public class DailyFigure {
         this._id = _id;
     }
 
-    public LocalDateTime getDate() {
-        return date;
+    public LocalDate getDateReported() {
+        return dateReported;
     }
 
-    public void setDate(LocalDateTime date) {
-        this.date = date;
+    public void setDateReported(LocalDate dateReported) {
+        this.dateReported = dateReported;
     }
 
-    public String getGeometricCode() {
+    public String getGeoCode() {
         return geoCode;
     }
 
-    public void setGeometricCode(String geometricCode) {
-        this.geoCode = geometricCode;
+    public void setGeoCode(String geoCode) {
+        this.geoCode = geoCode;
     }
 
-    public int getCasesLastTwoWeeks() {
-        return casesLastTwoWeeks;
+    public String getMunicipalDistrict() {
+        return municipalDistrict;
     }
 
-    public void setCasesLastTwoWeeks(int casesLastTwoWeeks) {
-        this.casesLastTwoWeeks = casesLastTwoWeeks;
+    public void setMunicipalDistrict(String municipalDistrict) {
+        this.municipalDistrict = municipalDistrict;
+    }
+
+    public float getInfectionRateLastTwoWeeks() {
+        return infectionRateLastTwoWeeks;
+    }
+
+    public void setInfectionRateLastTwoWeeks(float infectionRateLastTwoWeeks) {
+        this.infectionRateLastTwoWeeks = infectionRateLastTwoWeeks;
+    }
+
+    public float getInfectionRateTotal() {
+        return infectionRateTotal;
+    }
+
+    public void setInfectionRateTotal(float infectionRateTotal) {
+        this.infectionRateTotal = infectionRateTotal;
     }
 
     public int getTotalCases() {
@@ -70,6 +90,14 @@ public class DailyFigure {
         this.totalCases = totalCases;
     }
 
+    public int getCasesLastTwoWeeks() {
+        return casesLastTwoWeeks;
+    }
+
+    public void setCasesLastTwoWeeks(int casesLastTwoWeeks) {
+        this.casesLastTwoWeeks = casesLastTwoWeeks;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -77,20 +105,14 @@ public class DailyFigure {
 
         DailyFigure that = (DailyFigure) o;
 
-        if (casesLastTwoWeeks != that.casesLastTwoWeeks) return false;
-        if (totalCases != that.totalCases) return false;
-        if (!_id.equals(that._id)) return false;
-        if (!Objects.equals(date, that.date)) return false;
-        return Objects.equals(geoCode, that.geoCode);
+        if (!geoCode.equals(that.geoCode)) return false;
+        return dateReported.equals(that.dateReported);
     }
 
     @Override
     public int hashCode() {
-        int result = 1;
-        result = 31 * result + (date != null ? date.hashCode() : 0);
-        result = 31 * result + (geoCode != null ? geoCode.hashCode() : 0);
-        result = 31 * result + casesLastTwoWeeks;
-        result = 31 * result + totalCases;
+        int result = geoCode.hashCode();
+        result = 31 * result + dateReported.hashCode();
         return result;
     }
 
@@ -98,10 +120,13 @@ public class DailyFigure {
     public String toString() {
         return "DailyFigure{" +
                 "_id='" + _id + '\'' +
-                ", date=" + date +
                 ", geoCode='" + geoCode + '\'' +
-                ", casesLastTwoWeeks=" + casesLastTwoWeeks +
+                ", municipalDistrict='" + municipalDistrict + '\'' +
+                ", infectionRateLastTwoWeeks=" + infectionRateLastTwoWeeks +
+                ", infectionRateTotal=" + infectionRateTotal +
                 ", totalCases=" + totalCases +
+                ", casesLastTwoWeeks=" + casesLastTwoWeeks +
+                ", date=" + dateReported +
                 '}';
     }
 }

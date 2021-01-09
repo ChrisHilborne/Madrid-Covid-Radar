@@ -1,6 +1,7 @@
 package com.chilborne.covidradar.repository;
 
 import com.chilborne.covidradar.model.DailyFigure;
+import com.chilborne.covidradar.model.DailyFigureDTO;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
@@ -18,12 +19,13 @@ public class DailyFigureRepositoryTest implements DailyFigureRepository {
     }
 
     @Override
-    public List<DailyFigure> getDailyFiguresByGeoCode(String geoCode) {
-        List<DailyFigure> result = dailyFigures.stream()
-                .filter( dailyFigure -> dailyFigure.getGeometricCode().equals(geoCode))
+    public List<DailyFigureDTO> getDailyFiguresByGeoCode(String geoCode) {
+        List<DailyFigureDTO> dailyFigureData = dailyFigures.stream()
+                .filter(dailyFigure -> dailyFigure.getGeoCode().equals(geoCode))
+                .map(DailyFigureDTO::new)
                 .collect(Collectors.toUnmodifiableList());
 
-        return result;
+        return dailyFigureData;
     }
 
     @Override
@@ -32,18 +34,4 @@ public class DailyFigureRepositoryTest implements DailyFigureRepository {
     }
 
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        DailyFigureRepositoryTest that = (DailyFigureRepositoryTest) o;
-
-        return dailyFigures.equals(that.dailyFigures);
-    }
-
-    @Override
-    public int hashCode() {
-        return dailyFigures.hashCode();
-    }
 }
