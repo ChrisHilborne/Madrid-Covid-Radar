@@ -1,7 +1,7 @@
 package com.chilborne.covidradar;
 
 import com.chilborne.covidradar.services.DistrictDataService;
-import com.chilborne.covidradar.services.datacollection.DataFetcher;
+import com.chilborne.covidradar.services.datacollection.DailyFigureFetcher;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
@@ -15,13 +15,14 @@ public class CovidRadarApplication {
 
 		ApplicationContext ctx = SpringApplication.run(CovidRadarApplication.class, args);
 
-		DataFetcher dataFetcher = (DataFetcher) ctx.getBean("dataFetcherTest");
-		dataFetcher.fetch();
-		dataFetcher.processData();
+		DailyFigureFetcher dailyFigureFetcher = (DailyFigureFetcher) ctx.getBean("staticDailyFigureFetcher");
+		dailyFigureFetcher.fetch();
+		dailyFigureFetcher.processData();
 
 		DistrictDataService districtDataService = (DistrictDataService) ctx.getBean("districtDataServiceImpl");
 
-		System.out.println(districtDataService.getDistrictData("079603").toString());
+		String retiroData = districtDataService.getDistrictData("retiro").toString();
+		System.out.println(retiroData);
 
 	}
 

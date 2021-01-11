@@ -1,49 +1,85 @@
 package com.chilborne.covidradar.services;
 
-import com.chilborne.covidradar.model.DailyFigureDTO;
 import com.chilborne.covidradar.model.DistrictData;
+import com.chilborne.covidradar.model.DistrictDataDTO;
+import com.chilborne.covidradar.repository.DistrictDataRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
-@Profile("test")
+
 @Service
 public class DistrictDataServiceImpl implements DistrictDataService {
 
-    private final DailyFigureService dailyFigureService;
+    private final DistrictDataRepository districtDataRepository;
+    private final Logger logger = LoggerFactory.getLogger(DistrictDataServiceImpl.class);
 
-    public DistrictDataServiceImpl(DailyFigureService dailyFigureService) {
-        this.dailyFigureService = dailyFigureService;
+    public DistrictDataServiceImpl(DistrictDataRepository districtDataRepository) {
+        this.districtDataRepository = districtDataRepository;
     }
 
     @Override
     @Cacheable("districtData")
-    public DistrictData getDistrictData(String geoCode) {
-        DistrictData result = new DistrictData();
-        List<DailyFigureDTO> dailyFigures;
-        String name;
-        int totalCases;
-        LocalDate lastUpdated;
-
-        dailyFigures = dailyFigureService.getDailyFigures(geoCode);
-        result.setDailyFigures(dailyFigures);
-
-        name = dailyFigures.get(0).getDistrict();
-        result.setName(name);
-
-        totalCases = dailyFigures
-                .get(dailyFigures.size() - 1)
-                .getTotalCases();
-        result.setTotalCases(totalCases);
-
-        lastUpdated = dailyFigures
-                .get(dailyFigures.size() - 1)
-                .getDate();
-        result.setLastUpdated(lastUpdated);
-
-        return result;
+    public DistrictDataDTO getDistrictData(String name) throws RuntimeException {
+        logger.debug("Fetching Data for: " + name);
+        DistrictData result = districtDataRepository.findByName(name).orElseThrow(RuntimeException::new);
+        //TODO write DistrictNotFoundException
+        return new DistrictDataDTO(result);
     }
+
+    @Override
+    public List<DistrictDataDTO> getAllDistrictData() {
+        logger.debug("Fetching All District Data");
+
+        List<DistrictDataDTO> data = districtDataRepository.findAll()
+                .stream()
+                .map(DistrictDataDTO::new)
+                .collect(Collectors.toUnmodifiableList());
+
+        if (data.isEmpty()) {
+            logger.error("No Data Found");
+            return List.of();
+        }
+        else {
+            return data;
+        }
+    }
+
+    @Override
+    @Cacheable("names")
+    public List<String> getDistrictNames() {
+        logger.debug("Fetching District Names");
+        return getAllDistrictData().stream()
+                .map(DistrictDataDTO::getMunicipalDistrict)
+                .collect(Collectors.toUnmodifiableList());
+    }
+
+    @Override
+    public void save(DistrictData districtData) {
+        logger.debug("Saving: " + districtData.getName());
+        if (districtDataRepository.existsByName(districtData.getName())) {
+            logger.debug(districtData.getName() + " already exists. Updating...");
+            update(districtData);
+        }
+        else {
+            logger.debug(districtData.getName() + " doesn't exist. Inserting...");
+            districtDataRepository.insert(districtData);
+            logger.debug((districtData.getName() + " inserted."));
+        };
+    }
+
+    private void update(DistrictData districtData) {
+        //TODO exception
+        String IdToUpdate = districtDataRepository.findByName(districtData.getName())
+                .orElseThrow(RuntimeException::new).get_id();
+        districtData.set_id(IdToUpdate);
+        districtDataRepository.save(districtData);
+        logger.debug((districtData.getName() + " updated."));
+    }
+
+
 }
