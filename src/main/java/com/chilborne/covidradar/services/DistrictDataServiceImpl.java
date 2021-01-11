@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -53,9 +54,12 @@ public class DistrictDataServiceImpl implements DistrictDataService {
     @Cacheable("names")
     public List<String> getDistrictNames() {
         logger.debug("Fetching District Names");
-        return getAllDistrictData().stream()
+        List<String> districtNames = getAllDistrictData().stream()
                 .map(DistrictDataDTO::getMunicipalDistrict)
-                .collect(Collectors.toUnmodifiableList());
+                .collect(Collectors.toList());
+
+        Collections.sort(districtNames);
+        return districtNames;
     }
 
     @Override
