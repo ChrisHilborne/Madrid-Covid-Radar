@@ -2,7 +2,6 @@ package com.chilborne.covidradar.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
@@ -15,8 +14,7 @@ import java.util.Objects;
 @Document(collection = "daily_records")
 public class DailyRecord {
 
-    @Id
-    private String id;
+
     @JsonProperty("codigo_geometria")
     private String geoCode;
     @JsonProperty("municipio_distrito")
@@ -102,7 +100,6 @@ public class DailyRecord {
         if (Double.compare(that.infectionRateTotal, infectionRateTotal) != 0) return false;
         if (totalCases != that.totalCases) return false;
         if (casesLastTwoWeeks != that.casesLastTwoWeeks) return false;
-        if (!Objects.equals(id, that.id)) return false;
         if (!Objects.equals(geoCode, that.geoCode)) return false;
         if (!Objects.equals(municipalDistrict, that.municipalDistrict))
             return false;
@@ -113,8 +110,7 @@ public class DailyRecord {
     public int hashCode() {
         int result;
         long temp;
-        result = id.hashCode();
-        result = 31 * result + geoCode.hashCode();
+        result = geoCode.hashCode();
         result = 31 * result + municipalDistrict.hashCode();
         temp = Double.doubleToLongBits(infectionRateLastTwoWeeks);
         result = 31 * result + (int) (temp ^ (temp >>> 32));

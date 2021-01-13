@@ -8,11 +8,13 @@ import java.util.List;
 
 public interface DistrictDataService {
 
-    DistrictDataDTO getDistrictData(String municipality) throws DataAccessException;
+    DistrictDataDTO getDistrictDataByName(String municipality) throws DataAccessException;
 
     List<DistrictDataDTO> getAllDistrictData();
 
     List<String> getDistrictNames();
 
     void save(DistrictData districtData);
+
+    DistrictDataDTO getDistrictDataByGeoCode(String geoCode);
 }

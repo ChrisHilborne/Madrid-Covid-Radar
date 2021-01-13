@@ -41,10 +41,25 @@ public class DistrictDataController {
                 .body(result);
     }
 
-    @GetMapping(value = "/districts/{name}", produces = "application/json")
+    @GetMapping(value = "/districts/geoCode/{geoCode}", produces = "application/json")
+    public ResponseEntity<DistrictDataDTO> getDistrictDataByGeoCode(@PathVariable String geoCode, WebRequest request) {
+        logger.debug("Processing GetRequest --> " + geoCode + " DistrictData");
+        DistrictDataDTO result = districtDataService.getDistrictDataByGeoCode(geoCode);
+
+        long lastModifiedEpochMilli = getEpochLastModified(result);
+        if (request.checkNotModified(lastModifiedEpochMilli)) {
+            return ResponseEntity.status(304).build();
+        }
+        return ResponseEntity.ok()
+                .cacheControl(getCacheControl())
+                .lastModified(lastModifiedEpochMilli)
+                .body(districtDataService.getDistrictDataByGeoCode(geoCode));
+    }
+
+    @GetMapping(value = "/districts/name/{name}", produces = "application/json")
     public ResponseEntity<DistrictDataDTO> getDistrictDataByName(@PathVariable String name, WebRequest request) {
-        logger.debug("Processing GetRequest --> " + name + " Data");
-        DistrictDataDTO result = districtDataService.getDistrictData(name);
+        logger.debug("Processing GetRequest --> " + name + " DistrictData");
+        DistrictDataDTO result = districtDataService.getDistrictDataByName(name);
         long lastModifiedEpochMilli = getEpochLastModified(result);
 
         if (request.checkNotModified(lastModifiedEpochMilli)) {
@@ -53,7 +68,7 @@ public class DistrictDataController {
         return ResponseEntity.ok()
                 .cacheControl(getCacheControl())
                 .lastModified(lastModifiedEpochMilli)
-                .body(districtDataService.getDistrictData(name));
+                .body(districtDataService.getDistrictDataByName(name));
     }
 
     @GetMapping(value = "/districts/names", produces = "application/json")

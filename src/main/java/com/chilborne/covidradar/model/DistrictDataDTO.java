@@ -3,10 +3,12 @@ package com.chilborne.covidradar.model;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class DistrictDataDTO {
 
+    private String geoCode;
     private String municipalDistrict;
     private int totalConfirmedCases;
     private LocalDate lastReported;
@@ -17,6 +19,7 @@ public class DistrictDataDTO {
             throw new RuntimeException("No Data Provided");
             //TODO exception
         }
+        this.geoCode = districtData.getGeoCode();
         this.municipalDistrict = districtData.getName();
         this.totalConfirmedCases = districtData.getTotalCases();
         this.lastReported = districtData.getLastUpdated();
@@ -29,27 +32,12 @@ public class DistrictDataDTO {
     public DistrictDataDTO() {
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        DistrictDataDTO that = (DistrictDataDTO) o;
-
-        if (totalConfirmedCases != that.totalConfirmedCases) return false;
-        if (municipalDistrict != null ? !municipalDistrict.equals(that.municipalDistrict) : that.municipalDistrict != null)
-            return false;
-        if (lastReported != null ? !lastReported.equals(that.lastReported) : that.lastReported != null) return false;
-        return dailyReports != null ? dailyReports.equals(that.dailyReports) : that.dailyReports == null;
+    public String getGeoCode() {
+        return geoCode;
     }
 
-    @Override
-    public int hashCode() {
-        int result = municipalDistrict != null ? municipalDistrict.hashCode() : 0;
-        result = 31 * result + totalConfirmedCases;
-        result = 31 * result + (lastReported != null ? lastReported.hashCode() : 0);
-        result = 31 * result + (dailyReports != null ? dailyReports.hashCode() : 0);
-        return result;
+    public void setGeoCode(String geoCode) {
+        this.geoCode = geoCode;
     }
 
     public String getMunicipalDistrict() {
@@ -87,10 +75,34 @@ public class DistrictDataDTO {
     @Override
     public String toString() {
         return "DistrictDataDTO{" +
+                "geoCode='" + geoCode + '\'' +
                 "municipalDistrict='" + municipalDistrict + '\'' +
                 ", totalConfirmedCases=" + totalConfirmedCases +
                 ", lastReported=" + lastReported +
                 ", dailyReports=" + dailyReports +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        DistrictDataDTO that = (DistrictDataDTO) o;
+
+        if (totalConfirmedCases != that.totalConfirmedCases) return false;
+        if (!Objects.equals(municipalDistrict, that.municipalDistrict))
+            return false;
+        if (!Objects.equals(lastReported, that.lastReported)) return false;
+        return Objects.equals(dailyReports, that.dailyReports);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = municipalDistrict != null ? municipalDistrict.hashCode() : 0;
+        result = 31 * result + totalConfirmedCases;
+        result = 31 * result + (lastReported != null ? lastReported.hashCode() : 0);
+        result = 31 * result + (dailyReports != null ? dailyReports.hashCode() : 0);
+        return result;
     }
 }
