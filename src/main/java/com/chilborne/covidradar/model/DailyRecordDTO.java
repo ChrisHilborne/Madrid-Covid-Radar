@@ -1,6 +1,7 @@
 package com.chilborne.covidradar.model;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class DailyRecordDTO {
 
@@ -70,14 +71,24 @@ public class DailyRecordDTO {
 
         DailyRecordDTO that = (DailyRecordDTO) o;
 
+        if (Double.compare(that.twoWeekRate, twoWeekRate) != 0) return false;
+        if (Double.compare(that.totalRate, totalRate) != 0) return false;
+        if (twoWeekCases != that.twoWeekCases) return false;
         if (totalCases != that.totalCases) return false;
-        return date.equals(that.date);
+        return Objects.equals(date, that.date);
     }
 
     @Override
     public int hashCode() {
-        int result = totalCases/8;
-        result = 31 * result + date.hashCode();
+        int result;
+        long temp;
+        temp = Double.doubleToLongBits(twoWeekRate);
+        result = (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(totalRate);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + twoWeekCases;
+        result = 31 * result + totalCases;
+        result = 31 * result + (date != null ? date.hashCode() : 0);
         return result;
     }
 

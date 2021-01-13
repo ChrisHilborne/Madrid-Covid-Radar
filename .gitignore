@@ -1,6 +1,9 @@
-HELP.md
-target/
+/target/
+/data/
+/logs/
 !.mvn/wrapper/maven-wrapper.jar
+mvnw
+mvnw.cmd
 !**/src/main/**/target/
 !**/src/test/**/target/
 
@@ -31,9 +34,3 @@ build/
 
 ### VS Code ###
 .vscode/
-
-#logs
-logs/
-
-#Database
-data/

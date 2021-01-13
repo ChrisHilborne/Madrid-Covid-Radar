@@ -22,9 +22,9 @@ public class DailyRecord {
     @JsonProperty("municipio_distrito")
     private String municipalDistrict;
     @JsonProperty("tasa_incidencia_acumulada_ultimos_14dias")
-    private float infectionRateLastTwoWeeks;
+    private double infectionRateLastTwoWeeks;
     @JsonProperty("tasa_incidencia_acumulada_total")
-    private float infectionRateTotal;
+    private double infectionRateTotal;
     @JsonProperty("casos_confirmados_totales")
     private int totalCases;
     @JsonProperty("casos_confirmados_ultimos_14dias")
@@ -59,19 +59,19 @@ public class DailyRecord {
         this.municipalDistrict = municipalDistrict;
     }
 
-    public float getInfectionRateLastTwoWeeks() {
+    public double getInfectionRateLastTwoWeeks() {
         return infectionRateLastTwoWeeks;
     }
 
-    public void setInfectionRateLastTwoWeeks(float infectionRateLastTwoWeeks) {
+    public void setInfectionRateLastTwoWeeks(double infectionRateLastTwoWeeks) {
         this.infectionRateLastTwoWeeks = infectionRateLastTwoWeeks;
     }
 
-    public float getInfectionRateTotal() {
+    public double getInfectionRateTotal() {
         return infectionRateTotal;
     }
 
-    public void setInfectionRateTotal(float infectionRateTotal) {
+    public void setInfectionRateTotal(double infectionRateTotal) {
         this.infectionRateTotal = infectionRateTotal;
     }
 
@@ -98,8 +98,8 @@ public class DailyRecord {
 
         DailyRecord that = (DailyRecord) o;
 
-        if (Float.compare(that.infectionRateLastTwoWeeks, infectionRateLastTwoWeeks) != 0) return false;
-        if (Float.compare(that.infectionRateTotal, infectionRateTotal) != 0) return false;
+        if (Double.compare(that.infectionRateLastTwoWeeks, infectionRateLastTwoWeeks) != 0) return false;
+        if (Double.compare(that.infectionRateTotal, infectionRateTotal) != 0) return false;
         if (totalCases != that.totalCases) return false;
         if (casesLastTwoWeeks != that.casesLastTwoWeeks) return false;
         if (!Objects.equals(id, that.id)) return false;
@@ -111,26 +111,18 @@ public class DailyRecord {
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (geoCode != null ? geoCode.hashCode() : 0);
-        result = 31 * result + (municipalDistrict != null ? municipalDistrict.hashCode() : 0);
-        result = 31 * result + (infectionRateLastTwoWeeks != +0.0f ? Float.floatToIntBits(infectionRateLastTwoWeeks) : 0);
-        result = 31 * result + (infectionRateTotal != +0.0f ? Float.floatToIntBits(infectionRateTotal) : 0);
+        int result;
+        long temp;
+        result = id.hashCode();
+        result = 31 * result + geoCode.hashCode();
+        result = 31 * result + municipalDistrict.hashCode();
+        temp = Double.doubleToLongBits(infectionRateLastTwoWeeks);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(infectionRateTotal);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
         result = 31 * result + totalCases;
         result = 31 * result + casesLastTwoWeeks;
-        result = 31 * result + (dateReported != null ? dateReported.hashCode() : 0);
+        result = 31 * result + dateReported.hashCode();
         return result;
-    }
-
-    @Override
-    public String toString() {
-        return "DailyFigure{" +
-                ", municipalDistrict='" + municipalDistrict + '\'' +
-                ", infectionRateLastTwoWeeks=" + infectionRateLastTwoWeeks +
-                ", infectionRateTotal=" + infectionRateTotal +
-                ", totalCases=" + totalCases +
-                ", casesLastTwoWeeks=" + casesLastTwoWeeks +
-                ", date=" + dateReported +
-                '}';
     }
 }
