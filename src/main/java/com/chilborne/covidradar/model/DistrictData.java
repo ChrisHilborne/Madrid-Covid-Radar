@@ -12,8 +12,8 @@ import java.util.Objects;
 public class DistrictData {
 
     @Id
-    private String _id;
     @Indexed(unique = true)
+    private String geoCode;
     private String name;
     private int totalCases;
     private LocalDate lastUpdated;
@@ -21,6 +21,7 @@ public class DistrictData {
 
     public DistrictData(List<DailyRecord> dailyRecords) {
         DailyRecord lastRecord = dailyRecords.get(dailyRecords.size() - 1);
+        this.geoCode = lastRecord.getGeoCode();
         this.name = lastRecord.getMunicipalDistrict();
         this.totalCases = lastRecord.getTotalCases();
         this.lastUpdated = lastRecord.getDateReported();
@@ -32,9 +33,13 @@ public class DistrictData {
 
     public String getName() { return name; }
 
-    public String get_id() { return _id; }
+    public String getGeoCode() {
+        return geoCode;
+    }
 
-    public void set_id(String _id) { this._id = _id; }
+    public void setGeoCode(String geoCode) {
+        this.geoCode = geoCode;
+    }
 
     public List<DailyRecord> getDailyRecords() { return dailyRecords; }
 
@@ -68,7 +73,7 @@ public class DistrictData {
         DistrictData that = (DistrictData) o;
 
         if (totalCases != that.totalCases) return false;
-        if (!Objects.equals(_id, that._id)) return false;
+        if (!Objects.equals(geoCode, that.geoCode)) return false;
         if (!Objects.equals(name, that.name)) return false;
         if (!Objects.equals(lastUpdated, that.lastUpdated)) return false;
         return Objects.equals(dailyRecords, that.dailyRecords);
@@ -76,7 +81,7 @@ public class DistrictData {
 
     @Override
     public int hashCode() {
-        int result = _id != null ? _id.hashCode() : 0;
+        int result = geoCode != null ? geoCode.hashCode() : 0;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + totalCases;
         result = 31 * result + (lastUpdated != null ? lastUpdated.hashCode() : 0);
@@ -87,7 +92,7 @@ public class DistrictData {
     @Override
     public String toString() {
         return "DistrictData{" +
-                "_id='" + _id + '\'' +
+                "geoCode='" + geoCode + '\'' +
                 ", name='" + name + '\'' +
                 ", totalCases=" + totalCases +
                 ", lastUpdated=" + lastUpdated +

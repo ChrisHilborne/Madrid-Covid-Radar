@@ -47,7 +47,7 @@ public class DataProcessorImpl implements DataProcessor {
     private List<DailyRecord> filterData(List<DailyRecord> dailyRecords) {
         logger.debug("Filtering Data");
         List<DailyRecord> filteredData = dailyRecords.stream()
-                .filter(dailyRecord -> dailyRecord.getMunicipalDistrict().matches("Madrid*"))
+                .filter(dailyRecord -> dailyRecord.getMunicipalDistrict().matches("Madrid.*"))
                 .collect(Collectors.toList());
 
         logger.debug("New Number of Records: " + filteredData.size());

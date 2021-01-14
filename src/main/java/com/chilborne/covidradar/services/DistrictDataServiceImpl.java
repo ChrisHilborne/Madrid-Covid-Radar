@@ -24,8 +24,16 @@ public class DistrictDataServiceImpl implements DistrictDataService {
     }
 
     @Override
-    @Cacheable("districtData")
-    public DistrictDataDTO getDistrictData(String name) throws RuntimeException {
+    public DistrictDataDTO getDistrictDataByGeoCode(String geoCode) {
+        logger.debug("Fetching data for GeoCode: " + geoCode);
+        DistrictData result = districtDataRepository.findByGeoCode(geoCode).orElseThrow(RuntimeException::new);
+
+        return new DistrictDataDTO(result);
+    }
+
+    @Override
+    @Cacheable("districtData-name")
+    public DistrictDataDTO getDistrictDataByName(String name) throws RuntimeException {
         logger.debug("Fetching Data for: " + name);
         DistrictData result = districtDataRepository.findByName(name).orElseThrow(RuntimeException::new);
         //TODO write DistrictNotFoundException
@@ -65,25 +73,7 @@ public class DistrictDataServiceImpl implements DistrictDataService {
     @Override
     public void save(DistrictData districtData) {
         logger.debug("Saving: " + districtData.getName());
-        if (districtDataRepository.existsByName(districtData.getName())) {
-            logger.debug(districtData.getName() + " already exists. Updating...");
-            update(districtData);
-        }
-        else {
-            logger.debug(districtData.getName() + " doesn't exist. Inserting...");
-            districtDataRepository.insert(districtData);
-            logger.debug((districtData.getName() + " inserted."));
-        };
-    }
-
-    private void update(DistrictData districtData) {
-        //TODO exception
-        String IdToUpdate = districtDataRepository.findByName(districtData.getName())
-                .orElseThrow(RuntimeException::new).get_id();
-        districtData.set_id(IdToUpdate);
         districtDataRepository.save(districtData);
-        logger.debug((districtData.getName() + " updated."));
     }
-
 
 }
