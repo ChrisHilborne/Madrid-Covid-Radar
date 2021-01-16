@@ -1,5 +1,6 @@
 package com.chilborne.covidradar.services.datacollection;
 
+import com.chilborne.covidradar.events.NewDataEvent;
 import com.chilborne.covidradar.model.DailyRecord;
 import com.chilborne.covidradar.model.DistrictData;
 import com.chilborne.covidradar.services.DistrictDataService;
@@ -7,6 +8,7 @@ import com.chilborne.covidradar.util.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -25,9 +27,11 @@ public class DataProcessorImpl implements DataProcessor {
     }
 
     @Override
-    public void processData(String json) throws JsonProcessingException {
+    @EventListener
+    public void processData(NewDataEvent newData) throws JsonProcessingException {
         logger.debug("Starting to Process JSON Data");
         List<DailyRecord> dailyRecords;
+        String json = newData.getData();
         //Parse DailyRecords from JSON
         dailyRecords = jsonParser.parse(json);
         //Filter for DailyRecords for Madrid City only
