@@ -5,6 +5,7 @@ import com.chilborne.covidradar.model.DistrictDataDTO;
 import com.chilborne.covidradar.repository.DistrictDataRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,7 @@ public class DistrictDataServiceImpl implements DistrictDataService {
     }
 
     @Override
+    @Cacheable ("districtData")
     public DistrictDataDTO getDistrictDataByGeoCode(String geoCode) {
         logger.debug("Fetching data for GeoCode: " + geoCode);
         DistrictData result = districtDataRepository.findByGeoCode(geoCode).orElseThrow(RuntimeException::new);
@@ -32,7 +34,7 @@ public class DistrictDataServiceImpl implements DistrictDataService {
     }
 
     @Override
-    @Cacheable("districtData-name")
+    @Cacheable("districtData")
     public DistrictDataDTO getDistrictDataByName(String name) throws RuntimeException {
         logger.debug("Fetching Data for: " + name);
         DistrictData result = districtDataRepository.findByName(name).orElseThrow(RuntimeException::new);
@@ -59,7 +61,7 @@ public class DistrictDataServiceImpl implements DistrictDataService {
     }
 
     @Override
-    @Cacheable("names")
+    @Cacheable("districtData-names")
     public List<String> getDistrictNames() {
         logger.debug("Fetching District Names");
         List<String> districtNames = getAllDistrictData().stream()
@@ -71,6 +73,7 @@ public class DistrictDataServiceImpl implements DistrictDataService {
     }
 
     @Override
+    @CacheEvict(value = "districtData", allEntries = true)
     public void save(DistrictData districtData) {
         logger.debug("Saving: " + districtData.getName());
         districtDataRepository.save(districtData);
