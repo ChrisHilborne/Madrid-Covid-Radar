@@ -7,7 +7,7 @@ import java.io.File;
 import java.io.FileReader;
 
 @Service
-public class StaticDailyRecordFetcher implements DailyFigureFetcher {
+public class StaticDailyRecordFetcher implements DailyRecordFetcher {
 
     private final DataProcessor dataProcessor;
 
