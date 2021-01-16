@@ -1,49 +1,49 @@
 package com.chilborne.covidradar.services.datacollection;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
+import com.chilborne.covidradar.events.NewDataEventPublisher;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.FileReader;
 
 @Service
-public class StaticDailyRecordFetcher implements DailyFigureFetcher {
+public class StaticDailyRecordFetcher implements DailyRecordFetcher<String> {
 
-    private final DataProcessor dataProcessor;
+    private final NewDataEventPublisher newDataEventPublisher;
+    private final File staticDataFile;
 
-    private File dataFile;
-    private FileReader dataReader;
-    private String data = "";
-
-    public StaticDailyRecordFetcher(DataProcessor dataProcessor)  {
-        this.dataProcessor = dataProcessor;
+    public StaticDailyRecordFetcher(NewDataEventPublisher newDataEventPublisher, File staticDataFile) {
+        this.newDataEventPublisher = newDataEventPublisher;
+        this.staticDataFile = staticDataFile;
     }
 
     @Override
     public void fetch() {
-        try {
-            dataFile = new File("./src/main/resources/static/testdata.json");
-            dataReader = new FileReader(dataFile);
+        String data = "";
+        try (FileReader dataReader = new FileReader(staticDataFile)) {
             StringBuilder sb = new StringBuilder();
             char[] readData = new char[10000];
-
             while (dataReader.ready()) {
                 dataReader.read(readData);
                 sb.append(String.valueOf(readData));
             }
             data = sb.toString();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
+        }
+
+        if (isNewData(data)) {
+            newDataEvent(data);
         }
     }
 
     @Override
-    public void processData() {
-        try {
-            dataProcessor.processData(data);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
+    public boolean isNewData(String data) {
+        return true;
+    }
+
+    @Override
+    public void newDataEvent(String data) {
+        newDataEventPublisher.publishNewDataEvent(data);
     }
 }
