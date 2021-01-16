@@ -64,8 +64,8 @@ public class DistrictDataServiceImpl implements DistrictDataService {
     @Cacheable("districtData-names")
     public List<String> getDistrictNames() {
         logger.debug("Fetching District Names");
-        List<String> districtNames = getAllDistrictData().stream()
-                .map(DistrictDataDTO::getMunicipalDistrict)
+        List<String> districtNames = districtDataRepository.findAll().stream()
+                .map(DistrictData::getName)
                 .collect(Collectors.toList());
 
         Collections.sort(districtNames);
