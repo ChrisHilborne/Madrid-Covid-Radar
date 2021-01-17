@@ -1,52 +1,43 @@
-package com.chilborne.covidradar.services.datacollection;
+package com.chilborne.covidradar.services.data.processing;
 
-import com.chilborne.covidradar.events.NewDataEvent;
 import com.chilborne.covidradar.model.DailyRecord;
-import com.chilborne.covidradar.model.DistrictData;
 import com.chilborne.covidradar.services.DistrictDataService;
 import com.chilborne.covidradar.util.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
-public class DataProcessorImpl implements DataProcessor {
+public class DailyRecordProcessor implements DataProcessor<List<DailyRecord>> {
 
     private final DistrictDataService districtDataService;
-    private final JsonParser<DailyRecord> jsonParser;
-    private final Logger logger = LoggerFactory.getLogger(DataProcessorImpl.class);
+    private final Logger logger = LoggerFactory.getLogger(DailyRecordProcessor.class);
 
-    public DataProcessorImpl(DistrictDataService districtDataService, JsonParser<DailyRecord> jsonParser) {
+    public DailyRecordProcessor(DistrictDataService districtDataService, JsonParser<DailyRecord> jsonParser) {
         this.districtDataService = districtDataService;
-        this.jsonParser = jsonParser;
     }
 
-    @Override
-    @EventListener
-    public void processData(NewDataEvent newData) throws JsonProcessingException {
-        logger.debug("Starting to Process JSON Data");
-        List<DailyRecord> dailyRecords;
-        String json = newData.getData();
-        //Parse DailyRecords from JSON
-        dailyRecords = jsonParser.parse(json);
-        //Filter for DailyRecords for Madrid City only
-        dailyRecords = filterData(dailyRecords);
-        //Change DailyRecords properties
-        dailyRecords = transformData(dailyRecords);
-        //Reverse DailyRecords - so [0] is the first day, rather than the last
-        dailyRecords = sortData(dailyRecords);
-        //Map DailyRecords to each City District
-        HashMap<String, List<DailyRecord>> dailyRecordsMappedByDistrict = mapData(dailyRecords);
-        //Save each set of DailyRecords as a new DistrictData object
-        saveData(dailyRecordsMappedByDistrict);
+    public List<DailyRecord> processData(List<DailyRecord> dailyRecords)  {
 
-        logger.debug("Finished Processing JSON data");
+        logger.debug("Starting Processing DailyRecord data");
+
+        List<DailyRecord> processedData = dailyRecords;
+
+        processedData = filterData(dailyRecords);
+
+        processedData= transformData(dailyRecords);
+
+        processedData = reverseData(dailyRecords);
+
+        logger.debug("Finished Processing DailyRecord data");
+
+        return processedData;
+
     }
+
 
     private List<DailyRecord> filterData(List<DailyRecord> dailyRecords) {
         logger.debug("Filtering Data");
@@ -75,14 +66,14 @@ public class DataProcessorImpl implements DataProcessor {
         return transformedData;
     }
 
-    private List<DailyRecord> sortData(List<DailyRecord> dailyRecords) {
+    private List<DailyRecord> reverseData(List<DailyRecord> dailyRecords) {
         List<DailyRecord> sortedResults = dailyRecords;
         Collections.reverse(sortedResults);
 
         return sortedResults;
     }
 
-    private HashMap<String, List<DailyRecord>> mapData(List<DailyRecord> dailyRecords) {
+    public Map<String, List<DailyRecord>> mapData(List<DailyRecord> dailyRecords) {
         logger.debug("Mapping DailyRecords By District");
         HashMap<String, List<DailyRecord>> dailyRecordsMappedByDistrict = new HashMap<>();
 
@@ -104,12 +95,4 @@ public class DataProcessorImpl implements DataProcessor {
         return dailyRecordsMappedByDistrict;
     }
 
-
-    private void saveData(HashMap<String, List<DailyRecord>> dailyRecordsMappedByDistrict) {
-        logger.debug("Saving Data");
-        dailyRecordsMappedByDistrict.values()
-                .stream()
-                .map(DistrictData::new)
-                .forEach(districtDataService::save);
-    }
 }

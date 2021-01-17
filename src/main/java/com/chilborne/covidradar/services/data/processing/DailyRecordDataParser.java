@@ -1,4 +1,4 @@
-package com.chilborne.covidradar.services.datacollection;
+package com.chilborne.covidradar.services.data.processing;
 
 import com.chilborne.covidradar.model.DailyRecord;
 import com.chilborne.covidradar.util.JsonParser;
@@ -12,12 +12,12 @@ import java.util.Arrays;
 import java.util.List;
 
 @Service
-public class DailyRecordParser implements JsonParser<DailyRecord> {
+public class DailyRecordDataParser implements JsonParser<DailyRecord> {
 
     private final ObjectMapper mapper;
-    private final Logger logger = LoggerFactory.getLogger(DailyRecordParser.class);
+    private final Logger logger = LoggerFactory.getLogger(DailyRecordDataParser.class);
 
-    public DailyRecordParser(ObjectMapper mapper) {
+    public DailyRecordDataParser(ObjectMapper mapper) {
         this.mapper = mapper;
     }
 

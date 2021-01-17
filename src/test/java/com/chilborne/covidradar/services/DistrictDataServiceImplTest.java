@@ -147,7 +147,7 @@ class DistrictDataServiceImplTest {
         verify(districtDataRepository, times(1)).save(toSave);
         verify(districtDataRepository).save(districtDataCaptor.capture());
         assertEquals("toSave", districtDataCaptor.getValue().getName());
-        
+
     }
 
 
