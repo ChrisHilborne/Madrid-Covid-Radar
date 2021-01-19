@@ -13,6 +13,6 @@ public interface DistrictDataRepository extends MongoRepository<DistrictData, St
 
     Optional<DistrictData> findByGeoCode(String geoCode);
 
-    boolean existsByName(String name);
+
 
 }

@@ -1,4 +1,4 @@
-package com.chilborne.covidradar.services;
+package com.chilborne.covidradar.services.districtdata;
 
 import com.chilborne.covidradar.model.DistrictData;
 import com.chilborne.covidradar.model.DistrictDataDTO;
@@ -77,6 +77,11 @@ public class DistrictDataServiceImpl implements DistrictDataService {
     public void save(DistrictData districtData) {
         logger.debug("Saving: " + districtData.getName());
         districtDataRepository.save(districtData);
+    }
+
+    @Override
+    public void save(List<DistrictData> mappedData) {
+        mappedData.forEach(this::save);
     }
 
 }

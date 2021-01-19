@@ -1,4 +1,4 @@
-package com.chilborne.covidradar.services;
+package com.chilborne.covidradar.services.districtdata;
 
 import com.chilborne.covidradar.model.DistrictData;
 import com.chilborne.covidradar.model.DistrictDataDTO;
@@ -17,4 +17,6 @@ public interface DistrictDataService {
     void save(DistrictData districtData);
 
     DistrictDataDTO getDistrictDataByGeoCode(String geoCode);
+
+    void save(List<DistrictData> mappedData);
 }

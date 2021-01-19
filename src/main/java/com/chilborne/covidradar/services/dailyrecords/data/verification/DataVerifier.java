@@ -1,4 +1,4 @@
-package com.chilborne.covidradar.services.data.verification;
+package com.chilborne.covidradar.services.dailyrecords.data.verification;
 
 public interface DataVerifier<T> {
 

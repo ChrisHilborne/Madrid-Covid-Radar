@@ -1,7 +1,7 @@
 package com.chilborne.covidradar;
 
 
-import com.chilborne.covidradar.services.data.collection.DailyRecordDataCollector;
+import com.chilborne.covidradar.services.dailyrecords.data.DataManager;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -17,8 +17,10 @@ public class CovidRadarApplication {
 
 		ApplicationContext ctx = SpringApplication.run(CovidRadarApplication.class, args);
 
-		DailyRecordDataCollector<String> dailyRecordFetcher = (DailyRecordDataCollector) ctx.getBean("staticDailyRecordFetcher");
-		dailyRecordFetcher.collectData();
+		DataManager dataManager = (DataManager) ctx.getBean("dailyRecordDataManager");
+
+			dataManager.newData();
+
 	}
 
 }

@@ -1,4 +1,4 @@
-package com.chilborne.covidradar.services.data.collection;
+package com.chilborne.covidradar.services.dailyrecords.data.collection;
 
 import org.springframework.stereotype.Service;
 

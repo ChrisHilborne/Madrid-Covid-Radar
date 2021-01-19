@@ -1,6 +1,5 @@
-package com.chilborne.covidradar.services.data;
+package com.chilborne.covidradar.services.dailyrecords.data.collection;
 
-import com.chilborne.covidradar.services.data.collection.StaticDailyRecordDataCollector;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;

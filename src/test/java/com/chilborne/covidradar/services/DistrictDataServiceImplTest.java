@@ -4,6 +4,7 @@ import com.chilborne.covidradar.model.DailyRecord;
 import com.chilborne.covidradar.model.DistrictData;
 import com.chilborne.covidradar.model.DistrictDataDTO;
 import com.chilborne.covidradar.repository.DistrictDataRepository;
+import com.chilborne.covidradar.services.districtdata.DistrictDataServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -31,6 +32,9 @@ class DistrictDataServiceImplTest {
 
     @Captor
     ArgumentCaptor<DistrictData> districtDataCaptor;
+
+    @Captor
+    ArgumentCaptor<List<DistrictData>> districtDataListCaptor;
 
     @Test
     void getDistrictDataByNameException() {
@@ -147,6 +151,24 @@ class DistrictDataServiceImplTest {
         verify(districtDataRepository, times(1)).save(toSave);
         verify(districtDataRepository).save(districtDataCaptor.capture());
         assertEquals("toSave", districtDataCaptor.getValue().getName());
+
+    }
+
+    @Test
+    void saveList() {
+        //give
+        List<DistrictData> testList = new ArrayList<>();
+        DistrictData one = new DistrictData();
+        one.setName("one");
+        testList.add(one);
+        testList.add(new DistrictData());
+
+        //when
+        districtDataService.save(testList);
+
+        //verify
+        verify(districtDataRepository, times(2)).save(any());
+        verify(districtDataRepository, times(1)).save(one);
 
     }
 

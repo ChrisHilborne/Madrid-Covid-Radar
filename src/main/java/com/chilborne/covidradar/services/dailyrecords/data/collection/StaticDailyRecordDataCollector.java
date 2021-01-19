@@ -1,4 +1,4 @@
-package com.chilborne.covidradar.services.data.collection;
+package com.chilborne.covidradar.services.dailyrecords.data.collection;
 
 import org.springframework.stereotype.Service;
 
@@ -22,9 +22,9 @@ public class StaticDailyRecordDataCollector implements DailyRecordDataCollector<
             char[] readData = new char[10000];
             while (dataReader.ready()) {
                 dataReader.read(readData);
-                sb.append(String.valueOf(readData).trim());
+                sb.append(String.valueOf(readData));
             }
-            data = sb.toString();
+            data = sb.toString().trim();
         } catch (Exception e) {
             e.printStackTrace();
         }
