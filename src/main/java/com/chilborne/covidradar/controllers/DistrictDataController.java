@@ -41,7 +41,7 @@ public class DistrictDataController {
                 .body(result);
     }
 
-    @GetMapping(value = "/districts/geoCode/{geoCode}", produces = "application/json")
+    @GetMapping(value = "/districts/geocode/{geoCode}", produces = "application/json")
     public ResponseEntity<DistrictDataDTO> getDistrictDataByGeoCode(@PathVariable String geoCode, WebRequest request) {
         logger.debug("Processing GetRequest --> " + geoCode + " DistrictData");
         DistrictDataDTO result = districtDataService.getDistrictDataByGeoCode(geoCode);
@@ -53,7 +53,7 @@ public class DistrictDataController {
         return ResponseEntity.ok()
                 .cacheControl(getCacheControl())
                 .lastModified(lastModifiedEpochMilli)
-                .body(districtDataService.getDistrictDataByGeoCode(geoCode));
+                .body(result);
     }
 
     @GetMapping(value = "/districts/name/{name}", produces = "application/json")
@@ -68,7 +68,7 @@ public class DistrictDataController {
         return ResponseEntity.ok()
                 .cacheControl(getCacheControl())
                 .lastModified(lastModifiedEpochMilli)
-                .body(districtDataService.getDistrictDataByName(name));
+                .body(result);
     }
 
     @GetMapping(value = "/districts/names", produces = "application/json")
