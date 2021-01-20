@@ -10,6 +10,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -74,14 +75,23 @@ public class DistrictDataServiceImpl implements DistrictDataService {
 
     @Override
     @CacheEvict(value = "districtData", allEntries = true)
-    public void save(DistrictData districtData) {
+    public DistrictData save(DistrictData districtData) {
         logger.debug("Saving: " + districtData.getName());
-        districtDataRepository.save(districtData);
+        return districtDataRepository.save(districtData);
     }
 
     @Override
-    public void save(List<DistrictData> mappedData) {
-        mappedData.forEach(this::save);
+    public List<DistrictData> save(List<DistrictData> districtDataList) {
+        List<DistrictData> savedDistrictDataList = new LinkedList<>();
+
+        for (DistrictData districtData : districtDataList) {
+            savedDistrictDataList.add(
+                    save(districtData)
+            );
+
+        }
+        return savedDistrictDataList;
     }
+
 
 }

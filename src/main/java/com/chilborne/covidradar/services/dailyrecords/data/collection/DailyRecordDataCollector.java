@@ -5,5 +5,7 @@ import org.springframework.stereotype.Service;
 @Service
 public interface DailyRecordDataCollector<T> {
 
-    String collectData();
+    void collectData();
+
+    void publish(String data);
 }

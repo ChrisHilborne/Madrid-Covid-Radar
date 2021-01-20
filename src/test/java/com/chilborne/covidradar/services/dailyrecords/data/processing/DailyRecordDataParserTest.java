@@ -1,7 +1,7 @@
 package com.chilborne.covidradar.services.dailyrecords.data.processing;
 
 import com.chilborne.covidradar.model.DailyRecord;
-import com.chilborne.covidradar.services.dailyrecords.data.parsing.DailyRecordDataParser;
+import com.chilborne.covidradar.services.dailyrecords.data.processing.steps.DailyRecordParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -18,7 +18,7 @@ class DailyRecordDataParserTest {
     ObjectMapper mapper = new ObjectMapper()
             .registerModule(new JavaTimeModule());
 
-    DailyRecordDataParser dailyRecordDataParser = new DailyRecordDataParser(mapper);
+    DailyRecordParser dailyRecordDataParser = new DailyRecordParser(mapper);
 
     private String testString = "{\n" +
             "  \"data\": [\n" +
@@ -46,7 +46,7 @@ class DailyRecordDataParserTest {
         dailyRecord.setDateReported(LocalDate.of(2020, 07, 01));
 
         //when
-        List<DailyRecord> parsedDailyRecords = dailyRecordDataParser.parse(testString);
+        List<DailyRecord> parsedDailyRecords = dailyRecordDataParser.process(testString);
 
         //verify
         assertFalse(parsedDailyRecords.isEmpty());

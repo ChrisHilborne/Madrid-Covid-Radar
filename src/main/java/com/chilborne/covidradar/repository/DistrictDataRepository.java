@@ -8,6 +8,7 @@ import java.util.Optional;
 
 public interface DistrictDataRepository extends MongoRepository<DistrictData, String> {
 
+    DistrictData save(DistrictData districtData);
 
     Optional<DistrictData> findByName(String name);
 

@@ -1,4 +1,4 @@
-package com.chilborne.covidradar.services.dailyrecords.data.parsing;
+package com.chilborne.covidradar.services.dailyrecords.data.processing.steps;
 
 import com.chilborne.covidradar.model.DailyRecord;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -12,26 +12,26 @@ import java.util.Arrays;
 import java.util.List;
 
 @Component
-public class DailyRecordDataParser implements JsonParser<DailyRecord> {
+public class DailyRecordParser implements Step<String, List<DailyRecord>> {
 
     private final ObjectMapper mapper;
-    private final Logger logger = LoggerFactory.getLogger(DailyRecordDataParser.class);
+    private final Logger logger = LoggerFactory.getLogger(DailyRecordParser.class);
 
-    public DailyRecordDataParser(ObjectMapper mapper) {
+    public DailyRecordParser(ObjectMapper mapper) {
         this.mapper = mapper;
     }
 
     @Override
-    public List<DailyRecord> parse(String json)  {
-            logger.debug("Parsing JSON (hashcode: " + json.hashCode() +")");
+    public List<DailyRecord> process(String input)  {
+            logger.debug("Parsing JSON (hashcode: " + input.hashCode() +")");
 
         List<DailyRecord> dailyRecordList = List.of();
 
         try {
-            JsonNode listNode = mapper.readTree(json).path("data");
+            JsonNode listNode = mapper.readTree(input).path("data");
             dailyRecordList = Arrays.asList(mapper.treeToValue(listNode, DailyRecord[].class));
         } catch (JsonProcessingException e) {
-            logger.error("Failed to parse JSON (hashcode: " + json.hashCode(), e);
+            logger.error("Failed to parse JSON (hashcode: " + input.hashCode(), new PipeLineProcessException(e));
         }
 
             logger.debug(dailyRecordList.size() + " Records Parsed.");
