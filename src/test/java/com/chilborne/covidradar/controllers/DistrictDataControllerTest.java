@@ -1,7 +1,7 @@
 package com.chilborne.covidradar.controllers;
 
 import com.chilborne.covidradar.model.DistrictDataDTO;
-import com.chilborne.covidradar.services.districtdata.DistrictDataService;
+import com.chilborne.covidradar.services.DistrictDataService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

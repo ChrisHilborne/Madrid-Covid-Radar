@@ -1,7 +1,7 @@
 package com.chilborne.covidradar.controllers;
 
 import com.chilborne.covidradar.model.DistrictDataDTO;
-import com.chilborne.covidradar.services.districtdata.DistrictDataService;
+import com.chilborne.covidradar.services.DistrictDataService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.CacheControl;

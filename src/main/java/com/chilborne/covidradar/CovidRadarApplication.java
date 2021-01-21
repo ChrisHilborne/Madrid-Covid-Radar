@@ -1,7 +1,7 @@
 package com.chilborne.covidradar;
 
 
-import com.chilborne.covidradar.services.dailyrecords.data.collection.DailyRecordDataCollector;
+import com.chilborne.covidradar.data.collection.DailyRecordDataCollector;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.mongo.embedded.EmbeddedMongoAutoConfiguration;

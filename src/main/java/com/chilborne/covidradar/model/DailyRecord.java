@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
-import java.util.Objects;
 
 /**
  * @Author Chris Hilborne
@@ -100,25 +99,38 @@ public class DailyRecord {
         if (Double.compare(that.infectionRateTotal, infectionRateTotal) != 0) return false;
         if (totalCases != that.totalCases) return false;
         if (casesLastTwoWeeks != that.casesLastTwoWeeks) return false;
-        if (!Objects.equals(geoCode, that.geoCode)) return false;
-        if (!Objects.equals(municipalDistrict, that.municipalDistrict))
+        if (geoCode != null ? !geoCode.equals(that.geoCode) : that.geoCode != null) return false;
+        if (municipalDistrict != null ? !municipalDistrict.equals(that.municipalDistrict) : that.municipalDistrict != null)
             return false;
-        return Objects.equals(dateReported, that.dateReported);
+        return dateReported != null ? dateReported.equals(that.dateReported) : that.dateReported == null;
     }
 
     @Override
     public int hashCode() {
         int result;
         long temp;
-        result = geoCode.hashCode();
-        result = 31 * result + municipalDistrict.hashCode();
+        result = geoCode != null ? geoCode.hashCode() : 0;
+        result = 31 * result + (municipalDistrict != null ? municipalDistrict.hashCode() : 0);
         temp = Double.doubleToLongBits(infectionRateLastTwoWeeks);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         temp = Double.doubleToLongBits(infectionRateTotal);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         result = 31 * result + totalCases;
         result = 31 * result + casesLastTwoWeeks;
-        result = 31 * result + dateReported.hashCode();
+        result = 31 * result + (dateReported != null ? dateReported.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "DailyRecord{" +
+                "geoCode='" + geoCode + '\'' +
+                ", municipalDistrict='" + municipalDistrict + '\'' +
+                ", infectionRateLastTwoWeeks=" + infectionRateLastTwoWeeks +
+                ", infectionRateTotal=" + infectionRateTotal +
+                ", totalCases=" + totalCases +
+                ", casesLastTwoWeeks=" + casesLastTwoWeeks +
+                ", dateReported=" + dateReported +
+                '}';
     }
 }

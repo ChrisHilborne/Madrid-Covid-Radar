@@ -4,7 +4,6 @@ import com.chilborne.covidradar.model.DailyRecord;
 import com.chilborne.covidradar.model.DistrictData;
 import com.chilborne.covidradar.model.DistrictDataDTO;
 import com.chilborne.covidradar.repository.DistrictDataRepository;
-import com.chilborne.covidradar.services.districtdata.DistrictDataServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -13,6 +12,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -145,7 +145,7 @@ class DistrictDataServiceImplTest {
         toSave.setName("toSave");
 
         //when
-        districtDataService.save(toSave);
+        DistrictData saved = districtDataService.save(toSave);
 
         //then
         verify(districtDataRepository, times(1)).save(toSave);
@@ -157,19 +157,18 @@ class DistrictDataServiceImplTest {
     @Test
     void saveList() {
         //give
-        List<DistrictData> testList = new ArrayList<>();
+
         DistrictData one = new DistrictData();
         one.setName("one");
-        testList.add(one);
-        testList.add(new DistrictData());
+        one.setLastUpdated(LocalDate.now());
+        List<DistrictData> testList = List.of(one, new DistrictData());
 
         //when
-        districtDataService.save(testList);
+        List<DistrictData> returnedList = districtDataService.save(testList);
 
         //verify
         verify(districtDataRepository, times(2)).save(any());
         verify(districtDataRepository, times(1)).save(one);
-
     }
 
 

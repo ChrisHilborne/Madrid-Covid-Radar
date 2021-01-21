@@ -1,8 +1,8 @@
 package com.chilborne.covidradar.config;
 
 import com.chilborne.covidradar.model.DistrictData;
-import com.chilborne.covidradar.services.dailyrecords.data.processing.pipeline.Pipeline;
-import com.chilborne.covidradar.services.dailyrecords.data.processing.steps.*;
+import com.chilborne.covidradar.data.processing.pipeline.Pipeline;
+import com.chilborne.covidradar.data.processing.steps.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
