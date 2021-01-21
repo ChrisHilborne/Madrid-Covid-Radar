@@ -1,4 +1,4 @@
-package com.chilborne.covidradar.data.processing.steps;
+package com.chilborne.covidradar.data.steps;
 
 public interface Step<I, O> {
     public static class PipeLineProcessException extends RuntimeException {

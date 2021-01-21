@@ -1,4 +1,4 @@
-package com.chilborne.covidradar.data.processing.steps;
+package com.chilborne.covidradar.data.steps;
 
 import com.chilborne.covidradar.model.DailyRecord;
 import org.slf4j.Logger;
