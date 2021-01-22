@@ -1,4 +1,4 @@
-package com.chilborne.covidradar.services.datacollection;
+package com.chilborne.covidradar.data.collection;
 
 import com.chilborne.covidradar.events.NewDataEventPublisher;
 import org.springframework.stereotype.Service;
@@ -7,18 +7,20 @@ import java.io.File;
 import java.io.FileReader;
 
 @Service
-public class StaticDailyRecordFetcher implements DailyRecordFetcher<String> {
+public class StaticDailyRecordDataCollector implements DailyRecordDataCollector<String> {
 
     private final NewDataEventPublisher newDataEventPublisher;
     private final File staticDataFile;
 
-    public StaticDailyRecordFetcher(NewDataEventPublisher newDataEventPublisher, File staticDataFile) {
+    public StaticDailyRecordDataCollector(NewDataEventPublisher newDataEventPublisher,
+                                          File staticDataFile)
+    {
         this.newDataEventPublisher = newDataEventPublisher;
         this.staticDataFile = staticDataFile;
     }
 
     @Override
-    public void fetch() {
+    public void collectData() {
         String data = "";
         try (FileReader dataReader = new FileReader(staticDataFile)) {
             StringBuilder sb = new StringBuilder();
@@ -27,23 +29,16 @@ public class StaticDailyRecordFetcher implements DailyRecordFetcher<String> {
                 dataReader.read(readData);
                 sb.append(String.valueOf(readData));
             }
-            data = sb.toString();
+            data = sb.toString().trim();
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        if (isNewData(data)) {
-            newDataEvent(data);
-        }
+        publish(data);
     }
 
     @Override
-    public boolean isNewData(String data) {
-        return true;
-    }
-
-    @Override
-    public void newDataEvent(String data) {
+    public void publish(String data) {
         newDataEventPublisher.publishNewDataEvent(data);
     }
+
 }

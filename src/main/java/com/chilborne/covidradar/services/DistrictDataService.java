@@ -14,7 +14,9 @@ public interface DistrictDataService {
 
     List<String> getDistrictNames();
 
-    void save(DistrictData districtData);
+    DistrictData save(DistrictData districtData);
+
+    List<DistrictData> save(List<DistrictData> districtDataList);
 
     DistrictDataDTO getDistrictDataByGeoCode(String geoCode);
 }

@@ -8,16 +8,18 @@ import org.springframework.stereotype.Component;
 @Component
 public class NewDataEventPublisher {
 
-    private final ApplicationEventPublisher eventPublisher;
     private final Logger logger = LoggerFactory.getLogger(NewDataEventPublisher.class);
 
-    public NewDataEventPublisher(ApplicationEventPublisher eventPublisher) {
-        this.eventPublisher = eventPublisher;
+    private final ApplicationEventPublisher applicationEventPublisher;
+
+    public NewDataEventPublisher(ApplicationEventPublisher applicationEventPublisher) {
+        this.applicationEventPublisher = applicationEventPublisher;
     }
 
     public void publishNewDataEvent(final String data) {
-        logger.debug("Publishing NewDataEvent with data: " + data.hashCode() + " (hashcode)");
+        logger.debug("Publishing NewDataEvent with data " + data.hashCode() + " (hashcode)");
         NewDataEvent newDataEvent = new NewDataEvent(this, data);
-        eventPublisher.publishEvent(newDataEvent);
+
+        applicationEventPublisher.publishEvent(newDataEvent);
     }
 }
