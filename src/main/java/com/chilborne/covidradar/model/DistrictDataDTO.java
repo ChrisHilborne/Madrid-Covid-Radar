@@ -1,6 +1,7 @@
 package com.chilborne.covidradar.model;
 
 
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
@@ -8,10 +9,15 @@ import java.util.stream.Collectors;
 
 public class DistrictDataDTO {
 
+    @NotBlank
     private String geoCode;
+    @NotBlank
     private String municipalDistrict;
+    @PositiveOrZero
     private int totalConfirmedCases;
+    @Past
     private LocalDate lastReported;
+    @NotEmpty
     private List<DailyRecordDTO> dailyReports;
 
     public DistrictDataDTO(DistrictData districtData) {
