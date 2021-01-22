@@ -12,6 +12,7 @@ import org.springframework.web.context.request.WebRequest;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 @CrossOrigin(origins = "http://localhost:8081")
@@ -35,48 +36,53 @@ public class DistrictDataController {
             return ResponseEntity.status(304).build();
         }
         return ResponseEntity.ok()
-                .cacheControl(getCacheControl())
+                .cacheControl(getCacheControlDistrictData())
                 .lastModified(getEpochLastModified(result.get(0)))
                 .body(result);
     }
 
     @GetMapping(value = "/district/geocode/{geoCode}", produces = "application/json")
     public ResponseEntity<DistrictDataDTO> getDistrictDataByGeoCode(@PathVariable String geoCode, WebRequest request) {
-        logger.debug("Processing GetRequest --> " + geoCode + " DistrictData");
+        logger.debug("Processing Get Request --> " + geoCode + " DistrictData");
 
         DistrictDataDTO result = districtDataService.getDistrictDataByGeoCode(geoCode);
         if (hasBeenModifiedSince(result, request)) {
             return ResponseEntity.status(304).build();
         }
         return ResponseEntity.ok()
-                .cacheControl(getCacheControl())
+                .cacheControl(getCacheControlDistrictData())
                 .lastModified(getEpochLastModified(result))
                 .body(result);
     }
 
     @GetMapping(value = "/district/name/{name}", produces = "application/json")
     public ResponseEntity<DistrictDataDTO> getDistrictDataByName(@PathVariable String name, WebRequest request) {
-        logger.debug("Processing GetRequest --> " + name + " DistrictData");
+        logger.debug("Processing Get Request --> " + name + " DistrictData");
 
         DistrictDataDTO result = districtDataService.getDistrictDataByName(name);
         if (hasBeenModifiedSince(result, request)) {
             return ResponseEntity.status(304).build();
         }
         return ResponseEntity.ok()
-                .cacheControl(getCacheControl())
+                .cacheControl(getCacheControlDistrictData())
                 .lastModified(getEpochLastModified(result))
                 .body(result);
     }
 
     @GetMapping(value = "/names", produces = "application/json")
     public ResponseEntity<List<String>> getDistrictNames() {
-        logger.debug("Processing GetRequest --> District Names");
-        CacheControl cacheControl = CacheControl.maxAge(7, TimeUnit.DAYS)
-                .noTransform()
-                .mustRevalidate();
+        logger.debug("Processing Get Request --> District Names");
         return ResponseEntity.ok()
-                .cacheControl(cacheControl)
+                .cacheControl(getCacheControlNamesAndGeocodes())
                 .body(districtDataService.getDistrictNames());
+    }
+
+    @GetMapping(value = "/geocode-names", produces = "application/json")
+    public ResponseEntity<Map<String, String>> getNamesAndGeocodes() {
+        logger.debug("Processing Get Request --> Geocodes and Names");
+        return ResponseEntity.ok()
+                .cacheControl(getCacheControlNamesAndGeocodes())
+                .body(districtDataService.getDistrictGeoCodesAndNames());
     }
 
     private boolean hasBeenModifiedSince(DistrictDataDTO dataDTO, WebRequest request) {
@@ -84,12 +90,17 @@ public class DistrictDataController {
         return request.checkNotModified(lastModifiedEpochMilli);
     }
 
-
-    private CacheControl getCacheControl() {
+    private CacheControl getCacheControlDistrictData() {
         CacheControl cacheControl = CacheControl.maxAge(60, TimeUnit.SECONDS)
                 .mustRevalidate()
                 .noTransform();
         return cacheControl;
+    }
+
+    private CacheControl getCacheControlNamesAndGeocodes() {
+        return CacheControl.maxAge(7, TimeUnit.DAYS)
+                .noTransform()
+                .mustRevalidate();
     }
 
     private long getEpochLastModified(DistrictDataDTO districtData) {

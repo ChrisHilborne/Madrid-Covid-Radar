@@ -5,6 +5,7 @@ import com.chilborne.covidradar.model.DistrictDataDTO;
 import org.springframework.dao.DataAccessException;
 
 import java.util.List;
+import java.util.Map;
 
 public interface DistrictDataService {
 
@@ -19,4 +20,6 @@ public interface DistrictDataService {
     List<DistrictData> save(List<DistrictData> districtDataList);
 
     DistrictDataDTO getDistrictDataByGeoCode(String geoCode);
+
+    Map<String, String> getDistrictGeoCodesAndNames();
 }

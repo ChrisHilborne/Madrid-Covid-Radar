@@ -10,9 +10,7 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -27,26 +25,7 @@ public class DistrictDataServiceImpl implements DistrictDataService {
     }
 
     @Override
-    @Cacheable ("districtData")
-    public DistrictDataDTO getDistrictDataByGeoCode(String geoCode) throws DataNotFoundException {
-        logger.debug("Fetching data for GeoCode: " + geoCode);
-        DistrictData result = districtDataRepository.findByGeoCode(geoCode)
-                .orElseThrow(() -> new DataNotFoundException("District geocode: " + geoCode + " not found."));
-
-        return new DistrictDataDTO(result);
-    }
-
-    @Override
-    @Cacheable("districtData")
-    public DistrictDataDTO getDistrictDataByName(String name) throws DataNotFoundException {
-        logger.debug("Fetching Data for: " + name);
-        DistrictData result = districtDataRepository.findByName(name)
-                .orElseThrow(() -> new DataNotFoundException("District name: " + name + " not found."));
-
-        return new DistrictDataDTO(result);
-    }
-
-    @Override
+    @Cacheable("districtData-all")
     public List<DistrictDataDTO> getAllDistrictData() throws DataNotFoundException {
         logger.debug("Fetching All District Data");
 
@@ -63,6 +42,26 @@ public class DistrictDataServiceImpl implements DistrictDataService {
         }
     }
 
+    @Override
+    @Cacheable("districtData")
+    public DistrictDataDTO getDistrictDataByName(String name) throws DataNotFoundException {
+        logger.debug("Fetching Data for: " + name);
+        DistrictData result = districtDataRepository.findByName(name)
+                .orElseThrow(() -> new DataNotFoundException("District name: " + name + " not found."));
+
+        return new DistrictDataDTO(result);
+    }
+
+    @Override
+    @Cacheable ("districtData")
+    public DistrictDataDTO getDistrictDataByGeoCode(String geoCode) throws DataNotFoundException {
+        logger.debug("Fetching data for GeoCode: " + geoCode);
+        DistrictData result = districtDataRepository.findByGeoCode(geoCode)
+                .orElseThrow(() -> new DataNotFoundException("District geocode: " + geoCode + " not found."));
+
+        return new DistrictDataDTO(result);
+    }
+    
 
     @Override
     @Cacheable("districtData-names")
@@ -77,13 +76,30 @@ public class DistrictDataServiceImpl implements DistrictDataService {
     }
 
     @Override
-    @CacheEvict(value = "districtData", allEntries = true)
+    @Cacheable ("districtData-namesAndGeocodes")
+    public Map<String, String> getDistrictGeoCodesAndNames() {
+        Map<String, String> namesAndGeocodes = new HashMap<>();
+
+        List<DistrictDataDTO> allData = getAllDistrictData();
+        allData.forEach(districtData -> {
+            namesAndGeocodes.put(districtData.getMunicipalDistrict(), districtData.getGeoCode());
+        });
+
+        return namesAndGeocodes;
+    }
+
+    @Override
     public DistrictData save(DistrictData districtData) {
         logger.debug("Saving: " + districtData.getName());
         return districtDataRepository.save(districtData);
     }
 
     @Override
+    @CacheEvict(value = { "districtData",
+            "districtData-all",
+            "districtData-names",
+            "districtData-namesAndGeocodes"},
+            allEntries = true)
     public List<DistrictData> save(List<DistrictData> districtDataList) {
         List<DistrictData> savedDistrictDataList = new LinkedList<>();
 
