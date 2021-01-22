@@ -1,4 +1,4 @@
-package com.chilborne.covidradar.data.processing.pipeline;
+package com.chilborne.covidradar.data.pipeline;
 
 import com.chilborne.covidradar.events.NewDataEvent;
 import com.chilborne.covidradar.exceptions.PipeLineProcessException;

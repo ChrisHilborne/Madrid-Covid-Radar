@@ -1,6 +1,6 @@
-package com.chilborne.covidradar.data.processing.pipeline;
+package com.chilborne.covidradar.data.pipeline;
 
-import com.chilborne.covidradar.data.processing.steps.Step;
+import com.chilborne.covidradar.data.steps.Step;
 import com.chilborne.covidradar.exceptions.PipeLineProcessException;
 
 

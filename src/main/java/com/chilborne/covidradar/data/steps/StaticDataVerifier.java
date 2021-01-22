@@ -1,4 +1,4 @@
-package com.chilborne.covidradar.data.processing.steps;
+package com.chilborne.covidradar.data.steps;
 
 import org.springframework.stereotype.Component;
 
