@@ -57,10 +57,11 @@ class DailyRecordDataParserTest {
     @Test
     void processException() {
         //given
-        String fail = " ";
+        String fail = " { } ";
 
         //verify
-        assertThrows(PipeLineProcessException.class,
+        Exception exception = assertThrows(PipeLineProcessException.class,
                 () -> dailyRecordDataParser.process(fail));
+        assertEquals("Failed to parse JSON data", exception.getMessage());
     }
 }

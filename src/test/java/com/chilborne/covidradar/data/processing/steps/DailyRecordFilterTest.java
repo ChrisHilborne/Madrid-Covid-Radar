@@ -41,7 +41,8 @@ class DailyRecordFilterTest {
         List<DailyRecord> toFilter = List.of(filtered);
 
         //verify
-        assertThrows(PipeLineProcessException.class,
+        Exception exception = assertThrows(PipeLineProcessException.class,
                 () -> dailyRecordFilter.process(toFilter));
+        assertEquals("DailyRecordFilter removed all records", exception.getMessage());
     }
 }

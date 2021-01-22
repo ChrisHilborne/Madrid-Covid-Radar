@@ -50,7 +50,12 @@ class DailyRecordMapperTest {
         List<DailyRecord> toMap = List.of();
 
         //verify
-        assertThrows(PipeLineProcessException.class,
+        Exception exception = assertThrows(PipeLineProcessException.class,
                 () -> dailyRecordMapper.process(toMap));
+        assertEquals("DailyRecordMapper mapped DailyRecords to fewer Districts than expected " +
+                        toMap.size() + "actual, 21 expected.",
+                exception.getMessage());
     }
+
+
 }
