@@ -1,5 +1,6 @@
 package com.chilborne.covidradar.services;
 
+import com.chilborne.covidradar.exceptions.DataNotFoundException;
 import com.chilborne.covidradar.model.DistrictData;
 import com.chilborne.covidradar.model.DistrictDataDTO;
 import com.chilborne.covidradar.repository.DistrictDataRepository;
@@ -27,24 +28,26 @@ public class DistrictDataServiceImpl implements DistrictDataService {
 
     @Override
     @Cacheable ("districtData")
-    public DistrictDataDTO getDistrictDataByGeoCode(String geoCode) {
+    public DistrictDataDTO getDistrictDataByGeoCode(String geoCode) throws DataNotFoundException {
         logger.debug("Fetching data for GeoCode: " + geoCode);
-        DistrictData result = districtDataRepository.findByGeoCode(geoCode).orElseThrow(RuntimeException::new);
+        DistrictData result = districtDataRepository.findByGeoCode(geoCode)
+                .orElseThrow(() -> new DataNotFoundException("District geocode: " + geoCode + " not found."));
 
         return new DistrictDataDTO(result);
     }
 
     @Override
     @Cacheable("districtData")
-    public DistrictDataDTO getDistrictDataByName(String name) throws RuntimeException {
+    public DistrictDataDTO getDistrictDataByName(String name) throws DataNotFoundException {
         logger.debug("Fetching Data for: " + name);
-        DistrictData result = districtDataRepository.findByName(name).orElseThrow(RuntimeException::new);
-        //TODO write DistrictNotFoundException
+        DistrictData result = districtDataRepository.findByName(name)
+                .orElseThrow(() -> new DataNotFoundException("District name: " + name + " not found."));
+
         return new DistrictDataDTO(result);
     }
 
     @Override
-    public List<DistrictDataDTO> getAllDistrictData() {
+    public List<DistrictDataDTO> getAllDistrictData() throws DataNotFoundException {
         logger.debug("Fetching All District Data");
 
         List<DistrictDataDTO> data = districtDataRepository.findAll()
@@ -53,13 +56,13 @@ public class DistrictDataServiceImpl implements DistrictDataService {
                 .collect(Collectors.toUnmodifiableList());
 
         if (data.isEmpty()) {
-            logger.error("No Data Found");
-            return List.of();
-        }
-        else {
+            logger.error("No Data Found", new DataNotFoundException());
+            throw new DataNotFoundException("No Data Found");
+        } else {
             return data;
         }
     }
+
 
     @Override
     @Cacheable("districtData-names")

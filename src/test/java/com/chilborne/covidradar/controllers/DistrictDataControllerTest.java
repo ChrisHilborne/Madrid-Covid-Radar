@@ -1,5 +1,6 @@
 package com.chilborne.covidradar.controllers;
 
+import com.chilborne.covidradar.exceptions.DataNotFoundException;
 import com.chilborne.covidradar.model.DistrictDataDTO;
 import com.chilborne.covidradar.services.DistrictDataService;
 import org.junit.jupiter.api.BeforeEach;
@@ -90,6 +91,18 @@ class DistrictDataControllerTest {
     }
 
     @Test
+    void getAllDistrictData_StatusIsNotFound() throws Exception {
+        //when
+        when(districtDataService.getAllDistrictData()).thenThrow(new DataNotFoundException("Data Not Found"));
+
+        mvc.perform(
+                get("/api/districts")
+                        .accept("application/json")
+        )
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
     void getDistrictDataByGeoCode_StatusIsOK() throws Exception {
         //given
         DistrictDataDTO testDTO = new DistrictDataDTO();
@@ -135,6 +148,18 @@ class DistrictDataControllerTest {
     }
 
     @Test
+    void getDistrictDataByGeoCode_StatusIsNotFound() throws Exception {
+        //when
+        when(districtDataService.getDistrictDataByGeoCode("null")).thenThrow(new DataNotFoundException("Data Not Found"));
+
+        mvc.perform(
+                get("/api/districts/geocode/null")
+                        .accept("application/json")
+        )
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
     void getDistrictDataByName_StatusIsOK() throws Exception {
         //given
         DistrictDataDTO testDTO = new DistrictDataDTO();
@@ -155,6 +180,18 @@ class DistrictDataControllerTest {
 
         verify(districtDataService, times(1)).getDistrictDataByName(anyString());
         verify(districtDataService, times(1)).getDistrictDataByName("name");
+    }
+
+    @Test
+    void getDistrictDataByName_StatusIsNotFound() throws Exception {
+        //when
+        when(districtDataService.getDistrictDataByName("null")).thenThrow(new DataNotFoundException("Data Not Found"));
+
+        mvc.perform(
+                get("/api/districts/name/null")
+                        .accept("application/json")
+        )
+                .andExpect(status().isNotFound());
     }
 
     @Test
