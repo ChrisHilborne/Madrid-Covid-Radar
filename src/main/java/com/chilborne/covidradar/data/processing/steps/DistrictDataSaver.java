@@ -1,5 +1,6 @@
 package com.chilborne.covidradar.data.processing.steps;
 
+import com.chilborne.covidradar.exceptions.PipeLineProcessException;
 import com.chilborne.covidradar.model.DistrictData;
 import com.chilborne.covidradar.services.DistrictDataService;
 import org.slf4j.Logger;
@@ -24,12 +25,13 @@ public class DistrictDataSaver implements Step<List<DistrictData>, List<District
 
     @Override
     public List<DistrictData> process(List<DistrictData> input) throws PipeLineProcessException {
-        logger.debug("Starting to save DistrictData " + input.hashCode() + " (hashcode)...");
+        logger.debug("Starting to save DistrictData hashcode: " + input.hashCode() + "...");
 
         List<DistrictData> output = districtDataService.save(input);
 
         if (!output.equals(input)) {
-            logger.error("DistrictData not saved correctly.", new PipeLineProcessException());
+            logger.error("DistrictData not saved correctly.");
+            throw new PipeLineProcessException("DistrictData not saved correctly");
         }
 
         return output;

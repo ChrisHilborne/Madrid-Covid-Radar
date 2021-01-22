@@ -1,5 +1,6 @@
 package com.chilborne.covidradar.data.processing.steps;
 
+import com.chilborne.covidradar.exceptions.PipeLineProcessException;
 import com.chilborne.covidradar.model.DailyRecord;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -31,7 +32,8 @@ public class DailyRecordParser implements Step<String, List<DailyRecord>> {
             JsonNode listNode = mapper.readTree(input).path("data");
             dailyRecordList = Arrays.asList(mapper.treeToValue(listNode, DailyRecord[].class));
         } catch (JsonProcessingException e) {
-            logger.error("Failed to parse JSON (hashcode: " + input.hashCode(), new PipeLineProcessException(e));
+            logger.error("Failed to parse JSON (hashcode: " + input.hashCode(), e);
+            throw new PipeLineProcessException("Failed to parse JSON data", e);
         }
 
             logger.debug(dailyRecordList.size() + " Records Parsed.");

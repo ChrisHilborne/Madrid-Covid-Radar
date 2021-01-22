@@ -1,5 +1,6 @@
 package com.chilborne.covidradar.data.processing.steps;
 
+import com.chilborne.covidradar.exceptions.PipeLineProcessException;
 import com.chilborne.covidradar.model.DailyRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,6 +35,14 @@ public class DailyRecordMapper implements Step<List<DailyRecord>, Map<String, Li
                         dailyRecordsMappedByDistrict.put(dailyRecord.getMunicipalDistrict(), districtDailyResults);
                     }
                 });
+
+        if (dailyRecordsMappedByDistrict.size() < 21) {
+            logger.error("Fewer Districts mapped than expected: "
+                    + dailyRecordsMappedByDistrict.size() + " mapped, "
+                    + "21 expected");
+            throw new PipeLineProcessException("DailyRecordMapper mapped DailyRecords to fewer Districts than expected "
+                    + dailyRecordsMappedByDistrict.size() + "actual, 21 expected.");
+        }
 
         logger.debug("Results Mapped to " + dailyRecordsMappedByDistrict.size() + " Districts In Total");
 
