@@ -1,5 +1,6 @@
 package com.chilborne.covidradar.data.steps;
 
+import com.chilborne.covidradar.exceptions.PipeLineProcessException;
 import com.chilborne.covidradar.model.DistrictData;
 import com.chilborne.covidradar.services.DistrictDataService;
 import org.junit.jupiter.api.Test;
@@ -14,6 +15,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -30,6 +32,7 @@ class DistrictDataSaverTest {
 
     @Test
     void process() {
+        //given
         DistrictData one = new DistrictData();
         one.setName("one");
         one.setLastUpdated(LocalDate.MIN);
@@ -52,5 +55,23 @@ class DistrictDataSaverTest {
         List<DistrictData> capturedArgument = argumentCaptor.getValue();
         assertEquals(toSave, capturedArgument);
 
+    }
+
+    @Test
+    void processException() {
+        //given
+        DistrictData one = new DistrictData();
+        one.setName("one");
+        one.setLastUpdated(LocalDate.now());
+
+        List<DistrictData> toSave = List.of(one);
+
+        //when
+        when(districtDataService.save(toSave)).thenReturn(List.of());
+
+        //verify
+        Exception failedSave = assertThrows(PipeLineProcessException.class,
+                () -> districtDataSaver.process(toSave));
+        assertEquals("DistrictData not saved correctly", failedSave.getMessage());
     }
 }

@@ -1,5 +1,6 @@
 package com.chilborne.covidradar.data.steps;
 
+import com.chilborne.covidradar.exceptions.PipeLineProcessException;
 import com.chilborne.covidradar.model.DailyRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,14 +22,24 @@ public class DailyRecordTrimmer implements Step<List<DailyRecord>, List<DailyRec
         transformedData
                 .forEach(dailyRecord ->
                 {
-                    dailyRecord
-                            .setMunicipalDistrict(dailyRecord.getMunicipalDistrict()
+                    //trim unnecessary characters
+                    dailyRecord.setMunicipalDistrict(dailyRecord.getMunicipalDistrict()
                                                 .substring(7)
                                                 .toLowerCase()
-                            );
-
+                    );
+                    if (dailyRecord.getMunicipalDistrict().length() == 0) {
+                        throw new PipeLineProcessException("DailyRecord MunicipalDistrict trimmed to length 0.");
+                    }
+                    //round to 2dp
                     dailyRecord.setInfectionRateLastTwoWeeks(Math.round( dailyRecord.getInfectionRateLastTwoWeeks() * 100.0) / 100.0 );
+                    if (dailyRecord.getInfectionRateLastTwoWeeks() < 0) {
+                        throw new PipeLineProcessException("Two Week Infection Rate rounded to less than zero");
+                    }
+                    //round to 2dp
                     dailyRecord.setInfectionRateTotal(Math.round( dailyRecord.getInfectionRateTotal() * 100.0) / 100.0 );
+                    if (dailyRecord.getInfectionRateTotal() < 0) {
+                        throw new PipeLineProcessException("Total Infection Rate rounded to less than zero");
+                    }
                 });
         logger.debug("Finished trimming DailyRecord data.");
         return transformedData;

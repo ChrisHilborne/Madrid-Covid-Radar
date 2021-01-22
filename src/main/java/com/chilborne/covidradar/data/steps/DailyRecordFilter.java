@@ -1,5 +1,6 @@
 package com.chilborne.covidradar.data.steps;
 
+import com.chilborne.covidradar.exceptions.PipeLineProcessException;
 import com.chilborne.covidradar.model.DailyRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,7 +22,8 @@ public class DailyRecordFilter implements Step<List<DailyRecord>, List<DailyReco
                 .collect(Collectors.toList());
 
         if (filteredData.size() == 0) {
-            logger.error("No Records After Filtering", new PipeLineProcessException());
+            logger.error("No Records After Filtering");
+            throw new PipeLineProcessException("DailyRecordFilter removed all records");
         }
 
         logger.debug("New Number of Records: " + filteredData.size());

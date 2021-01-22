@@ -14,8 +14,6 @@ public class DailyRecordSorter implements Step<List<DailyRecord>, List<DailyReco
 
     private final Logger logger = LoggerFactory.getLogger(DailyRecordSorter.class);
 
-
-
     @Override
     public List<DailyRecord> process(List<DailyRecord> data) {
         logger.debug("Sorting DailyRecord data...");

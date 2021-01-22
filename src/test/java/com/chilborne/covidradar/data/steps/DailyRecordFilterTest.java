@@ -1,12 +1,12 @@
 package com.chilborne.covidradar.data.steps;
 
+import com.chilborne.covidradar.exceptions.PipeLineProcessException;
 import com.chilborne.covidradar.model.DailyRecord;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 class DailyRecordFilterTest {
 
@@ -30,6 +30,19 @@ class DailyRecordFilterTest {
                 () -> assertEquals(1, filtered.size()),
                 () -> assertEquals(pass, filtered.get(0))
         );
+    }
 
+    @Test
+    void processException() {
+        //given
+        DailyRecord filtered = new DailyRecord();
+        filtered.setMunicipalDistrict("filtered");
+
+        List<DailyRecord> toFilter = List.of(filtered);
+
+        //verify
+        Exception exception = assertThrows(PipeLineProcessException.class,
+                () -> dailyRecordFilter.process(toFilter));
+        assertEquals("DailyRecordFilter removed all records", exception.getMessage());
     }
 }

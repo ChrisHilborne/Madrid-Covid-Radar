@@ -1,5 +1,6 @@
 package com.chilborne.covidradar.data.steps;
 
+import com.chilborne.covidradar.exceptions.PipeLineProcessException;
 import com.chilborne.covidradar.model.DailyRecord;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -9,8 +10,7 @@ import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.*;
 
 class DailyRecordDataParserTest {
 
@@ -32,8 +32,9 @@ class DailyRecordDataParserTest {
             "    } ] \n" +
             "}";
 
+
     @Test
-    void parse() throws JsonProcessingException {
+    void process() throws JsonProcessingException {
         //given
         DailyRecord dailyRecord = new DailyRecord();
         dailyRecord.setGeoCode("079603");
@@ -51,5 +52,16 @@ class DailyRecordDataParserTest {
         assertFalse(parsedDailyRecords.isEmpty());
         assertEquals(dailyRecord, parsedDailyRecords.get(0));
 
+    }
+
+    @Test
+    void processException() {
+        //given
+        String fail = " { } ";
+
+        //verify
+        Exception exception = assertThrows(PipeLineProcessException.class,
+                () -> dailyRecordDataParser.process(fail));
+        assertEquals("Failed to parse JSON data", exception.getMessage());
     }
 }
