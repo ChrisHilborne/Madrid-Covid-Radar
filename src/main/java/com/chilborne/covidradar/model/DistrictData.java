@@ -4,6 +4,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
@@ -13,10 +14,17 @@ public class DistrictData {
 
     @Id
     @Indexed(unique = true)
+    @NotBlank
+    @Size(max = 100)
     private String geoCode;
+    @NotBlank
+    @Size(max = 100)
     private String name;
+    @PositiveOrZero
     private int totalCases;
+    @Past
     private LocalDate lastUpdated;
+    @NotEmpty
     private List<DailyRecord> dailyRecords;
 
     public DistrictData(List<DailyRecord> dailyRecords) {
