@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit;
 
 @CrossOrigin(origins = "http://localhost:8081")
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/data")
 public class DistrictDataController {
 
     private final DistrictDataService districtDataService;
@@ -26,52 +26,49 @@ public class DistrictDataController {
         this.districtDataService = districtDataService;
     }
 
-    @GetMapping(value = "/districts", produces = "application/json")
+    @GetMapping(value = "/all", produces = "application/json")
     public ResponseEntity<List<DistrictDataDTO>> getAllDistrictData(WebRequest request) {
         logger.debug("Processing Get Request --> All District Data");
-        List<DistrictDataDTO> result = districtDataService.getAllDistrictData();
-        long lastModifiedEpochMilli = getEpochLastModified(result.get(0));
 
-        if (request.checkNotModified(lastModifiedEpochMilli)) {
+        List<DistrictDataDTO> result = districtDataService.getAllDistrictData();
+        if (hasBeenModifiedSince(result.get(0), request)) {
             return ResponseEntity.status(304).build();
         }
         return ResponseEntity.ok()
                 .cacheControl(getCacheControl())
-                .lastModified(lastModifiedEpochMilli)
+                .lastModified(getEpochLastModified(result.get(0)))
                 .body(result);
     }
 
-    @GetMapping(value = "/districts/geocode/{geoCode}", produces = "application/json")
+    @GetMapping(value = "/district/geocode/{geoCode}", produces = "application/json")
     public ResponseEntity<DistrictDataDTO> getDistrictDataByGeoCode(@PathVariable String geoCode, WebRequest request) {
         logger.debug("Processing GetRequest --> " + geoCode + " DistrictData");
-        DistrictDataDTO result = districtDataService.getDistrictDataByGeoCode(geoCode);
 
-        long lastModifiedEpochMilli = getEpochLastModified(result);
-        if (request.checkNotModified(lastModifiedEpochMilli)) {
+        DistrictDataDTO result = districtDataService.getDistrictDataByGeoCode(geoCode);
+        if (hasBeenModifiedSince(result, request)) {
             return ResponseEntity.status(304).build();
         }
         return ResponseEntity.ok()
                 .cacheControl(getCacheControl())
-                .lastModified(lastModifiedEpochMilli)
+                .lastModified(getEpochLastModified(result))
                 .body(result);
     }
 
-    @GetMapping(value = "/districts/name/{name}", produces = "application/json")
+    @GetMapping(value = "/district/name/{name}", produces = "application/json")
     public ResponseEntity<DistrictDataDTO> getDistrictDataByName(@PathVariable String name, WebRequest request) {
         logger.debug("Processing GetRequest --> " + name + " DistrictData");
-        DistrictDataDTO result = districtDataService.getDistrictDataByName(name);
-        long lastModifiedEpochMilli = getEpochLastModified(result);
 
-        if (request.checkNotModified(lastModifiedEpochMilli)) {
+        DistrictDataDTO result = districtDataService.getDistrictDataByName(name);
+        if (hasBeenModifiedSince(result, request)) {
             return ResponseEntity.status(304).build();
         }
         return ResponseEntity.ok()
                 .cacheControl(getCacheControl())
-                .lastModified(lastModifiedEpochMilli)
+                .lastModified(getEpochLastModified(result))
                 .body(result);
     }
 
-    @GetMapping(value = "/districts/names", produces = "application/json")
+    @GetMapping(value = "/names", produces = "application/json")
     public ResponseEntity<List<String>> getDistrictNames() {
         logger.debug("Processing GetRequest --> District Names");
         CacheControl cacheControl = CacheControl.maxAge(7, TimeUnit.DAYS)
@@ -80,6 +77,11 @@ public class DistrictDataController {
         return ResponseEntity.ok()
                 .cacheControl(cacheControl)
                 .body(districtDataService.getDistrictNames());
+    }
+
+    private boolean hasBeenModifiedSince(DistrictDataDTO dataDTO, WebRequest request) {
+        long lastModifiedEpochMilli = getEpochLastModified(dataDTO);
+        return request.checkNotModified(lastModifiedEpochMilli);
     }
 
 

@@ -58,7 +58,7 @@ class DistrictDataControllerTest {
 
         //verify
         mvc.perform(
-                 get("/api/districts")
+                 get("/data/all")
                 .accept("application/json")
             )
             .andExpect(status().isOk())
@@ -81,7 +81,7 @@ class DistrictDataControllerTest {
 
         //verify
         mvc.perform(
-                  get("/api/districts")
+                  get("/data/all")
                  .accept("application/json")
                  .header("If-Modified-Since", testDateEpochMilli)
             )
@@ -96,7 +96,7 @@ class DistrictDataControllerTest {
         when(districtDataService.getAllDistrictData()).thenThrow(new DataNotFoundException("Data Not Found"));
 
         mvc.perform(
-                get("/api/districts")
+                get("/data/all")
                         .accept("application/json")
         )
                 .andExpect(status().isNotFound());
@@ -114,7 +114,7 @@ class DistrictDataControllerTest {
 
         //verify
         mvc.perform(
-                 get("/api/districts/geocode/geoCode")
+                 get("/data/district/geocode/geoCode")
                 .accept("application/json")
             )
             .andExpect(status().isOk())
@@ -137,7 +137,7 @@ class DistrictDataControllerTest {
 
         //verify
         mvc.perform(
-                 get("/api/districts/geocode/geoCode")
+                 get("/data/district/geocode/geoCode")
                 .accept("application/json")
                 .header("If-Modified-Since", testDateEpochMilli)
             )
@@ -153,7 +153,7 @@ class DistrictDataControllerTest {
         when(districtDataService.getDistrictDataByGeoCode("null")).thenThrow(new DataNotFoundException("Data Not Found"));
 
         mvc.perform(
-                get("/api/districts/geocode/null")
+                get("/data/district/geocode/null")
                         .accept("application/json")
         )
                 .andExpect(status().isNotFound());
@@ -171,7 +171,7 @@ class DistrictDataControllerTest {
 
         //verify
         mvc.perform(
-                     get("/api/districts/name/name")
+                     get("/data/district/name/name")
                     .accept("application/json")
                 )
                 .andExpect(status().isOk())
@@ -188,7 +188,7 @@ class DistrictDataControllerTest {
         when(districtDataService.getDistrictDataByName("null")).thenThrow(new DataNotFoundException("Data Not Found"));
 
         mvc.perform(
-                get("/api/districts/name/null")
+                get("/data/district/name/null")
                         .accept("application/json")
         )
                 .andExpect(status().isNotFound());
@@ -206,7 +206,7 @@ class DistrictDataControllerTest {
 
         //verify
         mvc.perform(
-                 get("/api/districts/name/name")
+                 get("/data/district/name/name")
                 .accept("application/json")
                 .header("If-Modified-Since", testDateEpochMilli)
         )
@@ -226,7 +226,7 @@ class DistrictDataControllerTest {
 
         //verify
         mvc.perform(
-                get("/api/districts/names")
+                get("/data/names")
                 .accept("application/json")
             )
             .andExpect(status().isOk())
