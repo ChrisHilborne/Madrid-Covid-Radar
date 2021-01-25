@@ -15,10 +15,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -33,8 +33,6 @@ class DistrictDataServiceImplTest {
     @Captor
     ArgumentCaptor<DistrictData> districtDataCaptor;
 
-    @Captor
-    ArgumentCaptor<List<DistrictData>> districtDataListCaptor;
 
     @Test
     void getDistrictDataByNameException() {
@@ -43,7 +41,7 @@ class DistrictDataServiceImplTest {
         //when
         when(districtDataRepository.findByName("name")).thenReturn(Optional.empty());
 
-        //then
+        //verify
         assertThrows(RuntimeException.class, () -> {
             districtDataService.getDistrictDataByName("name");
         });
@@ -62,7 +60,7 @@ class DistrictDataServiceImplTest {
         when(districtDataRepository.findByName("one")).thenReturn(Optional.of(testDistrictData));
         DistrictDataDTO result = districtDataService.getDistrictDataByName("one");
 
-        //then
+        //verify
         verify(districtDataRepository, times(1)).findByName("one");
         assertEquals("one", result.getMunicipalDistrict());
         
@@ -79,7 +77,7 @@ class DistrictDataServiceImplTest {
         when(districtDataRepository.findByGeoCode("geoCode")).thenReturn(Optional.of(testDistrictData));
         DistrictDataDTO result = districtDataService.getDistrictDataByGeoCode("geoCode");
 
-        //then
+        //verify
         verify(districtDataRepository, times(1)).findByGeoCode("geoCode");
         assertEquals("geoCode", result.getGeoCode());
 
@@ -93,7 +91,7 @@ class DistrictDataServiceImplTest {
         //when
         when(districtDataRepository.findByGeoCode("geoCode")).thenReturn(Optional.empty());
 
-        //then
+        //verify
         assertThrows(RuntimeException.class, () -> {
             districtDataService.getDistrictDataByGeoCode("geoCode");
         });
@@ -112,30 +110,33 @@ class DistrictDataServiceImplTest {
         when(districtDataRepository.findAll()).thenReturn(mockResults);
         List<DistrictDataDTO> testResults = districtDataService.getAllDistrictData();
 
-        //then
+        //verify
         verify(districtDataRepository, times(1)).findAll();
         assertEquals(1, testResults.size());
     }
 
+
     @Test
-    void getDistrictNames() {
+    void getDistrictNamesAndGeocodes() {
         //given
-        List<DistrictData> results = new ArrayList<>();
         DistrictData one = new DistrictData();
         one.setName("one");
+        one.setGeoCode("1");
         DistrictData two = new DistrictData();
         two.setName("two");
-        results.add(one);
-        results.add(two);
+        two.setGeoCode("2");
+        List<DistrictData> results = List.of(one, two);
 
         //when
         when(districtDataRepository.findAll()).thenReturn(results);
-        List<String> names = districtDataService.getDistrictNames();
+        Map<String, String> namesAndGeocodes = districtDataService.getDistrictGeoCodesAndNames();
 
-        //then
-        verify(districtDataRepository, times(1)).findAll();
-        assertEquals(2, names.size());
-        assertEquals("one", names.get(0));
+        //verify
+        assertAll("names and geocodes",
+                () -> assertEquals(2, namesAndGeocodes.size()),
+                () -> assertEquals("1", namesAndGeocodes.get("one")),
+                () -> assertEquals("2", namesAndGeocodes.get("two"))
+        );
     }
 
     @Test
@@ -145,9 +146,9 @@ class DistrictDataServiceImplTest {
         toSave.setName("toSave");
 
         //when
-        DistrictData saved = districtDataService.save(toSave);
+        districtDataService.save(toSave);
 
-        //then
+        //verify
         verify(districtDataRepository, times(1)).save(toSave);
         verify(districtDataRepository).save(districtDataCaptor.capture());
         assertEquals("toSave", districtDataCaptor.getValue().getName());
@@ -156,7 +157,7 @@ class DistrictDataServiceImplTest {
 
     @Test
     void saveList() {
-        //give
+        //given
 
         DistrictData one = new DistrictData();
         one.setName("one");
@@ -164,7 +165,7 @@ class DistrictDataServiceImplTest {
         List<DistrictData> testList = List.of(one, new DistrictData());
 
         //when
-        List<DistrictData> returnedList = districtDataService.save(testList);
+        districtDataService.save(testList);
 
         //verify
         verify(districtDataRepository, times(2)).save(any());

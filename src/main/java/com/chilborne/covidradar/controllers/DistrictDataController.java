@@ -69,17 +69,9 @@ public class DistrictDataController {
                 .body(result);
     }
 
-    @GetMapping(value = "/names", produces = "application/json")
-    public ResponseEntity<List<String>> getDistrictNames() {
-        logger.debug("Processing Get Request --> District Names");
-        return ResponseEntity.ok()
-                .cacheControl(getCacheControlNamesAndGeocodes())
-                .body(districtDataService.getDistrictNames());
-    }
-
-    @GetMapping(value = "/geocode-names", produces = "application/json")
+    @GetMapping(value = "/names-geocodes", produces = "application/json")
     public ResponseEntity<Map<String, String>> getNamesAndGeocodes() {
-        logger.debug("Processing Get Request --> Geocodes and Names");
+        logger.debug("Processing Get Request --> Names and Geocodes");
         return ResponseEntity.ok()
                 .cacheControl(getCacheControlNamesAndGeocodes())
                 .body(districtDataService.getDistrictGeoCodesAndNames());

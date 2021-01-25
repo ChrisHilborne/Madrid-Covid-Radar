@@ -61,28 +61,15 @@ public class DistrictDataServiceImpl implements DistrictDataService {
 
         return new DistrictDataDTO(result);
     }
-    
-
-    @Override
-    @Cacheable("districtData-names")
-    public List<String> getDistrictNames() {
-        logger.debug("Fetching District Names");
-        List<String> districtNames = districtDataRepository.findAll().stream()
-                .map(DistrictData::getName)
-                .collect(Collectors.toList());
-
-        Collections.sort(districtNames);
-        return districtNames;
-    }
 
     @Override
     @Cacheable ("districtData-namesAndGeocodes")
     public Map<String, String> getDistrictGeoCodesAndNames() {
         Map<String, String> namesAndGeocodes = new HashMap<>();
 
-        List<DistrictDataDTO> allData = getAllDistrictData();
+        List<DistrictData> allData = districtDataRepository.findAll();
         allData.forEach(districtData -> {
-            namesAndGeocodes.put(districtData.getMunicipalDistrict(), districtData.getGeoCode());
+            namesAndGeocodes.put(districtData.getName(), districtData.getGeoCode());
         });
 
         return namesAndGeocodes;

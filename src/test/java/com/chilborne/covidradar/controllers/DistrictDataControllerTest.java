@@ -14,7 +14,9 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -217,24 +219,28 @@ class DistrictDataControllerTest {
     }
 
     @Test
-    void getDistrictNames() throws Exception {
+    void getDistrictNamesAndGeocodes() throws Exception {
         //given
-        List<String> nameList = List.of("name-one", "name-two", "name-three");
+        Map<String, String> namesAndGeocodes = new HashMap<>();
+        namesAndGeocodes.put("one", "1");
+        namesAndGeocodes.put("two", "2");
+        namesAndGeocodes.put("three", "3");
 
         //when
-        when(districtDataService.getDistrictNames()).thenReturn(nameList);
+        when(districtDataService.getDistrictGeoCodesAndNames()).thenReturn(namesAndGeocodes);
 
         //verify
         mvc.perform(
-                get("/data/names")
-                .accept("application/json")
-            )
-            .andExpect(status().isOk())
-            .andExpect(jsonPath("$.[0]").value("name-one"))
-            .andExpect(jsonPath("$.[1]").value("name-two"))
-            .andExpect(jsonPath("$.[2]").value("name-three"));
+                get("/data/names-geocodes")
+                        .accept("application/json")
+        )
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.one").value("1"))
+                .andExpect(jsonPath("$.two").value("2"))
+                .andExpect(jsonPath("$.three").value("3"));
 
-        verify(districtDataService, times(1)).getDistrictNames();
+
+        verify(districtDataService, times(1)).getDistrictGeoCodesAndNames();
 
     }
 }

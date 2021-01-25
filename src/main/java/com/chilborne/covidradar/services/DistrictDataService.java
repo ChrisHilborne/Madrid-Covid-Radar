@@ -13,8 +13,6 @@ public interface DistrictDataService {
 
     List<DistrictDataDTO> getAllDistrictData();
 
-    List<String> getDistrictNames();
-
     DistrictData save(DistrictData districtData);
 
     List<DistrictData> save(List<DistrictData> districtDataList);
