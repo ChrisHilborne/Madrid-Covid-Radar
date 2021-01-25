@@ -33,7 +33,7 @@ public class DistrictDataSaver implements Step<List<DistrictData>, List<District
             logger.error("DistrictData not saved correctly.");
             throw new PipeLineProcessException("DistrictData not saved correctly");
         }
-
+        logger.debug("DistrictData saved correctly.");
         return output;
     }
 }

@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import java.io.File;
 
 @Configuration
-@ConfigurationProperties(prefix = "static.data")
+@ConfigurationProperties(prefix = "data.static")
 public class StaticDailyRecordFetcherConfig {
 
     private String filepath;

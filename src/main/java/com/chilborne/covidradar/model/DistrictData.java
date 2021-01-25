@@ -6,16 +6,19 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.*;
 import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Document(collection = "districts")
 public class DistrictData {
 
-    @Id
-    @Indexed(unique = true)
+
     @NotBlank
     @Size(max = 100)
+    @Id
+    @Indexed(unique = true)
     private String geoCode;
     @NotBlank
     @Size(max = 100)
@@ -34,6 +37,15 @@ public class DistrictData {
         this.totalCases = lastRecord.getTotalCases();
         this.lastUpdated = lastRecord.getDateReported();
         this.dailyRecords = dailyRecords;
+    }
+
+    public void combine(DistrictData districtData) {
+        dailyRecords.addAll(districtData.getDailyRecords());
+        dailyRecords = dailyRecords
+                .stream()
+                .sorted(Comparator.comparing(DailyRecord::getDateReported))
+                .collect(Collectors.toList());
+        
     }
 
     public DistrictData() {

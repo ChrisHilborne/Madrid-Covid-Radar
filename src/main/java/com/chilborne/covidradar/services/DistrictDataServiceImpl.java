@@ -77,7 +77,7 @@ public class DistrictDataServiceImpl implements DistrictDataService {
 
     @Override
     public DistrictData save(DistrictData districtData) {
-        logger.debug("Saving: " + districtData.getName());
+        logger.debug("Saving: " + districtData.getName() + " geocode: " + districtData.getGeoCode());
         return districtDataRepository.save(districtData);
     }
 

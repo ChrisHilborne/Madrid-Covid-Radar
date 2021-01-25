@@ -1,19 +1,21 @@
 package com.chilborne.covidradar.data.collection;
 
 import com.chilborne.covidradar.events.NewDataEventPublisher;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.FileReader;
 
 @Service
-public class StaticDailyRecordDataCollector implements DailyRecordDataCollector<String> {
+@Profile(value = "static")
+public class StaticDailyRecordFetcher implements DailyRecordDataFetcher<String> {
 
     private final NewDataEventPublisher newDataEventPublisher;
     private final File staticDataFile;
 
-    public StaticDailyRecordDataCollector(NewDataEventPublisher newDataEventPublisher,
-                                          File staticDataFile)
+    public StaticDailyRecordFetcher(NewDataEventPublisher newDataEventPublisher,
+                                    File staticDataFile)
     {
         this.newDataEventPublisher = newDataEventPublisher;
         this.staticDataFile = staticDataFile;

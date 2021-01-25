@@ -12,7 +12,6 @@ import java.util.List;
 public class DailyRecordDataPipelineConfig {
 
 
-    private final StaticDataVerifier verifier;
     private final DailyRecordParser parser;
     private final DailyRecordFilter filter;
     private final DailyRecordTrimmer trimmer;
@@ -23,7 +22,6 @@ public class DailyRecordDataPipelineConfig {
 
 
     public DailyRecordDataPipelineConfig(
-                                        StaticDataVerifier verifier,
                                         DailyRecordParser parser,
                                         DailyRecordFilter filter,
                                         DailyRecordTrimmer trimmer,
@@ -31,7 +29,6 @@ public class DailyRecordDataPipelineConfig {
                                         DailyRecordMapper mapper,
                                         DailyRecordConverter converter,
                                         DistrictDataSaver saver) {
-        this.verifier = verifier;
         this.parser = parser;
         this.filter = filter;
         this.trimmer = trimmer;
@@ -44,8 +41,7 @@ public class DailyRecordDataPipelineConfig {
 
     @Bean
     public Pipeline<String, List<DistrictData>> pipeline() {
-        return new Pipeline<>(verifier)
-                .pipe(parser)
+        return new Pipeline<>(parser)
                 .pipe(filter)
                 .pipe(trimmer)
                 .pipe(sorter)
