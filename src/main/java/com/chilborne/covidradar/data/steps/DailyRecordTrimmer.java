@@ -23,12 +23,14 @@ public class DailyRecordTrimmer implements Step<List<DailyRecord>, List<DailyRec
                 .forEach(dailyRecord ->
                 {
                     //trim unnecessary characters
-                    dailyRecord.setMunicipalDistrict(dailyRecord.getMunicipalDistrict()
-                                                .substring(7)
-                                                .toLowerCase()
-                    );
-                    if (dailyRecord.getMunicipalDistrict().length() == 0) {
-                        throw new PipeLineProcessException("DailyRecord MunicipalDistrict trimmed to length 0.");
+                    if (dailyRecord.getGeoCode().matches("Madrid-.*")) {
+                        dailyRecord.setMunicipalDistrict(dailyRecord.getMunicipalDistrict()
+                                .substring(7)
+                                .toLowerCase()
+                        );
+                        if (dailyRecord.getMunicipalDistrict().length() == 0) {
+                            throw new PipeLineProcessException("DailyRecord MunicipalDistrict trimmed to length 0.");
+                        }
                     }
                     //round to 2dp
                     dailyRecord.setInfectionRateLastTwoWeeks(Math.round( dailyRecord.getInfectionRateLastTwoWeeks() * 100.0) / 100.0 );

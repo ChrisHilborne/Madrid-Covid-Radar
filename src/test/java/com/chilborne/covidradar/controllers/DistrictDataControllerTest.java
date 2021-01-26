@@ -1,7 +1,7 @@
 package com.chilborne.covidradar.controllers;
 
 import com.chilborne.covidradar.exceptions.DataNotFoundException;
-import com.chilborne.covidradar.model.DistrictDataDTO;
+import com.chilborne.covidradar.model.DistrictData;
 import com.chilborne.covidradar.services.DistrictDataService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,7 +24,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @ExtendWith(MockitoExtension.class)
 class DistrictDataControllerTest {
-
 
     MockMvc mvc;
 
@@ -50,10 +49,10 @@ class DistrictDataControllerTest {
     @Test
     void getAllDistrictData_StatusIsOK() throws Exception {
         //given
-        DistrictDataDTO testDTO = new DistrictDataDTO();
-        testDTO.setMunicipalDistrict("test");
-        testDTO.setLastReported(testDate);
-        List<DistrictDataDTO> testList = List.of(testDTO);
+        DistrictData testDTO = new DistrictData();
+        testDTO.setName("test");
+        testDTO.setLastUpdated(testDate);
+        List<DistrictData> testList = List.of(testDTO);
 
         //when
         when(districtDataService.getAllDistrictData()).thenReturn(testList);
@@ -73,10 +72,10 @@ class DistrictDataControllerTest {
     @Test
     void getAllDistrictData_StatusIs304() throws Exception {
         //given
-        DistrictDataDTO testDTO = new DistrictDataDTO();
-        testDTO.setMunicipalDistrict("test");
-        testDTO.setLastReported(testDate);
-        List<DistrictDataDTO> testList = List.of(testDTO);
+        DistrictData testDTO = new DistrictData();
+        testDTO.setName("test");
+        testDTO.setLastUpdated(testDate);
+        List<DistrictData> testList = List.of(testDTO);
 
         //when
         when(districtDataService.getAllDistrictData()).thenReturn(testList);
@@ -107,9 +106,9 @@ class DistrictDataControllerTest {
     @Test
     void getDistrictDataByGeoCode_StatusIsOK() throws Exception {
         //given
-        DistrictDataDTO testDTO = new DistrictDataDTO();
+        DistrictData testDTO = new DistrictData();
         testDTO.setGeoCode("geoCode");
-        testDTO.setLastReported(testDate);
+        testDTO.setLastUpdated(testDate);
 
         //when
         when(districtDataService.getDistrictDataByGeoCode("geoCode")).thenReturn(testDTO);
@@ -130,9 +129,9 @@ class DistrictDataControllerTest {
     @Test
     void getDistrictDataByGeoCode_StatusIs304() throws Exception {
         //given
-        DistrictDataDTO testDTO = new DistrictDataDTO();
+        DistrictData testDTO = new DistrictData();
         testDTO.setGeoCode("geoCode");
-        testDTO.setLastReported(testDate);
+        testDTO.setLastUpdated(testDate);
 
         //when
         when(districtDataService.getDistrictDataByGeoCode("geoCode")).thenReturn(testDTO);
@@ -164,9 +163,9 @@ class DistrictDataControllerTest {
     @Test
     void getDistrictDataByName_StatusIsOK() throws Exception {
         //given
-        DistrictDataDTO testDTO = new DistrictDataDTO();
-        testDTO.setMunicipalDistrict("name");
-        testDTO.setLastReported(testDate);
+        DistrictData testDTO = new DistrictData();
+        testDTO.setName("name");
+        testDTO.setLastUpdated(testDate);
 
         //when
         when(districtDataService.getDistrictDataByName("name")).thenReturn(testDTO);
@@ -199,9 +198,9 @@ class DistrictDataControllerTest {
     @Test
     void getDistrictDataByName_StatusIs304() throws Exception {
         //given
-        DistrictDataDTO testDTO = new DistrictDataDTO();
-        testDTO.setMunicipalDistrict("name");
-        testDTO.setLastReported(testDate);
+        DistrictData testDTO = new DistrictData();
+        testDTO.setName("name");
+        testDTO.setLastUpdated(testDate);
 
         //when
         when(districtDataService.getDistrictDataByName("name")).thenReturn(testDTO);

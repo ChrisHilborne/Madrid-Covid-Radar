@@ -18,7 +18,7 @@ class DailyRecordDataPipelineTest {
     Pipeline pipeline;
 
     @InjectMocks
-    DailyRecordDataPipeline dailyRecordDataPipeline;
+    DailyRecordPipeline dailyRecordDataPipeline;
 
     @Captor
     ArgumentCaptor<String> argumentCaptor;
