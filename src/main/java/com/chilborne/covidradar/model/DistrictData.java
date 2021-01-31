@@ -1,19 +1,14 @@
 package com.chilborne.covidradar.model;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.Document;
-
 import javax.validation.constraints.*;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
-@Document(collection = "districts")
+
 public class DistrictData {
 
-    @Id
-    @Indexed(unique = true)
     @NotBlank
     @Size(max = 100)
     private String geoCode;
@@ -25,7 +20,7 @@ public class DistrictData {
     @Past
     private LocalDate lastUpdated;
     @NotEmpty
-    private List<DailyRecord> dailyRecords;
+    private List<DailyRecordDTO> dailyRecords;
 
     public DistrictData(List<DailyRecord> dailyRecords) {
         DailyRecord lastRecord = dailyRecords.get(dailyRecords.size() - 1);
@@ -33,7 +28,10 @@ public class DistrictData {
         this.name = lastRecord.getMunicipalDistrict();
         this.totalCases = lastRecord.getTotalCases();
         this.lastUpdated = lastRecord.getDateReported();
-        this.dailyRecords = dailyRecords;
+        this.dailyRecords = dailyRecords
+                .stream()
+                .map(DailyRecordDTO::new)
+                .collect(Collectors.toList());
     }
 
     public DistrictData() {
@@ -49,9 +47,9 @@ public class DistrictData {
         this.geoCode = geoCode;
     }
 
-    public List<DailyRecord> getDailyRecords() { return dailyRecords; }
+    public List<DailyRecordDTO> getDailyRecords() { return dailyRecords; }
 
-    public void setDailyRecords(List<DailyRecord> dailyRecords) { this.dailyRecords = dailyRecords; }
+    public void setDailyRecords(List<DailyRecordDTO> dailyRecords) { this.dailyRecords = dailyRecords; }
 
     public void setName(String name) {
         this.name = name;

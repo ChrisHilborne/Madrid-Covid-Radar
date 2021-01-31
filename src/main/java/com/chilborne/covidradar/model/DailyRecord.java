@@ -2,6 +2,8 @@ package com.chilborne.covidradar.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.NotBlank;
@@ -15,6 +17,9 @@ import java.time.LocalDate;
 @Document(collection = "daily_records")
 public class DailyRecord {
 
+    @Id
+    @Indexed(unique = true)
+    private String id;
     @NotBlank
     @JsonProperty("codigo_geometria")
     private String geoCode;
@@ -38,7 +43,16 @@ public class DailyRecord {
     @JsonFormat(pattern = "yyyy/MM/dd HH:mm:ss")
     private LocalDate dateReported;
 
+
     public DailyRecord() {}
+
+    public void generateId() {
+        this.id = this.geoCode + "/" + this.dateReported.toString();
+    }
+
+    public String getId() {
+        return id;
+    }
 
     public String getGeoCode() {
         return geoCode;
@@ -141,4 +155,6 @@ public class DailyRecord {
                 ", dateReported=" + dateReported +
                 '}';
     }
+
+
 }
