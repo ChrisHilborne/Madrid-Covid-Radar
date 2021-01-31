@@ -9,7 +9,7 @@ import java.io.FileReader;
 
 @Service
 @Profile(value = "static")
-public class StaticDailyRecordFetcher implements DailyRecordDataFetcher<String> {
+public class StaticDailyRecordFetcher implements DataFetcher {
 
     private final NewDataEventPublisher newDataEventPublisher;
     private final File staticDataFile;
@@ -22,7 +22,7 @@ public class StaticDailyRecordFetcher implements DailyRecordDataFetcher<String> 
     }
 
     @Override
-    public void collectData() {
+    public void fetchData(DataFetchType type) {
         String data = "";
         try (FileReader dataReader = new FileReader(staticDataFile)) {
             StringBuilder sb = new StringBuilder();
@@ -35,11 +35,11 @@ public class StaticDailyRecordFetcher implements DailyRecordDataFetcher<String> 
         } catch (Exception e) {
             e.printStackTrace();
         }
-        publish(data);
+        publishData(data);
     }
 
     @Override
-    public void publish(String data) {
+    public void publishData(String data) {
         newDataEventPublisher.publishNewDataEvent(data);
     }
 

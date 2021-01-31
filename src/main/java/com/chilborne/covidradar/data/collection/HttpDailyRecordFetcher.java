@@ -1,10 +1,12 @@
 package com.chilborne.covidradar.data.collection;
 
 import com.chilborne.covidradar.events.NewDataEventPublisher;
+import com.chilborne.covidradar.exceptions.DataFetchException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -14,76 +16,94 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Map;
 
 
 @Component
 @Primary
 @Profile(value = "dynamic")
-public class HttpDailyRecordFetcher implements DailyRecordDataFetcher<HttpResponse<String>> {
+public class HttpDailyRecordFetcher implements DataFetcher {
 
 
     private final HttpClient httpClient;
-    private final URI uri;
+    private final Map<DataFetchType, URI> uriMap;
     private final NewDataEventPublisher newDataEventPublisher;
-    private final DateTimeFormatter dateTimeFormatter;
+    private final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.RFC_1123_DATE_TIME;
+
     private OffsetDateTime lastModified;
 
-    private final Logger logger = LoggerFactory.getLogger(DailyRecordDataFetcher.class);
+    private final Logger logger = LoggerFactory.getLogger(DataFetcher.class);
 
     public HttpDailyRecordFetcher(HttpClient httpClient,
-                                  DateTimeFormatter dateTimeFormatter,
-                                  URI uri,
+                                  Map<DataFetchType, URI> uriMap,
                                   NewDataEventPublisher newDataEventPublisher) {
         this.httpClient = httpClient;
-        this.dateTimeFormatter = dateTimeFormatter;
-        this.uri = uri;
+        this.uriMap = uriMap;
         this.newDataEventPublisher = newDataEventPublisher;
     }
 
     @Override
-    public void collectData() throws IOException, InterruptedException {
-        logger.debug("Starting to fetch data from API...");
-        HttpRequest httpRequest = getRequest();
-        logger.debug("Sending HttpRequest...");
-        HttpResponse<String> httpResponse = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
-        logger.debug("Data successfully received.");
+    public void fetchData(DataFetchType type)  {
+        logger.debug("Fetching data...");
+        HttpRequest httpRequest = buildHttpRequest(type);
+        HttpResponse<String> httpResponse = makeHttpRequest(httpRequest);
 
-        if (httpResponse.statusCode() == 304) {
-            logger.debug("No New Data Available");
+        if(httpResponse.statusCode() == 304) {
+            logger.info("Data has not been updated since it was last received.");
             return;
         }
+        lastModified = getLastModified(httpResponse);
+        publishData(httpResponse.body());
+    }
 
-        lastModified = OffsetDateTime.parse(
+    private HttpResponse<String> makeHttpRequest(HttpRequest initialHttpRequest) {
+        try {
+            logger.debug("Making HttpRequest");
+            HttpResponse<String> httpResponse = httpClient.send(initialHttpRequest, HttpResponse.BodyHandlers.ofString());
+            logger.debug("HttpRequest successfully made - data received.");
+            return httpResponse;
+
+        } catch (IOException e) {
+            logger.error("Problem when making Http Request", e);
+            throw new DataFetchException(e.getMessage(), e);
+        } catch (InterruptedException e) {
+            logger.error("Http Request interrupted", e);
+            throw new DataFetchException(e.getMessage(), e);
+        }
+    }
+
+    private HttpRequest buildHttpRequest(DataFetchType type) {
+        logger.debug("Building HttpRequest type: " + type);
+        if (lastModified != null) {
+            return HttpRequest
+                    .newBuilder()
+                    .GET()
+                    .uri(uriMap.get(type))
+                    .header(HttpHeaders.IF_MODIFIED_SINCE,
+                            dateTimeFormatter.format(lastModified))
+                    .build();
+        }
+        else {
+            return HttpRequest
+                    .newBuilder()
+                    .GET()
+                    .uri(uriMap.get(type))
+                    .build();
+            }
+    }
+
+    private OffsetDateTime getLastModified(HttpResponse<String> httpResponse) {
+        return OffsetDateTime.parse(
                 httpResponse
                         .headers()
                         .map()
                         .get("Last-Modified").get(0),
                 dateTimeFormatter
         );
-
-        publish(httpResponse);
-    }
-
-    private HttpRequest getRequest() {
-        logger.debug("Building HttpRequest...");
-        if (lastModified != null) {
-            return HttpRequest
-                    .newBuilder()
-                    .GET()
-                    .uri(uri)
-                    .header("If-Modified-Since", dateTimeFormatter.format(lastModified))
-                    .build();
-        } else {
-            return HttpRequest
-                    .newBuilder()
-                    .GET()
-                    .uri(uri)
-                    .build();
-        }
     }
 
     @Override
-    public void publish(HttpResponse<String> httpResponse) {
-        newDataEventPublisher.publishNewDataEvent(httpResponse.body());
+    public void publishData(String responseBody) {
+        newDataEventPublisher.publishNewDataEvent(responseBody);
     }
 }

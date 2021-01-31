@@ -1,6 +1,7 @@
 package com.chilborne.covidradar.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -14,7 +15,9 @@ import java.time.LocalDate;
 /**
  * @Author Chris Hilborne
  */
+
 @Document(collection = "daily_records")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class DailyRecord {
 
     @Id
@@ -24,7 +27,7 @@ public class DailyRecord {
     @JsonProperty("codigo_geometria")
     private String geoCode;
     @NotBlank
-    @JsonProperty("municipio_distrito")
+    @JsonProperty("zona_basica_salud")
     private String municipalDistrict;
     @PositiveOrZero
     @JsonProperty("tasa_incidencia_acumulada_ultimos_14dias")
@@ -47,7 +50,7 @@ public class DailyRecord {
     public DailyRecord() {}
 
     public void generateId() {
-        this.id = this.geoCode + "/" + this.dateReported.toString();
+        this.id = this.municipalDistrict + "::" + this.dateReported.toString();
     }
 
     public String getId() {
@@ -108,6 +111,10 @@ public class DailyRecord {
 
     public void setCasesLastTwoWeeks(int casesLastTwoWeeks) {
         this.casesLastTwoWeeks = casesLastTwoWeeks;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     @Override
