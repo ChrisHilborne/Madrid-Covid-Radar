@@ -4,7 +4,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.net.ProxySelector;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -30,7 +29,6 @@ public class DailyRecordAPICollectorConfig {
     @Bean
     public HttpClient httpClient() {
         return HttpClient.newBuilder()
-                .proxy(ProxySelector.getDefault())
                 .connectTimeout(Duration.of(10, SECONDS))
                 .build();
     }
