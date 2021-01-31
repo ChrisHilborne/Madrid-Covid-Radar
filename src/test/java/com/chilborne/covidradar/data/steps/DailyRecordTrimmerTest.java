@@ -31,7 +31,7 @@ class DailyRecordTrimmerTest {
                 () -> assertEquals(11.00, trimmedRecord.getInfectionRateLastTwoWeeks())
         );
     }
-    
+
 
     @Test
     void processException_TwoWeekInfectionRateTooLow() {
