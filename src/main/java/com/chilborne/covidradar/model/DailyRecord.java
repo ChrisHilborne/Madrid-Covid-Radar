@@ -2,35 +2,57 @@ package com.chilborne.covidradar.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.PositiveOrZero;
 import java.time.LocalDate;
 
 /**
  * @Author Chris Hilborne
- * @Date 06.01.21
  */
 @Document(collection = "daily_records")
 public class DailyRecord {
 
-
+    @Id
+    @Indexed(unique = true)
+    private String id;
+    @NotBlank
     @JsonProperty("codigo_geometria")
     private String geoCode;
+    @NotBlank
     @JsonProperty("municipio_distrito")
     private String municipalDistrict;
+    @PositiveOrZero
     @JsonProperty("tasa_incidencia_acumulada_ultimos_14dias")
     private double infectionRateLastTwoWeeks;
+    @PositiveOrZero
     @JsonProperty("tasa_incidencia_acumulada_total")
     private double infectionRateTotal;
+    @PositiveOrZero
     @JsonProperty("casos_confirmados_totales")
     private int totalCases;
+    @PositiveOrZero
     @JsonProperty("casos_confirmados_ultimos_14dias")
     private int casesLastTwoWeeks;
+    @Past
     @JsonProperty("fecha_informe")
     @JsonFormat(pattern = "yyyy/MM/dd HH:mm:ss")
     private LocalDate dateReported;
 
+
     public DailyRecord() {}
+
+    public void generateId() {
+        this.id = this.geoCode + "/" + this.dateReported.toString();
+    }
+
+    public String getId() {
+        return id;
+    }
 
     public String getGeoCode() {
         return geoCode;
@@ -133,4 +155,6 @@ public class DailyRecord {
                 ", dateReported=" + dateReported +
                 '}';
     }
+
+
 }

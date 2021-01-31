@@ -1,100 +1,72 @@
 package com.chilborne.covidradar.services;
 
+import com.chilborne.covidradar.data.pipeline.DailyRecordsToDistrictDataPipeline;
 import com.chilborne.covidradar.exceptions.DataNotFoundException;
+import com.chilborne.covidradar.model.DailyRecord;
 import com.chilborne.covidradar.model.DistrictData;
-import com.chilborne.covidradar.model.DistrictDataDTO;
-import com.chilborne.covidradar.repository.DistrictDataRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.LinkedList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Map;
 
 
 @Service
 public class DistrictDataServiceImpl implements DistrictDataService {
 
-    private final DistrictDataRepository districtDataRepository;
+    private final DailyRecordService dailyRecordService;
+    private final DailyRecordsToDistrictDataPipeline districtDataPipeline;
     private final Logger logger = LoggerFactory.getLogger(DistrictDataServiceImpl.class);
 
-    public DistrictDataServiceImpl(DistrictDataRepository districtDataRepository) {
-        this.districtDataRepository = districtDataRepository;
+    public DistrictDataServiceImpl(DailyRecordService dailyRecordService,
+                                   DailyRecordsToDistrictDataPipeline districtDataPipeline) {
+        this.dailyRecordService = dailyRecordService;
+        this.districtDataPipeline = districtDataPipeline;
     }
 
     @Override
-    @Cacheable ("districtData")
-    public DistrictDataDTO getDistrictDataByGeoCode(String geoCode) throws DataNotFoundException {
-        logger.debug("Fetching data for GeoCode: " + geoCode);
-        DistrictData result = districtDataRepository.findByGeoCode(geoCode)
-                .orElseThrow(() -> new DataNotFoundException("District geocode: " + geoCode + " not found."));
+    @Cacheable("districtData-all")
+    public List<DistrictData> getAllDistrictData() throws DataNotFoundException {
+        logger.debug("Fetching All District Data");
+        List<DailyRecord> data = dailyRecordService.getAll();
+        return districtDataPipeline.startPipeline(data);
+    }
 
-        return new DistrictDataDTO(result);
+    @Override
+    @Cacheable("districtData-district")
+    public DistrictData getDistrictDataByName(String name) throws DataNotFoundException {
+        logger.debug("Fetching Data for: " + name);
+        List<DailyRecord> dailyRecords = dailyRecordService.getDailyRecordsByMunicipalDistrict(name);
+
+        return new DistrictData(dailyRecords);
     }
 
     @Override
     @Cacheable("districtData")
-    public DistrictDataDTO getDistrictDataByName(String name) throws DataNotFoundException {
-        logger.debug("Fetching Data for: " + name);
-        DistrictData result = districtDataRepository.findByName(name)
-                .orElseThrow(() -> new DataNotFoundException("District name: " + name + " not found."));
+    public DistrictData getDistrictDataByGeoCode(String geoCode) throws DataNotFoundException {
+        logger.debug("Fetching data for GeoCode: " + geoCode);
+        List<DailyRecord> dailyRecords = dailyRecordService.getDailyRecordsByGeoCode(geoCode);
 
-        return new DistrictDataDTO(result);
+        return new DistrictData(dailyRecords);
     }
 
     @Override
-    public List<DistrictDataDTO> getAllDistrictData() throws DataNotFoundException {
-        logger.debug("Fetching All District Data");
+    @Cacheable("districtData-namesAndGeocodes")
+    public Map<String, String> getDistrictGeoCodesAndNames() {
+        Map<String, String> namesAndGeocodes = new HashMap<>();
 
-        List<DistrictDataDTO> data = districtDataRepository.findAll()
-                .stream()
-                .map(DistrictDataDTO::new)
-                .collect(Collectors.toUnmodifiableList());
+        List<DistrictData> allData = getAllDistrictData();
+        allData.forEach(districtData -> {
+            namesAndGeocodes.put(districtData.getName(), districtData.getGeoCode());
+        });
 
-        if (data.isEmpty()) {
-            logger.error("No Data Found", new DataNotFoundException());
-            throw new DataNotFoundException("No Data Found");
-        } else {
-            return data;
-        }
+        return namesAndGeocodes;
     }
 
 
-    @Override
-    @Cacheable("districtData-names")
-    public List<String> getDistrictNames() {
-        logger.debug("Fetching District Names");
-        List<String> districtNames = districtDataRepository.findAll().stream()
-                .map(DistrictData::getName)
-                .collect(Collectors.toList());
-
-        Collections.sort(districtNames);
-        return districtNames;
-    }
-
-    @Override
-    @CacheEvict(value = "districtData", allEntries = true)
-    public DistrictData save(DistrictData districtData) {
-        logger.debug("Saving: " + districtData.getName());
-        return districtDataRepository.save(districtData);
-    }
-
-    @Override
-    public List<DistrictData> save(List<DistrictData> districtDataList) {
-        List<DistrictData> savedDistrictDataList = new LinkedList<>();
-
-        for (DistrictData districtData : districtDataList) {
-            savedDistrictDataList.add(
-                    save(districtData)
-            );
-
-        }
-        return savedDistrictDataList;
-    }
 
 
 }

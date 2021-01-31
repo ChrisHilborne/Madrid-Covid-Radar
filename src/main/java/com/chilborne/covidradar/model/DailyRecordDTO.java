@@ -1,14 +1,21 @@
 package com.chilborne.covidradar.model;
 
+import javax.validation.constraints.Past;
+import javax.validation.constraints.PositiveOrZero;
 import java.time.LocalDate;
 import java.util.Objects;
 
 public class DailyRecordDTO {
 
+    @PositiveOrZero
     private double twoWeekRate;
+    @PositiveOrZero
     private double totalRate;
+    @PositiveOrZero
     private int twoWeekCases;
+    @PositiveOrZero
     private int totalCases;
+    @Past
     private LocalDate date;
 
     public DailyRecordDTO(DailyRecord dailyRecord) {

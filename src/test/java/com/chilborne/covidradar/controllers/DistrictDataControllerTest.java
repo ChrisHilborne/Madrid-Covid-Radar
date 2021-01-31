@@ -1,7 +1,7 @@
 package com.chilborne.covidradar.controllers;
 
 import com.chilborne.covidradar.exceptions.DataNotFoundException;
-import com.chilborne.covidradar.model.DistrictDataDTO;
+import com.chilborne.covidradar.model.DistrictData;
 import com.chilborne.covidradar.services.DistrictDataService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,7 +14,9 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -22,7 +24,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @ExtendWith(MockitoExtension.class)
 class DistrictDataControllerTest {
-
 
     MockMvc mvc;
 
@@ -48,17 +49,17 @@ class DistrictDataControllerTest {
     @Test
     void getAllDistrictData_StatusIsOK() throws Exception {
         //given
-        DistrictDataDTO testDTO = new DistrictDataDTO();
-        testDTO.setMunicipalDistrict("test");
-        testDTO.setLastReported(testDate);
-        List<DistrictDataDTO> testList = List.of(testDTO);
+        DistrictData testDTO = new DistrictData();
+        testDTO.setName("test");
+        testDTO.setLastUpdated(testDate);
+        List<DistrictData> testList = List.of(testDTO);
 
         //when
         when(districtDataService.getAllDistrictData()).thenReturn(testList);
 
         //verify
         mvc.perform(
-                 get("/api/districts")
+                 get("/data/all")
                 .accept("application/json")
             )
             .andExpect(status().isOk())
@@ -71,17 +72,17 @@ class DistrictDataControllerTest {
     @Test
     void getAllDistrictData_StatusIs304() throws Exception {
         //given
-        DistrictDataDTO testDTO = new DistrictDataDTO();
-        testDTO.setMunicipalDistrict("test");
-        testDTO.setLastReported(testDate);
-        List<DistrictDataDTO> testList = List.of(testDTO);
+        DistrictData testDTO = new DistrictData();
+        testDTO.setName("test");
+        testDTO.setLastUpdated(testDate);
+        List<DistrictData> testList = List.of(testDTO);
 
         //when
         when(districtDataService.getAllDistrictData()).thenReturn(testList);
 
         //verify
         mvc.perform(
-                  get("/api/districts")
+                  get("/data/all")
                  .accept("application/json")
                  .header("If-Modified-Since", testDateEpochMilli)
             )
@@ -96,7 +97,7 @@ class DistrictDataControllerTest {
         when(districtDataService.getAllDistrictData()).thenThrow(new DataNotFoundException("Data Not Found"));
 
         mvc.perform(
-                get("/api/districts")
+                get("/data/all")
                         .accept("application/json")
         )
                 .andExpect(status().isNotFound());
@@ -105,16 +106,16 @@ class DistrictDataControllerTest {
     @Test
     void getDistrictDataByGeoCode_StatusIsOK() throws Exception {
         //given
-        DistrictDataDTO testDTO = new DistrictDataDTO();
+        DistrictData testDTO = new DistrictData();
         testDTO.setGeoCode("geoCode");
-        testDTO.setLastReported(testDate);
+        testDTO.setLastUpdated(testDate);
 
         //when
         when(districtDataService.getDistrictDataByGeoCode("geoCode")).thenReturn(testDTO);
 
         //verify
         mvc.perform(
-                 get("/api/districts/geocode/geoCode")
+                 get("/data/district/geocode/geoCode")
                 .accept("application/json")
             )
             .andExpect(status().isOk())
@@ -128,16 +129,16 @@ class DistrictDataControllerTest {
     @Test
     void getDistrictDataByGeoCode_StatusIs304() throws Exception {
         //given
-        DistrictDataDTO testDTO = new DistrictDataDTO();
+        DistrictData testDTO = new DistrictData();
         testDTO.setGeoCode("geoCode");
-        testDTO.setLastReported(testDate);
+        testDTO.setLastUpdated(testDate);
 
         //when
         when(districtDataService.getDistrictDataByGeoCode("geoCode")).thenReturn(testDTO);
 
         //verify
         mvc.perform(
-                 get("/api/districts/geocode/geoCode")
+                 get("/data/district/geocode/geoCode")
                 .accept("application/json")
                 .header("If-Modified-Since", testDateEpochMilli)
             )
@@ -153,7 +154,7 @@ class DistrictDataControllerTest {
         when(districtDataService.getDistrictDataByGeoCode("null")).thenThrow(new DataNotFoundException("Data Not Found"));
 
         mvc.perform(
-                get("/api/districts/geocode/null")
+                get("/data/district/geocode/null")
                         .accept("application/json")
         )
                 .andExpect(status().isNotFound());
@@ -162,16 +163,16 @@ class DistrictDataControllerTest {
     @Test
     void getDistrictDataByName_StatusIsOK() throws Exception {
         //given
-        DistrictDataDTO testDTO = new DistrictDataDTO();
-        testDTO.setMunicipalDistrict("name");
-        testDTO.setLastReported(testDate);
+        DistrictData testDTO = new DistrictData();
+        testDTO.setName("name");
+        testDTO.setLastUpdated(testDate);
 
         //when
         when(districtDataService.getDistrictDataByName("name")).thenReturn(testDTO);
 
         //verify
         mvc.perform(
-                     get("/api/districts/name/name")
+                     get("/data/district/name/name")
                     .accept("application/json")
                 )
                 .andExpect(status().isOk())
@@ -188,7 +189,7 @@ class DistrictDataControllerTest {
         when(districtDataService.getDistrictDataByName("null")).thenThrow(new DataNotFoundException("Data Not Found"));
 
         mvc.perform(
-                get("/api/districts/name/null")
+                get("/data/district/name/null")
                         .accept("application/json")
         )
                 .andExpect(status().isNotFound());
@@ -197,16 +198,16 @@ class DistrictDataControllerTest {
     @Test
     void getDistrictDataByName_StatusIs304() throws Exception {
         //given
-        DistrictDataDTO testDTO = new DistrictDataDTO();
-        testDTO.setMunicipalDistrict("name");
-        testDTO.setLastReported(testDate);
+        DistrictData testDTO = new DistrictData();
+        testDTO.setName("name");
+        testDTO.setLastUpdated(testDate);
 
         //when
         when(districtDataService.getDistrictDataByName("name")).thenReturn(testDTO);
 
         //verify
         mvc.perform(
-                 get("/api/districts/name/name")
+                 get("/data/district/name/name")
                 .accept("application/json")
                 .header("If-Modified-Since", testDateEpochMilli)
         )
@@ -217,24 +218,28 @@ class DistrictDataControllerTest {
     }
 
     @Test
-    void getDistrictNames() throws Exception {
+    void getDistrictNamesAndGeocodes() throws Exception {
         //given
-        List<String> nameList = List.of("name-one", "name-two", "name-three");
+        Map<String, String> namesAndGeocodes = new HashMap<>();
+        namesAndGeocodes.put("one", "1");
+        namesAndGeocodes.put("two", "2");
+        namesAndGeocodes.put("three", "3");
 
         //when
-        when(districtDataService.getDistrictNames()).thenReturn(nameList);
+        when(districtDataService.getDistrictGeoCodesAndNames()).thenReturn(namesAndGeocodes);
 
         //verify
         mvc.perform(
-                get("/api/districts/names")
-                .accept("application/json")
-            )
-            .andExpect(status().isOk())
-            .andExpect(jsonPath("$.[0]").value("name-one"))
-            .andExpect(jsonPath("$.[1]").value("name-two"))
-            .andExpect(jsonPath("$.[2]").value("name-three"));
+                get("/data/names-geocodes")
+                        .accept("application/json")
+        )
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.one").value("1"))
+                .andExpect(jsonPath("$.two").value("2"))
+                .andExpect(jsonPath("$.three").value("3"));
 
-        verify(districtDataService, times(1)).getDistrictNames();
+
+        verify(districtDataService, times(1)).getDistrictGeoCodesAndNames();
 
     }
 }

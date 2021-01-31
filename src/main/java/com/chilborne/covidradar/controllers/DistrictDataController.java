@@ -1,6 +1,6 @@
 package com.chilborne.covidradar.controllers;
 
-import com.chilborne.covidradar.model.DistrictDataDTO;
+import com.chilborne.covidradar.model.DistrictData;
 import com.chilborne.covidradar.services.DistrictDataService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +12,7 @@ import org.springframework.web.context.request.WebRequest;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 @CrossOrigin(origins = "http://localhost:8081")
@@ -26,72 +27,76 @@ public class DistrictDataController {
         this.districtDataService = districtDataService;
     }
 
-    @GetMapping(value = "/districts", produces = "application/json")
-    public ResponseEntity<List<DistrictDataDTO>> getAllDistrictData(WebRequest request) {
+    @GetMapping(value = "/all", produces = "application/json")
+    public ResponseEntity<List<DistrictData>> getAllDistrictData(WebRequest request) {
         logger.debug("Processing Get Request --> All District Data");
-        List<DistrictDataDTO> result = districtDataService.getAllDistrictData();
-        long lastModifiedEpochMilli = getEpochLastModified(result.get(0));
 
-        if (request.checkNotModified(lastModifiedEpochMilli)) {
+        List<DistrictData> result = districtDataService.getAllDistrictData();
+        if (hasBeenModifiedSince(result.get(0), request)) {
             return ResponseEntity.status(304).build();
         }
         return ResponseEntity.ok()
-                .cacheControl(getCacheControl())
-                .lastModified(lastModifiedEpochMilli)
+                .cacheControl(getCacheControlDistrictData())
+                .lastModified(getEpochLastModified(result.get(0)))
                 .body(result);
     }
 
-    @GetMapping(value = "/districts/geocode/{geoCode}", produces = "application/json")
-    public ResponseEntity<DistrictDataDTO> getDistrictDataByGeoCode(@PathVariable String geoCode, WebRequest request) {
-        logger.debug("Processing GetRequest --> " + geoCode + " DistrictData");
-        DistrictDataDTO result = districtDataService.getDistrictDataByGeoCode(geoCode);
+    @GetMapping(value = "/geocode/{geoCode}", produces = "application/json")
+    public ResponseEntity<DistrictData> getDistrictDataByGeoCode(@PathVariable String geoCode, WebRequest request) {
+        logger.debug("Processing Get Request --> geocode: " + geoCode);
 
-        long lastModifiedEpochMilli = getEpochLastModified(result);
-        if (request.checkNotModified(lastModifiedEpochMilli)) {
+        DistrictData result = districtDataService.getDistrictDataByGeoCode(geoCode);
+        if (hasBeenModifiedSince(result, request)) {
             return ResponseEntity.status(304).build();
         }
         return ResponseEntity.ok()
-                .cacheControl(getCacheControl())
-                .lastModified(lastModifiedEpochMilli)
+                .cacheControl(getCacheControlDistrictData())
+                .lastModified(getEpochLastModified(result))
                 .body(result);
     }
 
-    @GetMapping(value = "/districts/name/{name}", produces = "application/json")
-    public ResponseEntity<DistrictDataDTO> getDistrictDataByName(@PathVariable String name, WebRequest request) {
-        logger.debug("Processing GetRequest --> " + name + " DistrictData");
-        DistrictDataDTO result = districtDataService.getDistrictDataByName(name);
-        long lastModifiedEpochMilli = getEpochLastModified(result);
+    @GetMapping(value = "/name/{name}", produces = "application/json")
+    public ResponseEntity<DistrictData> getDistrictDataByName(@PathVariable String name, WebRequest request) {
+        logger.debug("Processing Get Request --> district: " + name);
 
-        if (request.checkNotModified(lastModifiedEpochMilli)) {
+        DistrictData result = districtDataService.getDistrictDataByName(name);
+        if (hasBeenModifiedSince(result, request)) {
             return ResponseEntity.status(304).build();
         }
         return ResponseEntity.ok()
-                .cacheControl(getCacheControl())
-                .lastModified(lastModifiedEpochMilli)
+                .cacheControl(getCacheControlDistrictData())
+                .lastModified(getEpochLastModified(result))
                 .body(result);
     }
 
-    @GetMapping(value = "/districts/names", produces = "application/json")
-    public ResponseEntity<List<String>> getDistrictNames() {
-        logger.debug("Processing GetRequest --> District Names");
-        CacheControl cacheControl = CacheControl.maxAge(7, TimeUnit.DAYS)
-                .noTransform()
-                .mustRevalidate();
+    @GetMapping(value = "/names+geocodes", produces = "application/json")
+    public ResponseEntity<Map<String, String>> getNamesAndGeocodes() {
+        logger.debug("Processing Get Request --> Names and Geocodes");
         return ResponseEntity.ok()
-                .cacheControl(cacheControl)
-                .body(districtDataService.getDistrictNames());
+                .cacheControl(getCacheControlNamesAndGeocodes())
+                .body(districtDataService.getDistrictGeoCodesAndNames());
     }
 
+    private boolean hasBeenModifiedSince(DistrictData dataDTO, WebRequest request) {
+        long lastModifiedEpochMilli = getEpochLastModified(dataDTO);
+        return request.checkNotModified(lastModifiedEpochMilli);
+    }
 
-    private CacheControl getCacheControl() {
+    private CacheControl getCacheControlDistrictData() {
         CacheControl cacheControl = CacheControl.maxAge(60, TimeUnit.SECONDS)
                 .mustRevalidate()
                 .noTransform();
         return cacheControl;
     }
 
-    private long getEpochLastModified(DistrictDataDTO districtData) {
-        LocalDate lastModified = districtData.getLastReported();
+    private CacheControl getCacheControlNamesAndGeocodes() {
+        return CacheControl.maxAge(7, TimeUnit.DAYS)
+                .noTransform()
+                .mustRevalidate();
+    }
+
+    private long getEpochLastModified(DistrictData districtData) {
+        LocalDate lastModified = districtData.getLastUpdated();
         ZoneId zoneId = ZoneId.of("Europe/Paris");
         long epochLastModified = lastModified.atStartOfDay(zoneId).toInstant().toEpochMilli();
         return epochLastModified;
