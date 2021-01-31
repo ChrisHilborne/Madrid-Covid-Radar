@@ -18,16 +18,16 @@ class DailyRecordMapperTest {
     void process() {
         //given
         DailyRecord one = new DailyRecord();
-        one.setMunicipalDistrict("one");
+        one.setHealthWard("one");
         DailyRecord two = new DailyRecord();
-        two.setMunicipalDistrict("two");
+        two.setHealthWard("two");
         List<DailyRecord> testData = new ArrayList<>();
         testData.add(one);
         testData.add(two);
 
         for (int i = 0; i < 19; i++) {
             DailyRecord dailyRecord = new DailyRecord();
-            dailyRecord.setMunicipalDistrict("District no." + i);
+            dailyRecord.setHealthWard("District no." + i);
             testData.add(dailyRecord);
         }
 

@@ -20,15 +20,15 @@ public class DataFetcherScheduler {
     @EventListener
     public void initialiseDataOnStartUp(ContextRefreshedEvent event) {
         logger.debug("Initialising data...");
-        dataFetcher.fetchData(DataFetchType.INIT);
-        dataFetcher.fetchData(DataFetchType.UPDATE);
+        dataFetcher.fetchData(DataFetchAction.INIT);
+        dataFetcher.fetchData(DataFetchAction.UPDATE);
         logger.debug("Data Initialised");
     }
 
     @Scheduled(cron = "0 0 6,9,12,15,18,21 ? * *")
     public void updateData() {
         logger.debug("Updating data...");
-        dataFetcher.fetchData(DataFetchType.UPDATE);
+        dataFetcher.fetchData(DataFetchAction.UPDATE);
         logger.debug("Data updated.");
     }
 

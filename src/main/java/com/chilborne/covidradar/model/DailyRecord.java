@@ -28,7 +28,7 @@ public class DailyRecord {
     private String geoCode;
     @NotBlank
     @JsonProperty("zona_basica_salud")
-    private String municipalDistrict;
+    private String healthWard;
     @PositiveOrZero
     @JsonProperty("tasa_incidencia_acumulada_ultimos_14dias")
     private double infectionRateLastTwoWeeks;
@@ -50,7 +50,7 @@ public class DailyRecord {
     public DailyRecord() {}
 
     public void generateId() {
-        this.id = this.municipalDistrict + "::" + this.dateReported.toString();
+        this.id = this.healthWard + "::" + this.dateReported.toString();
     }
 
     public String getId() {
@@ -73,12 +73,12 @@ public class DailyRecord {
         this.dateReported = dateReported;
     }
 
-    public String getMunicipalDistrict() {
-        return municipalDistrict;
+    public String getHealthWard() {
+        return healthWard;
     }
 
-    public void setMunicipalDistrict(String municipalDistrict) {
-        this.municipalDistrict = municipalDistrict;
+    public void setHealthWard(String healthWard) {
+        this.healthWard = healthWard;
     }
 
     public double getInfectionRateLastTwoWeeks() {
@@ -129,7 +129,7 @@ public class DailyRecord {
         if (totalCases != that.totalCases) return false;
         if (casesLastTwoWeeks != that.casesLastTwoWeeks) return false;
         if (geoCode != null ? !geoCode.equals(that.geoCode) : that.geoCode != null) return false;
-        if (municipalDistrict != null ? !municipalDistrict.equals(that.municipalDistrict) : that.municipalDistrict != null)
+        if (healthWard != null ? !healthWard.equals(that.healthWard) : that.healthWard != null)
             return false;
         return dateReported != null ? dateReported.equals(that.dateReported) : that.dateReported == null;
     }
@@ -139,7 +139,7 @@ public class DailyRecord {
         int result;
         long temp;
         result = geoCode != null ? geoCode.hashCode() : 0;
-        result = 31 * result + (municipalDistrict != null ? municipalDistrict.hashCode() : 0);
+        result = 31 * result + (healthWard != null ? healthWard.hashCode() : 0);
         temp = Double.doubleToLongBits(infectionRateLastTwoWeeks);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         temp = Double.doubleToLongBits(infectionRateTotal);
@@ -154,7 +154,7 @@ public class DailyRecord {
     public String toString() {
         return "DailyRecord{" +
                 "geoCode='" + geoCode + '\'' +
-                ", municipalDistrict='" + municipalDistrict + '\'' +
+                ", municipalDistrict='" + healthWard + '\'' +
                 ", infectionRateLastTwoWeeks=" + infectionRateLastTwoWeeks +
                 ", infectionRateTotal=" + infectionRateTotal +
                 ", totalCases=" + totalCases +

@@ -26,7 +26,7 @@ public class HttpDailyRecordFetcher implements DataFetcher {
 
 
     private final HttpClient httpClient;
-    private final Map<DataFetchType, URI> uriMap;
+    private final Map<DataFetchAction, URI> uriMap;
     private final NewDataEventPublisher newDataEventPublisher;
     private final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.RFC_1123_DATE_TIME;
 
@@ -35,7 +35,7 @@ public class HttpDailyRecordFetcher implements DataFetcher {
     private final Logger logger = LoggerFactory.getLogger(DataFetcher.class);
 
     public HttpDailyRecordFetcher(HttpClient httpClient,
-                                  Map<DataFetchType, URI> uriMap,
+                                  Map<DataFetchAction, URI> uriMap,
                                   NewDataEventPublisher newDataEventPublisher) {
         this.httpClient = httpClient;
         this.uriMap = uriMap;
@@ -43,7 +43,7 @@ public class HttpDailyRecordFetcher implements DataFetcher {
     }
 
     @Override
-    public void fetchData(DataFetchType type)  {
+    public void fetchData(DataFetchAction type)  {
         logger.debug("Fetching data...");
         HttpRequest httpRequest = buildHttpRequest(type);
         HttpResponse<String> httpResponse = makeHttpRequest(httpRequest);
@@ -72,7 +72,7 @@ public class HttpDailyRecordFetcher implements DataFetcher {
         }
     }
 
-    private HttpRequest buildHttpRequest(DataFetchType type) {
+    private HttpRequest buildHttpRequest(DataFetchAction type) {
         logger.debug("Building HttpRequest type: " + type);
         if (lastModified != null) {
             return HttpRequest

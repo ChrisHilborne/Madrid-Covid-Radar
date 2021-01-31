@@ -41,21 +41,22 @@ public class DailyRecordServiceImpl implements DailyRecordService {
     }
 
     @Override
-    public List<DailyRecord> getDailyRecordsByMunicipalDistrict(String municipalDistrict) {
-        logger.debug("Fetching DailyRecords for municipalDistrict: " + municipalDistrict);
-        List<DailyRecord> results = dailyRecordRepository.findByMunicipalDistrict(municipalDistrict);
+    public List<DailyRecord> getDailyRecordsByHealthWard(String healthWard) {
+        logger.debug("Fetching DailyRecords for health ward: " + healthWard);
+        List<DailyRecord> results = dailyRecordRepository.findByHealthWard(healthWard);
         if (results.isEmpty()) {
-            logger.error("No data for municipalDistrict " + municipalDistrict + " found");
-            throw new DataNotFoundException("No dat for municipalDistrict " + municipalDistrict);
+            logger.error("No data for health ward " + healthWard + " found");
+            throw new DataNotFoundException("No data for health ward " + healthWard);
         }
         return results;
     }
 
     @Override
     @CacheEvict( {
-            "districtData-all",
-            "districtData-geoCode",
-            "districtData-district",
+            "healthWard-all",
+            "healthWard-name",
+            "healthWard-geoCode",
+            "namesAndGeoCodes"
     })
     public List<DailyRecord> save(List<DailyRecord> dailyRecordList) {
         logger.debug("Saving dailyRecordList (hashcode: " + dailyRecordList.hashCode() +")");

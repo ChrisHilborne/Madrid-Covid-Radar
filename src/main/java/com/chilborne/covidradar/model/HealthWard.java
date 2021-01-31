@@ -7,7 +7,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 
-public class DistrictData {
+public class HealthWard {
 
     @NotBlank
     @Size(max = 100)
@@ -22,10 +22,10 @@ public class DistrictData {
     @NotEmpty
     private List<DailyRecordDTO> dailyRecords;
 
-    public DistrictData(List<DailyRecord> dailyRecords) {
+    public HealthWard(List<DailyRecord> dailyRecords) {
         DailyRecord lastRecord = dailyRecords.get(dailyRecords.size() - 1);
         this.geoCode = lastRecord.getGeoCode();
-        this.name = lastRecord.getMunicipalDistrict();
+        this.name = lastRecord.getHealthWard();
         this.totalCases = lastRecord.getTotalCases();
         this.lastUpdated = lastRecord.getDateReported();
         this.dailyRecords = dailyRecords
@@ -34,7 +34,7 @@ public class DistrictData {
                 .collect(Collectors.toList());
     }
 
-    public DistrictData() {
+    public HealthWard() {
     }
 
     public String getName() { return name; }
@@ -76,7 +76,7 @@ public class DistrictData {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        DistrictData that = (DistrictData) o;
+        HealthWard that = (HealthWard) o;
 
         if (totalCases != that.totalCases) return false;
         if (!Objects.equals(geoCode, that.geoCode)) return false;

@@ -1,6 +1,6 @@
 package com.chilborne.covidradar.config;
 
-import com.chilborne.covidradar.data.collection.DataFetchType;
+import com.chilborne.covidradar.data.collection.DataFetchAction;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,10 +28,10 @@ public class HttpDailyRecordFetcherConfig {
     }
 
     @Bean
-    public Map<DataFetchType, URI> uriMap() {
-        HashMap<DataFetchType, URI> uriMap = new HashMap<>();
-        uriMap.put(DataFetchType.INIT, URI.create(init));
-        uriMap.put(DataFetchType.UPDATE, URI.create(update));
+    public Map<DataFetchAction, URI> uriMap() {
+        HashMap<DataFetchAction, URI> uriMap = new HashMap<>();
+        uriMap.put(DataFetchAction.INIT, URI.create(init));
+        uriMap.put(DataFetchAction.UPDATE, URI.create(update));
         return uriMap;
     }
 

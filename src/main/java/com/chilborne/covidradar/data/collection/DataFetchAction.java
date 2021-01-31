@@ -1,6 +1,6 @@
 package com.chilborne.covidradar.data.collection;
 
-public enum DataFetchType {
+public enum DataFetchAction {
     INIT,
     UPDATE
 }

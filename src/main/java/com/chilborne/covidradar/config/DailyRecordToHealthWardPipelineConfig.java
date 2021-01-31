@@ -8,15 +8,15 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class DistrictDataPipelineConfig {
+public class DailyRecordToHealthWardPipelineConfig {
 
     private final DailyRecordSorter sorter;
     private final DailyRecordMapper mapper;
     private final DailyRecordConverter converter;
 
-    public DistrictDataPipelineConfig(DailyRecordSorter sorter,
-                                      DailyRecordMapper mapper,
-                                      DailyRecordConverter converter) {
+    public DailyRecordToHealthWardPipelineConfig(DailyRecordSorter sorter,
+                                                 DailyRecordMapper mapper,
+                                                 DailyRecordConverter converter) {
         this.sorter = sorter;
         this.mapper = mapper;
         this.converter = converter;

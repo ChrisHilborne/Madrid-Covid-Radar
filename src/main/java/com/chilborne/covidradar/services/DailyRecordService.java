@@ -11,7 +11,7 @@ public interface DailyRecordService  {
 
     List<DailyRecord> getAll();
 
-    List<DailyRecord> getDailyRecordsByMunicipalDistrict(String municipalDistrict);
+    List<DailyRecord> getDailyRecordsByHealthWard(String municipalDistrict);
 
     List<DailyRecord> save(List<DailyRecord> dailyRecordList);
 
