@@ -12,12 +12,12 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class DailyRecordPipeline {
+public class DailyRecordProcessingPipeline {
 
     private final Pipeline<String, List<DailyRecord>> pipeline;
-    private final Logger logger = LoggerFactory.getLogger(DailyRecordPipeline.class);
+    private final Logger logger = LoggerFactory.getLogger(DailyRecordProcessingPipeline.class);
 
-    public DailyRecordPipeline(@Qualifier("dailyRecord-Pipeline") Pipeline pipeline) {
+    public DailyRecordProcessingPipeline(@Qualifier("dailyRecord-Pipeline") Pipeline pipeline) {
         this.pipeline = pipeline;
     }
 
