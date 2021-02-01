@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class DailyRecordTest {
 
-    
+
     @Test
     void generateId() {
         //given
