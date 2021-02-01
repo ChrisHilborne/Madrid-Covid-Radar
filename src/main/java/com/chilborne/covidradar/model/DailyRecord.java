@@ -50,7 +50,7 @@ public class DailyRecord {
     public DailyRecord() {}
 
     public void generateId() {
-        this.id = this.healthWard + "::" + this.dateReported.toString();
+        this.id = healthWard + "::" + dateReported.toString();
     }
 
     public String getId() {
