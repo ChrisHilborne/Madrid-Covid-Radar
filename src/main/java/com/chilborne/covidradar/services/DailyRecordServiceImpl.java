@@ -1,6 +1,7 @@
 package com.chilborne.covidradar.services;
 
 import com.chilborne.covidradar.exceptions.DataNotFoundException;
+import com.chilborne.covidradar.exceptions.DataSaveException;
 import com.chilborne.covidradar.model.DailyRecord;
 import com.chilborne.covidradar.repository.DailyRecordRepository;
 import org.slf4j.Logger;
@@ -26,16 +27,21 @@ public class DailyRecordServiceImpl implements DailyRecordService {
     public DailyRecord save(DailyRecord dailyRecord) {
         logger.debug("Saving dailyRecord id: " + dailyRecord.getId());
         dailyRecord.generateId();
-        return dailyRecordRepository.save(dailyRecord);
+        DailyRecord saved = dailyRecordRepository.save(dailyRecord);
+        if (saved.equals(dailyRecord)) {
+            return saved;
+        } else {
+            throw new DataSaveException("Failed to save DailyRecord id: " + dailyRecord.getId());
+        }
     }
 
     @Override
     public List<DailyRecord> getAll() {
-        logger.debug("Fetching All DailyRecords...");
+        logger.debug("Fetching all DailyRecords...");
         List<DailyRecord> results = dailyRecordRepository.findAll();
         if (results.isEmpty()) {
             logger.error("No DailyRecords found.");
-            throw new DataNotFoundException("No data found.");
+            throw new DataNotFoundException("No Daily Records found.");
         }
         return results;
     }
@@ -45,14 +51,14 @@ public class DailyRecordServiceImpl implements DailyRecordService {
         logger.debug("Fetching DailyRecords for health ward: " + healthWard);
         List<DailyRecord> results = dailyRecordRepository.findByHealthWard(healthWard);
         if (results.isEmpty()) {
-            logger.error("No data for health ward " + healthWard + " found");
-            throw new DataNotFoundException("No data for health ward " + healthWard);
+            logger.error("No data found for healthward: " + healthWard);
+            throw new DataNotFoundException("No data found for health ward: " + healthWard);
         }
         return results;
     }
 
     @Override
-    @CacheEvict( {
+    @CacheEvict({
             "healthWard-all",
             "healthWard-name",
             "healthWard-geoCode",
@@ -68,10 +74,9 @@ public class DailyRecordServiceImpl implements DailyRecordService {
         });
         if (!savedList.equals(dailyRecordList)) {
             logger.error("dailyRecordList to save and returned list to not match.");
-            throw new RuntimeException("Error when saving dailyRecordList.");
+            throw new DataSaveException("Error when saving dailyRecordList (hashcode " + dailyRecordList.hashCode() + ")");
         }
         return savedList;
-
     }
 
     @Override
@@ -79,7 +84,8 @@ public class DailyRecordServiceImpl implements DailyRecordService {
         logger.debug("Fetching DailyRecords for GeoCode: " + geoCode);
         List<DailyRecord> results = dailyRecordRepository.findByGeoCode(geoCode);
         if (results.isEmpty()) {
-            logger.error("Results are empty for GeoCode: " + geoCode);
+            logger.error("No data found for geocode: " + geoCode);
+            throw new DataNotFoundException("No data found for geocode: " + geoCode);
         }
         return results;
     }
@@ -88,7 +94,7 @@ public class DailyRecordServiceImpl implements DailyRecordService {
     public DailyRecord getDailyRecordByGeoCodeAndDate(String geoCode, LocalDate date) {
         return dailyRecordRepository
                 .findByGeoCodeAndDateReported(geoCode, date)
-                .orElseThrow(() -> new DataNotFoundException("No Data Found for GeoCode " + geoCode + " and date" + date.toString()));
+                .orElseThrow(() -> new DataNotFoundException("No data found for geocode: " + geoCode + " and dateReported: " + date.toString()));
 
     }
 
