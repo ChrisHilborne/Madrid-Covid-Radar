@@ -16,7 +16,7 @@ public class DailyRecordsToHealthWardPipeline {
 
     private final Logger logger = LoggerFactory.getLogger(DailyRecordsToHealthWardPipeline.class);
 
-    public DailyRecordsToHealthWardPipeline(@Qualifier("districtData-Pipeline") Pipeline pipeline) {
+    public DailyRecordsToHealthWardPipeline(@Qualifier("healthWard-Pipeline") Pipeline pipeline) {
         this.pipeline = pipeline;
     }
 

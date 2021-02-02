@@ -41,7 +41,7 @@ public class HealthWardServiceImpl implements HealthWardService {
         logger.debug("Fetching Data for: " + name);
         List<DailyRecord> dailyRecords = healthWardService.getDailyRecordsByHealthWard(name);
 
-        return new HealthWard(dailyRecords);
+        return healthWardPipeline.startPipeline(dailyRecords).get(0);
     }
 
     @Override
@@ -50,7 +50,7 @@ public class HealthWardServiceImpl implements HealthWardService {
         logger.debug("Fetching data for GeoCode: " + geoCode);
         List<DailyRecord> dailyRecords = healthWardService.getDailyRecordsByGeoCode(geoCode);
 
-        return new HealthWard(dailyRecords);
+        return healthWardPipeline.startPipeline(dailyRecords).get(0);
     }
 
     @Override

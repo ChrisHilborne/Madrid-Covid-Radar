@@ -22,7 +22,7 @@ public class DailyRecordToHealthWardPipelineConfig {
         this.converter = converter;
     }
 
-    @Bean("districtData-Pipeline")
+    @Bean("healthWard-Pipeline")
     public Pipeline pipeline() {
         return new Pipeline(sorter)
                 .pipe(mapper)
