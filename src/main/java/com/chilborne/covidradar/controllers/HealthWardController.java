@@ -95,8 +95,8 @@ public class HealthWardController {
                 .mustRevalidate();
     }
 
-    private long getEpochLastModified(HealthWard districtData) {
-        LocalDate lastModified = districtData.getLastUpdated();
+    private long getEpochLastModified(HealthWard HealthWard) {
+        LocalDate lastModified = HealthWard.getLastUpdated();
         ZoneId zoneId = ZoneId.of("Europe/Paris");
         long epochLastModified = lastModified.atStartOfDay(zoneId).toInstant().toEpochMilli();
         return epochLastModified;

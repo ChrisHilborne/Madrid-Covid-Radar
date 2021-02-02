@@ -47,7 +47,7 @@ class HealthWardControllerTest {
     }
 
     @Test
-    void getAllDistrictData_StatusIsOK() throws Exception {
+    void getAllHealthWards_StatusIsOK() throws Exception {
         //given
         HealthWard testHealthWard = new HealthWard();
         testHealthWard.setName("test");
@@ -70,7 +70,7 @@ class HealthWardControllerTest {
     }
 
     @Test
-    void getAllDistrictData_StatusIs304() throws Exception {
+    void getAllHealthWard_StatusIs304() throws Exception {
         //given
         HealthWard testHealthWard = new HealthWard();
         testHealthWard.setName("test");
@@ -92,7 +92,7 @@ class HealthWardControllerTest {
     }
 
     @Test
-    void getAllDistrictData_StatusIsNotFound() throws Exception {
+    void getAllHealthWard_StatusIsNotFound() throws Exception {
         //when
         when(healthWardServiceService.getAllHealthWards()).thenThrow(new DataNotFoundException("Data Not Found"));
 
@@ -104,7 +104,7 @@ class HealthWardControllerTest {
     }
 
     @Test
-    void getDistrictDataByGeoCode_StatusIsOK() throws Exception {
+    void getHealthWardByGeoCode_StatusIsOK() throws Exception {
         //given
         HealthWard testHealthWard = new HealthWard();
         testHealthWard.setGeoCode("geoCode");
@@ -127,7 +127,7 @@ class HealthWardControllerTest {
     }
 
     @Test
-    void getDistrictDataByGeoCode_StatusIs304() throws Exception {
+    void getHealthWardByGeoCode_StatusIs304() throws Exception {
         //given
         HealthWard testHealthWard = new HealthWard();
         testHealthWard.setGeoCode("geoCode");
@@ -149,7 +149,7 @@ class HealthWardControllerTest {
     }
 
     @Test
-    void getDistrictDataByGeoCode_StatusIsNotFound() throws Exception {
+    void getHealthWardByGeoCode_StatusIsNotFound() throws Exception {
         //when
         when(healthWardServiceService.getHealthWardByGeoCode("null")).thenThrow(new DataNotFoundException("Data Not Found"));
 
@@ -161,7 +161,7 @@ class HealthWardControllerTest {
     }
 
     @Test
-    void getDistrictDataByName_StatusIsOK() throws Exception {
+    void getHealthWardByName_StatusIsOK() throws Exception {
         //given
         HealthWard testHealthWard = new HealthWard();
         testHealthWard.setName("name");
@@ -184,7 +184,7 @@ class HealthWardControllerTest {
     }
 
     @Test
-    void getDistrictDataByName_StatusIsNotFound() throws Exception {
+    void getHealthWardByName_StatusIsNotFound() throws Exception {
         //when
         when(healthWardServiceService.getHealthWardByName("null")).thenThrow(new DataNotFoundException("Data Not Found"));
 
@@ -196,7 +196,7 @@ class HealthWardControllerTest {
     }
 
     @Test
-    void getDistrictDataByName_StatusIs304() throws Exception {
+    void getHealthWardByName_StatusIs304() throws Exception {
         //given
         HealthWard testHealthWard = new HealthWard();
         testHealthWard.setName("name");

@@ -97,7 +97,7 @@ public class HealthWard {
 
     @Override
     public String toString() {
-        return "DistrictData{" +
+        return "HealthWard{" +
                 "geoCode='" + geoCode + '\'' +
                 ", name='" + name + '\'' +
                 ", totalCases=" + totalCases +

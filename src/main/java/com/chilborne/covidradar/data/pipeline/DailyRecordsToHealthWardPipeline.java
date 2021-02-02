@@ -21,7 +21,7 @@ public class DailyRecordsToHealthWardPipeline {
     }
 
     public List<HealthWard> startPipeline(List<DailyRecord> dailyRecords) {
-        logger.debug("Starting to convert dailyRecords (hashcode: " + dailyRecords.hashCode() + ") to DistrictData");
+        logger.debug("Starting to convert dailyRecords (hashcode: " + dailyRecords.hashCode() + ") to HealthWard");
 
         return pipeline.execute(dailyRecords);
     }

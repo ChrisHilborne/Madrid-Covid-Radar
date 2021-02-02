@@ -17,14 +17,14 @@ public class DailyRecordConverter implements Step<Map<String, List<DailyRecord>>
 
     @Override
     public List<HealthWard> process(Map<String, List<DailyRecord>> input) {
-        logger.debug("Converting Mapped DailyRecord objects to DistrictData objects...");
-        List<HealthWard> districtData = input
+        logger.debug("Converting Mapped DailyRecord objects to HealthWard objects...");
+        List<HealthWard> HealthWard = input
                 .values()
                 .stream()
                 .map(HealthWard::new)
                 .collect(Collectors.toList());
 
-        logger.debug("Finished converting DailyRecord data into " + districtData.size() + "districtData objects.");
-        return districtData;
+        logger.debug("Finished converting DailyRecord data into " + HealthWard.size() + "HealthWard objects.");
+        return HealthWard;
     }
 }
