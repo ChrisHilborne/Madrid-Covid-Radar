@@ -5,7 +5,6 @@ import com.chilborne.covidradar.exceptions.DataFetchException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Primary;
-import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 
@@ -21,7 +20,6 @@ import java.util.Map;
 
 @Component
 @Primary
-@Profile(value = "dynamic")
 public class HttpDailyRecordFetcher implements DataFetcher {
 
 
