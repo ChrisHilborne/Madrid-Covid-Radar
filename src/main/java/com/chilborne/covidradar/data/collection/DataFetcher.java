@@ -6,3 +6,4 @@ public interface DataFetcher {
 
     void publishData(String data);
 }
+
