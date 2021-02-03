@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DailyRecord.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Covid Radar</a> &gt; <a href="index.source.html" class="el_package">com.chilborne.covidradar.model</a> &gt; <span class="el_source">DailyRecord.java</span></div><h1>DailyRecord.java</h1><pre class="source lang-java linenums">package com.chilborne.covidradar.model;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.PositiveOrZero;
+import java.time.LocalDate;
+
+/**
+ * @Author Chris Hilborne
+ */
+
+@Document(collection = &quot;daily_records&quot;)
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class DailyRecord {
+
+    @Id
+    @Indexed(unique = true)
+    private String id;
+    @NotBlank
+    @JsonProperty(&quot;codigo_geometria&quot;)
+    private String geoCode;
+    @NotBlank
+    @JsonProperty(&quot;zona_basica_salud&quot;)
+    private String healthWard;
+    @PositiveOrZero
+    @JsonProperty(&quot;tasa_incidencia_acumulada_ultimos_14dias&quot;)
+    private double infectionRateLastTwoWeeks;
+    @PositiveOrZero
+    @JsonProperty(&quot;tasa_incidencia_acumulada_total&quot;)
+    private double infectionRateTotal;
+    @PositiveOrZero
+    @JsonProperty(&quot;casos_confirmados_totales&quot;)
+    private int totalCases;
+    @PositiveOrZero
+    @JsonProperty(&quot;casos_confirmados_ultimos_14dias&quot;)
+    private int casesLastTwoWeeks;
+    @Past
+    @JsonProperty(&quot;fecha_informe&quot;)
+    @JsonFormat(pattern = &quot;yyyy/MM/dd HH:mm:ss&quot;)
+    private LocalDate dateReported;
+
+
+<span class="fc" id="L50">    public DailyRecord() {}</span>
+
+    public void generateId() {
+<span class="fc" id="L53">        this.id = healthWard + &quot;::&quot; + dateReported.toString();</span>
+<span class="fc" id="L54">    }</span>
+
+    public String getId() {
+<span class="fc" id="L57">        return id;</span>
+    }
+
+    public String getGeoCode() {
+<span class="fc" id="L61">        return geoCode;</span>
+    }
+
+    public void setGeoCode(String geoCode) {
+<span class="fc" id="L65">        this.geoCode = geoCode;</span>
+<span class="fc" id="L66">    }</span>
+
+    public LocalDate getDateReported() {
+<span class="fc" id="L69">        return dateReported;</span>
+    }
+
+    public void setDateReported(LocalDate dateReported) {
+<span class="fc" id="L73">        this.dateReported = dateReported;</span>
+<span class="fc" id="L74">    }</span>
+
+    public String getHealthWard() {
+<span class="fc" id="L77">        return healthWard;</span>
+    }
+
+    public void setHealthWard(String healthWard) {
+<span class="fc" id="L81">        this.healthWard = healthWard;</span>
+<span class="fc" id="L82">    }</span>
+
+    public double getInfectionRateLastTwoWeeks() {
+<span class="fc" id="L85">        return infectionRateLastTwoWeeks;</span>
+    }
+
+    public void setInfectionRateLastTwoWeeks(double infectionRateLastTwoWeeks) {
+<span class="fc" id="L89">        this.infectionRateLastTwoWeeks = infectionRateLastTwoWeeks;</span>
+<span class="fc" id="L90">    }</span>
+
+    public double getInfectionRateTotal() {
+<span class="fc" id="L93">        return infectionRateTotal;</span>
+    }
+
+    public void setInfectionRateTotal(double infectionRateTotal) {
+<span class="fc" id="L97">        this.infectionRateTotal = infectionRateTotal;</span>
+<span class="fc" id="L98">    }</span>
+
+    public int getTotalCases() {
+<span class="fc" id="L101">        return totalCases;</span>
+    }
+
+    public void setTotalCases(int totalCases) {
+<span class="fc" id="L105">        this.totalCases = totalCases;</span>
+<span class="fc" id="L106">    }</span>
+
+    public int getCasesLastTwoWeeks() {
+<span class="fc" id="L109">        return casesLastTwoWeeks;</span>
+    }
+
+    public void setCasesLastTwoWeeks(int casesLastTwoWeeks) {
+<span class="fc" id="L113">        this.casesLastTwoWeeks = casesLastTwoWeeks;</span>
+<span class="fc" id="L114">    }</span>
+
+    public void setId(String id) {
+<span class="nc" id="L117">        this.id = id;</span>
+<span class="nc" id="L118">    }</span>
+
+    @Override
+    public boolean equals(Object o) {
+<span class="fc bfc" id="L122" title="All 2 branches covered.">        if (this == o) return true;</span>
+<span class="pc bpc" id="L123" title="2 of 4 branches missed.">        if (o == null || getClass() != o.getClass()) return false;</span>
+
+<span class="fc" id="L125">        DailyRecord that = (DailyRecord) o;</span>
+
+<span class="pc bpc" id="L127" title="1 of 2 branches missed.">        if (Double.compare(that.infectionRateLastTwoWeeks, infectionRateLastTwoWeeks) != 0) return false;</span>
+<span class="pc bpc" id="L128" title="1 of 2 branches missed.">        if (Double.compare(that.infectionRateTotal, infectionRateTotal) != 0) return false;</span>
+<span class="pc bpc" id="L129" title="1 of 2 branches missed.">        if (totalCases != that.totalCases) return false;</span>
+<span class="pc bpc" id="L130" title="1 of 2 branches missed.">        if (casesLastTwoWeeks != that.casesLastTwoWeeks) return false;</span>
+<span class="pc bpc" id="L131" title="2 of 6 branches missed.">        if (geoCode != null ? !geoCode.equals(that.geoCode) : that.geoCode != null) return false;</span>
+<span class="pc bpc" id="L132" title="2 of 6 branches missed.">        if (healthWard != null ? !healthWard.equals(that.healthWard) : that.healthWard != null)</span>
+<span class="fc" id="L133">            return false;</span>
+<span class="pc bpc" id="L134" title="3 of 4 branches missed.">        return dateReported != null ? dateReported.equals(that.dateReported) : that.dateReported == null;</span>
+    }
+
+    @Override
+    public int hashCode() {
+        int result;
+        long temp;
+<span class="fc bfc" id="L141" title="All 2 branches covered.">        result = geoCode != null ? geoCode.hashCode() : 0;</span>
+<span class="pc bpc" id="L142" title="1 of 2 branches missed.">        result = 31 * result + (healthWard != null ? healthWard.hashCode() : 0);</span>
+<span class="fc" id="L143">        temp = Double.doubleToLongBits(infectionRateLastTwoWeeks);</span>
+<span class="fc" id="L144">        result = 31 * result + (int) (temp ^ (temp &gt;&gt;&gt; 32));</span>
+<span class="fc" id="L145">        temp = Double.doubleToLongBits(infectionRateTotal);</span>
+<span class="fc" id="L146">        result = 31 * result + (int) (temp ^ (temp &gt;&gt;&gt; 32));</span>
+<span class="fc" id="L147">        result = 31 * result + totalCases;</span>
+<span class="fc" id="L148">        result = 31 * result + casesLastTwoWeeks;</span>
+<span class="fc bfc" id="L149" title="All 2 branches covered.">        result = 31 * result + (dateReported != null ? dateReported.hashCode() : 0);</span>
+<span class="fc" id="L150">        return result;</span>
+    }
+
+    @Override
+    public String toString() {
+<span class="nc" id="L155">        return &quot;DailyRecord{&quot; +</span>
+                &quot;geoCode='&quot; + geoCode + '\'' +
+                &quot;, municipalDistrict='&quot; + healthWard + '\'' +
+                &quot;, infectionRateLastTwoWeeks=&quot; + infectionRateLastTwoWeeks +
+                &quot;, infectionRateTotal=&quot; + infectionRateTotal +
+                &quot;, totalCases=&quot; + totalCases +
+                &quot;, casesLastTwoWeeks=&quot; + casesLastTwoWeeks +
+                &quot;, dateReported=&quot; + dateReported +
+                '}';
+    }
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

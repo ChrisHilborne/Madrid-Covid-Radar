@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>HealthWard.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Covid Radar</a> &gt; <a href="index.source.html" class="el_package">com.chilborne.covidradar.model</a> &gt; <span class="el_source">HealthWard.java</span></div><h1>HealthWard.java</h1><pre class="source lang-java linenums">package com.chilborne.covidradar.model;
+
+import javax.validation.constraints.*;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
+
+
+public class HealthWard {
+
+    @NotBlank
+    @Size(max = 100)
+    private String geoCode;
+    @NotBlank
+    @Size(max = 100)
+    private String name;
+    @PositiveOrZero
+    private int totalCases;
+    @Past
+    private LocalDate lastUpdated;
+    @NotEmpty
+    private List&lt;DailyRecordDTO&gt; dailyRecords;
+
+<span class="fc" id="L25">    public HealthWard(List&lt;DailyRecord&gt; dailyRecords) {</span>
+<span class="fc" id="L26">        DailyRecord lastRecord = dailyRecords.get(dailyRecords.size() - 1);</span>
+<span class="fc" id="L27">        this.geoCode = lastRecord.getGeoCode();</span>
+<span class="fc" id="L28">        this.name = lastRecord.getHealthWard();</span>
+<span class="fc" id="L29">        this.totalCases = lastRecord.getTotalCases();</span>
+<span class="fc" id="L30">        this.lastUpdated = lastRecord.getDateReported();</span>
+<span class="fc" id="L31">        this.dailyRecords = dailyRecords</span>
+<span class="fc" id="L32">                .stream()</span>
+<span class="fc" id="L33">                .map(DailyRecordDTO::new)</span>
+<span class="fc" id="L34">                .collect(Collectors.toList());</span>
+<span class="fc" id="L35">    }</span>
+
+<span class="fc" id="L37">    public HealthWard() {</span>
+<span class="fc" id="L38">    }</span>
+
+<span class="fc" id="L40">    public String getName() { return name; }</span>
+
+    public String getGeoCode() {
+<span class="fc" id="L43">        return geoCode;</span>
+    }
+
+    public void setGeoCode(String geoCode) {
+<span class="fc" id="L47">        this.geoCode = geoCode;</span>
+<span class="fc" id="L48">    }</span>
+
+<span class="fc" id="L50">    public List&lt;DailyRecordDTO&gt; getDailyRecords() { return dailyRecords; }</span>
+
+<span class="nc" id="L52">    public void setDailyRecords(List&lt;DailyRecordDTO&gt; dailyRecords) { this.dailyRecords = dailyRecords; }</span>
+
+    public void setName(String name) {
+<span class="fc" id="L55">        this.name = name;</span>
+<span class="fc" id="L56">    }</span>
+
+    public int getTotalCases() {
+<span class="fc" id="L59">        return totalCases;</span>
+    }
+
+    public void setTotalCases(int totalCases) {
+<span class="nc" id="L63">        this.totalCases = totalCases;</span>
+<span class="nc" id="L64">    }</span>
+
+    public LocalDate getLastUpdated() {
+<span class="fc" id="L67">        return lastUpdated;</span>
+    }
+
+    public void setLastUpdated(LocalDate lastUpdated) {
+<span class="fc" id="L71">        this.lastUpdated = lastUpdated;</span>
+<span class="fc" id="L72">    }</span>
+
+    @Override
+    public boolean equals(Object o) {
+<span class="fc bfc" id="L76" title="All 2 branches covered.">        if (this == o) return true;</span>
+<span class="pc bpc" id="L77" title="2 of 4 branches missed.">        if (o == null || getClass() != o.getClass()) return false;</span>
+
+<span class="fc" id="L79">        HealthWard that = (HealthWard) o;</span>
+
+<span class="pc bpc" id="L81" title="1 of 2 branches missed.">        if (totalCases != that.totalCases) return false;</span>
+<span class="pc bpc" id="L82" title="1 of 2 branches missed.">        if (!Objects.equals(geoCode, that.geoCode)) return false;</span>
+<span class="pc bpc" id="L83" title="1 of 2 branches missed.">        if (!Objects.equals(name, that.name)) return false;</span>
+<span class="pc bpc" id="L84" title="1 of 2 branches missed.">        if (!Objects.equals(lastUpdated, that.lastUpdated)) return false;</span>
+<span class="fc" id="L85">        return Objects.equals(dailyRecords, that.dailyRecords);</span>
+    }
+
+    @Override
+    public int hashCode() {
+<span class="nc bnc" id="L90" title="All 2 branches missed.">        int result = geoCode != null ? geoCode.hashCode() : 0;</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">        result = 31 * result + (name != null ? name.hashCode() : 0);</span>
+<span class="nc" id="L92">        result = 31 * result + totalCases;</span>
+<span class="nc bnc" id="L93" title="All 2 branches missed.">        result = 31 * result + (lastUpdated != null ? lastUpdated.hashCode() : 0);</span>
+<span class="nc bnc" id="L94" title="All 2 branches missed.">        result = 31 * result + (dailyRecords != null ? dailyRecords.hashCode() : 0);</span>
+<span class="nc" id="L95">        return result;</span>
+    }
+
+    @Override
+    public String toString() {
+<span class="nc" id="L100">        return &quot;HealthWard{&quot; +</span>
+                &quot;geoCode='&quot; + geoCode + '\'' +
+                &quot;, name='&quot; + name + '\'' +
+                &quot;, totalCases=&quot; + totalCases +
+                &quot;, lastUpdated=&quot; + lastUpdated +
+                &quot;, dailyRecords=&quot; + dailyRecords +
+                '}';
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>
