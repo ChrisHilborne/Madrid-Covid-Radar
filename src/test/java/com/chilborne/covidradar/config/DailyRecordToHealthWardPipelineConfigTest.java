@@ -19,6 +19,7 @@ import java.util.Map;
 
 import static org.mockito.Mockito.*;
 
+
 @ExtendWith(MockitoExtension.class)
 class DailyRecordToHealthWardPipelineConfigTest {
 
