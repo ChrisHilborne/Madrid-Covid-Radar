@@ -31,3 +31,4 @@ public class DailyRecordDataInitializer implements DataInitializer {
         logger.debug("Data successfully initialised.");
     }
 }
+
