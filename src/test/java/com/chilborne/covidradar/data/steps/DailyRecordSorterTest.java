@@ -24,9 +24,9 @@ class DailyRecordSorterTest {
         two.setDateReported(LocalDate.of(2020, 12, 25));
         three.setDateReported(LocalDate.of(2020, 12, 25));
 
-        one.setMunicipalDistrict("A");
-        two.setMunicipalDistrict("B");
-        three.setMunicipalDistrict("A");
+        one.setHealthWard("A");
+        two.setHealthWard("B");
+        three.setHealthWard("A");
 
         List<DailyRecord> toSort = List.of(one, two, three);
 

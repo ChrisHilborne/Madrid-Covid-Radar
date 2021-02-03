@@ -1,6 +1,5 @@
 package com.chilborne.covidradar.data.steps;
 
-import com.chilborne.covidradar.exceptions.PipeLineProcessException;
 import com.chilborne.covidradar.model.DailyRecord;
 import org.junit.jupiter.api.Test;
 
@@ -8,7 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class DailyRecordMapperTest {
 
@@ -18,16 +18,16 @@ class DailyRecordMapperTest {
     void process() {
         //given
         DailyRecord one = new DailyRecord();
-        one.setMunicipalDistrict("one");
+        one.setHealthWard("one");
         DailyRecord two = new DailyRecord();
-        two.setMunicipalDistrict("two");
+        two.setHealthWard("two");
         List<DailyRecord> testData = new ArrayList<>();
         testData.add(one);
         testData.add(two);
 
         for (int i = 0; i < 19; i++) {
             DailyRecord dailyRecord = new DailyRecord();
-            dailyRecord.setMunicipalDistrict("District no." + i);
+            dailyRecord.setHealthWard("District no." + i);
             testData.add(dailyRecord);
         }
 
@@ -44,18 +44,6 @@ class DailyRecordMapperTest {
         );
     }
 
-    @Test
-    void processException() {
-        //given
-        List<DailyRecord> toMap = List.of();
-
-        //verify
-        Exception exception = assertThrows(PipeLineProcessException.class,
-                () -> dailyRecordMapper.process(toMap));
-        assertEquals("DailyRecordMapper mapped DailyRecords to fewer Districts than expected " +
-                        toMap.size() + "actual, 21 expected.",
-                exception.getMessage());
-    }
 
 
 }

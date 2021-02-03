@@ -34,6 +34,7 @@ class DailyRecordDataPipelineTest {
 
         //verify
         verify(pipeline, times(1)).execute(any());
+        verify(pipeline, times(1)).execute(testInput);
         verify(pipeline).execute(argumentCaptor.capture());
         String capturedInput = argumentCaptor.getValue();
         assertEquals(testInput, capturedInput);

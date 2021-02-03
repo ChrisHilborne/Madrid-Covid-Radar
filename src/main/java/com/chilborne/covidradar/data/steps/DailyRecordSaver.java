@@ -2,7 +2,7 @@ package com.chilborne.covidradar.data.steps;
 
 import com.chilborne.covidradar.exceptions.PipeLineProcessException;
 import com.chilborne.covidradar.model.DailyRecord;
-import com.chilborne.covidradar.model.DistrictData;
+import com.chilborne.covidradar.model.HealthWard;
 import com.chilborne.covidradar.services.DailyRecordService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +16,7 @@ public class DailyRecordSaver implements Step<List<DailyRecord>, List<DailyRecor
 
     private final DailyRecordService dailyRecordService;
 
-    private final Logger logger = LoggerFactory.getLogger(DistrictData.class);
+    private final Logger logger = LoggerFactory.getLogger(HealthWard.class);
 
     @Autowired
     public DailyRecordSaver(DailyRecordService dailyRecordService) {

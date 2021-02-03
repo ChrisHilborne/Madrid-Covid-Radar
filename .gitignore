@@ -1,9 +1,6 @@
 /target/
-/data/
 /logs/
 !.mvn/wrapper/maven-wrapper.jar
-mvnw
-mvnw.cmd
 !**/src/main/**/target/
 !**/src/test/**/target/
 
@@ -34,3 +31,8 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Application ###
+/logs/
+/src/main/resources/
+/src/frontend

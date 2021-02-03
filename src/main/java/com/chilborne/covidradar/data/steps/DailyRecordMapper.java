@@ -1,6 +1,5 @@
 package com.chilborne.covidradar.data.steps;
 
-import com.chilborne.covidradar.exceptions.PipeLineProcessException;
 import com.chilborne.covidradar.model.DailyRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,33 +17,26 @@ public class DailyRecordMapper implements Step<List<DailyRecord>, Map<String, Li
 
     @Override
     public Map<String, List<DailyRecord>> process(List<DailyRecord> data) {
-        logger.debug("Mapping DailyRecords By District");
+        logger.debug("Mapping DailyRecords By Health Ward");
         HashMap<String, List<DailyRecord>> dailyRecordsMappedByDistrict = new HashMap<>();
 
         data.forEach(
                 dailyRecord ->
                 {
-                    if (dailyRecordsMappedByDistrict.containsKey(dailyRecord.getMunicipalDistrict())) {
+                    if (dailyRecordsMappedByDistrict.containsKey(dailyRecord.getHealthWard())) {
                         dailyRecordsMappedByDistrict
-                                .get(dailyRecord.getMunicipalDistrict())
+                                .get(dailyRecord.getHealthWard())
                                 .add(dailyRecord);
                     }
                     else {
                         List<DailyRecord> districtDailyResults = new ArrayList<DailyRecord>();
                         districtDailyResults.add(dailyRecord);
-                        dailyRecordsMappedByDistrict.put(dailyRecord.getMunicipalDistrict(), districtDailyResults);
+                        dailyRecordsMappedByDistrict.put(dailyRecord.getHealthWard(), districtDailyResults);
                     }
                 });
 
-        if (dailyRecordsMappedByDistrict.size() < 21) {
-            logger.error("Fewer Districts mapped than expected: "
-                    + dailyRecordsMappedByDistrict.size() + " mapped, "
-                    + "21 expected");
-            throw new PipeLineProcessException("DailyRecordMapper mapped DailyRecords to fewer Districts than expected "
-                    + dailyRecordsMappedByDistrict.size() + "actual, 21 expected.");
-        }
 
-        logger.debug("Results Mapped to " + dailyRecordsMappedByDistrict.size() + " Districts In Total");
+        logger.debug("Results Mapped to " + dailyRecordsMappedByDistrict.size() + " Health Wards In Total");
 
         return dailyRecordsMappedByDistrict;
     }

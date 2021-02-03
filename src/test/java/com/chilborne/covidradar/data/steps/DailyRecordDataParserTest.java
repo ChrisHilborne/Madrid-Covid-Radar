@@ -23,7 +23,7 @@ class DailyRecordDataParserTest {
             "  \"data\": [\n" +
             "    {\n" +
             "      \"codigo_geometria\": \"079603\",\n" +
-            "      \"municipio_distrito\": \"Madrid-Retiro\",\n" +
+            "      \"zona_basica_salud\": \"Madrid-Retiro\",\n" +
             "      \"tasa_incidencia_acumulada_ultimos_14dias\": 23.4668991007149,\n" +
             "      \"tasa_incidencia_acumulada_total\": 1417.23308497532,\n" +
             "      \"casos_confirmados_totales\": 1691,\n" +
@@ -38,7 +38,7 @@ class DailyRecordDataParserTest {
         //given
         DailyRecord dailyRecord = new DailyRecord();
         dailyRecord.setGeoCode("079603");
-        dailyRecord.setMunicipalDistrict("Madrid-Retiro");
+        dailyRecord.setHealthWard("Madrid-Retiro");
         dailyRecord.setInfectionRateLastTwoWeeks(23.4668991007149);
         dailyRecord.setInfectionRateTotal(1417.23308497532);
         dailyRecord.setCasesLastTwoWeeks(28);
