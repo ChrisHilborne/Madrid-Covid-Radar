@@ -6,8 +6,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.mongo.embedded.EmbeddedMongoAutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication(exclude = EmbeddedMongoAutoConfiguration.class)
+@EnableScheduling
 @EnableConfigurationProperties
 @EnableCaching
 public class CovidRadarApplication {
@@ -15,6 +17,7 @@ public class CovidRadarApplication {
 	public static void main(String[] args) {
 
 		SpringApplication.run(CovidRadarApplication.class, args);
+
 
 
 	}

@@ -21,7 +21,7 @@ public class DailyRecordSorter implements Step<List<DailyRecord>, List<DailyReco
         List<DailyRecord> sortedData = data
                 .stream()
                 .sorted(Comparator.comparing(DailyRecord::getDateReported)
-                        .thenComparing(DailyRecord::getMunicipalDistrict))
+                        .thenComparing(DailyRecord::getHealthWard))
                 .collect(Collectors.toList());
 
         logger.debug("Finished sorting DailyRecord data.");

@@ -16,7 +16,6 @@ class DailyRecordTrimmerTest {
     void process() {
         //given
         DailyRecord one = new DailyRecord();
-        one.setMunicipalDistrict("Madrid-one");
         one.setInfectionRateTotal(100.543);
         one.setInfectionRateLastTwoWeeks(10.999);
 
@@ -28,34 +27,17 @@ class DailyRecordTrimmerTest {
 
         //verify
         assertAll("trimming",
-                () -> assertEquals("one", trimmedRecord.getMunicipalDistrict()),
                 () -> assertEquals(100.54, trimmedRecord.getInfectionRateTotal()),
                 () -> assertEquals(11.00, trimmedRecord.getInfectionRateLastTwoWeeks())
         );
     }
 
-    @Test
-    void processException_MunicipalDistrictTooShort() {
-        //given
-        DailyRecord test = new DailyRecord();
-        test.setMunicipalDistrict("Madrid-");
-
-
-        //when
-        Exception municipalDistrict = assertThrows(PipeLineProcessException.class,
-                () -> dailyRecordTrimmer.process(List.of(test)));
-
-
-        //verify
-        assertEquals("DailyRecord MunicipalDistrict trimmed to length 0.", municipalDistrict.getMessage());
-
-    }
 
     @Test
     void processException_TwoWeekInfectionRateTooLow() {
         //given
         DailyRecord test = new DailyRecord();
-        test.setMunicipalDistrict("lowTwoWeekInfectionRate");
+        test.setHealthWard("lowTwoWeekInfectionRate");
         test.setInfectionRateLastTwoWeeks(-10.00);
 
         //when
@@ -70,7 +52,7 @@ class DailyRecordTrimmerTest {
     @Test
     void processException_TotalInfectionRateTooLow() {
         DailyRecord test = new DailyRecord();
-        test.setMunicipalDistrict("lowTotalInfectionRate");
+        test.setHealthWard("lowTotalInfectionRate");
         test.setInfectionRateTotal(-10.00);
 
         //when
