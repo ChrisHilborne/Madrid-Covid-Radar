@@ -118,13 +118,14 @@
 						<goals>
 							<goal>report</goal>
 						</goals>
-						<!-- default target/jscoco/site/* -->
+						<!-- default target/jacoco/site/* -->
 						<configuration>
-							<outputDirectory>.jacoco/report</outputDirectory>
+							<outputDirectory>jacoco/site/</outputDirectory>
 						</configuration>
 					</execution>
 				</executions>
-			</plugin></plugins>
+			</plugin>
+		</plugins>
 	</build>
 
 </project>
