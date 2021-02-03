@@ -120,7 +120,7 @@
 						</goals>
 						<!-- default target/jacoco/site/* -->
 						<configuration>
-							<outputDirectory>jacoco/site/</outputDirectory>
+							<outputDirectory>.jacoco/report/</outputDirectory>
 						</configuration>
 					</execution>
 				</executions>

@@ -292,3 +292,95 @@ Caused by: java.net.ConnectException: Connection refused (Connection refused)
 2021-02-03 19:32:49.286  INFO 25336 --- [main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
 2021-02-03 19:32:49.287  INFO 25336 --- [main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
 2021-02-03 19:32:49.294 DEBUG 25336 --- [main] c.c.c.controllers.HealthWardController   : Processing Get Request --> All HealthWards
+2021-02-03 19:50:08.736  INFO 27155 --- [main] c.c.c.CovidRadarApplicationTests         : Starting CovidRadarApplicationTests using Java 11.0.10 on v1ru5-ma551v3 with PID 27155 (started by chris in /home/chris/Development/covidradar)
+2021-02-03 19:50:08.744 DEBUG 27155 --- [main] c.c.c.CovidRadarApplicationTests         : Running with Spring Boot v2.4.1, Spring v5.3.2
+2021-02-03 19:50:08.745  INFO 27155 --- [main] c.c.c.CovidRadarApplicationTests         : The following profiles are active: test
+2021-02-03 19:50:13.392  INFO 27155 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data MongoDB repositories in DEFAULT mode.
+2021-02-03 19:50:13.643  INFO 27155 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 233 ms. Found 1 MongoDB repository interfaces.
+2021-02-03 19:50:16.763  INFO 27155 --- [main] org.mongodb.driver.cluster               : Cluster created with settings {hosts=[localhost:27017], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms'}
+2021-02-03 19:50:17.157  INFO 27155 --- [cluster-ClusterId{value='601af068f9f0d46b87418fd0', description='null'}-localhost:27017] org.mongodb.driver.cluster               : Exception in monitor thread while connecting to server localhost:27017
+
+com.mongodb.MongoSocketOpenException: Exception opening socket
+	at com.mongodb.internal.connection.SocketStream.open(SocketStream.java:70) ~[mongodb-driver-core-4.1.1.jar:na]
+	at com.mongodb.internal.connection.InternalStreamConnection.open(InternalStreamConnection.java:143) ~[mongodb-driver-core-4.1.1.jar:na]
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.lookupServerDescription(DefaultServerMonitor.java:188) ~[mongodb-driver-core-4.1.1.jar:na]
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.run(DefaultServerMonitor.java:144) ~[mongodb-driver-core-4.1.1.jar:na]
+	at java.base/java.lang.Thread.run(Thread.java:834) ~[na:na]
+Caused by: java.net.ConnectException: Connection refused (Connection refused)
+	at java.base/java.net.PlainSocketImpl.socketConnect(Native Method) ~[na:na]
+	at java.base/java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:399) ~[na:na]
+	at java.base/java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:242) ~[na:na]
+	at java.base/java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:224) ~[na:na]
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392) ~[na:na]
+	at java.base/java.net.Socket.connect(Socket.java:609) ~[na:na]
+	at com.mongodb.internal.connection.SocketStreamHelper.initialize(SocketStreamHelper.java:78) ~[mongodb-driver-core-4.1.1.jar:na]
+	at com.mongodb.internal.connection.SocketStream.initializeSocket(SocketStream.java:79) ~[mongodb-driver-core-4.1.1.jar:na]
+	at com.mongodb.internal.connection.SocketStream.open(SocketStream.java:65) ~[mongodb-driver-core-4.1.1.jar:na]
+	... 4 common frames omitted
+
+2021-02-03 19:50:22.603  INFO 27155 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2021-02-03 19:50:23.988  INFO 27155 --- [main] o.s.s.c.ThreadPoolTaskScheduler          : Initializing ExecutorService 'taskScheduler'
+2021-02-03 19:50:24.160  INFO 27155 --- [main] c.c.c.CovidRadarApplicationTests         : Started CovidRadarApplicationTests in 17.27 seconds (JVM running for 34.926)
+2021-02-03 19:50:24.306  INFO 27155 --- [main] o.s.s.c.ThreadPoolTaskScheduler          : Shutting down ExecutorService 'taskScheduler'
+2021-02-03 19:50:24.310  INFO 27155 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
+2021-02-03 19:50:24.762 DEBUG 27155 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecordList (hashcode: -1267273904)
+2021-02-03 19:50:24.778 DEBUG 27155 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving DailyRecord id: test::2021-02-03
+2021-02-03 19:50:24.794 DEBUG 27155 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecordList (hashcode: -1267273904)
+2021-02-03 19:50:24.796 DEBUG 27155 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving DailyRecord id: test::2021-02-03
+2021-02-03 19:50:24.803 ERROR 27155 --- [main] c.c.c.services.DailyRecordServiceImpl    : dailyRecordList to save and returned list to not match.
+2021-02-03 19:50:24.822 DEBUG 27155 --- [main] c.c.c.services.DailyRecordServiceImpl    : Fetching DailyRecords for health ward: test
+2021-02-03 19:50:24.842 DEBUG 27155 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: null
+2021-02-03 19:50:24.857 DEBUG 27155 --- [main] c.c.c.services.DailyRecordServiceImpl    : Fetching DailyRecords for GeoCode: 01
+2021-02-03 19:50:24.869 DEBUG 27155 --- [main] c.c.c.services.DailyRecordServiceImpl    : Fetching all DailyRecords...
+2021-02-03 19:50:24.872 ERROR 27155 --- [main] c.c.c.services.DailyRecordServiceImpl    : No DailyRecords found.
+2021-02-03 19:50:24.884 DEBUG 27155 --- [main] c.c.c.services.DailyRecordServiceImpl    : Fetching all DailyRecords...
+2021-02-03 19:50:24.923 DEBUG 27155 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: null
+2021-02-03 19:50:24.936 DEBUG 27155 --- [main] c.c.c.services.DailyRecordServiceImpl    : Fetching DailyRecords for GeoCode: test
+2021-02-03 19:50:24.940 ERROR 27155 --- [main] c.c.c.services.DailyRecordServiceImpl    : No data found for geocode: test
+2021-02-03 19:50:24.956 DEBUG 27155 --- [main] c.c.c.services.DailyRecordServiceImpl    : Fetching DailyRecords for health ward: test
+2021-02-03 19:50:24.963 ERROR 27155 --- [main] c.c.c.services.DailyRecordServiceImpl    : No data found for healthward: test
+2021-02-03 19:50:25.127 DEBUG 27155 --- [main] c.c.c.services.HealthWardServiceImpl     : Fetching Data for: one
+2021-02-03 19:50:25.175 DEBUG 27155 --- [main] c.c.c.services.HealthWardServiceImpl     : Fetching data for GeoCode: 01
+2021-02-03 19:50:25.186 DEBUG 27155 --- [main] c.c.c.services.HealthWardServiceImpl     : Fetching All Health Wards
+2021-02-03 19:50:25.194 DEBUG 27155 --- [main] c.c.c.services.HealthWardServiceImpl     : Fetching All Health Wards
+2021-02-03 19:50:25.197 DEBUG 27155 --- [main] c.c.c.services.HealthWardServiceImpl     : Fetching All Health Wards
+2021-02-03 19:50:25.787  INFO 27155 --- [main] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2021-02-03 19:50:25.791  INFO 27155 --- [main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2021-02-03 19:50:25.799  INFO 27155 --- [main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 2 ms
+2021-02-03 19:50:26.027 DEBUG 27155 --- [main] c.c.c.controllers.HealthWardController   : Processing Get Request --> geocode: geoCode
+2021-02-03 19:50:26.253  INFO 27155 --- [main] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2021-02-03 19:50:26.258  INFO 27155 --- [main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2021-02-03 19:50:26.262  INFO 27155 --- [main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2021-02-03 19:50:26.268 DEBUG 27155 --- [main] c.c.c.controllers.HealthWardController   : Processing Get Request --> Names and GeoCodes
+2021-02-03 19:50:26.520  INFO 27155 --- [main] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2021-02-03 19:50:26.523  INFO 27155 --- [main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2021-02-03 19:50:26.525  INFO 27155 --- [main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2021-02-03 19:50:26.537 DEBUG 27155 --- [main] c.c.c.controllers.HealthWardController   : Processing Get Request --> geocode: null
+2021-02-03 19:50:26.585  INFO 27155 --- [main] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2021-02-03 19:50:26.586  INFO 27155 --- [main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2021-02-03 19:50:26.588  INFO 27155 --- [main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2021-02-03 19:50:26.600 DEBUG 27155 --- [main] c.c.c.controllers.HealthWardController   : Processing Get Request --> All HealthWards
+2021-02-03 19:50:26.654  INFO 27155 --- [main] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2021-02-03 19:50:26.655  INFO 27155 --- [main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2021-02-03 19:50:26.657  INFO 27155 --- [main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2021-02-03 19:50:26.669 DEBUG 27155 --- [main] c.c.c.controllers.HealthWardController   : Processing Get Request --> health ward: null
+2021-02-03 19:50:26.743  INFO 27155 --- [main] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2021-02-03 19:50:26.745  INFO 27155 --- [main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2021-02-03 19:50:26.746  INFO 27155 --- [main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2021-02-03 19:50:26.760 DEBUG 27155 --- [main] c.c.c.controllers.HealthWardController   : Processing Get Request --> health ward: name
+2021-02-03 19:50:26.950  INFO 27155 --- [main] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2021-02-03 19:50:26.954  INFO 27155 --- [main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2021-02-03 19:50:26.955  INFO 27155 --- [main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2021-02-03 19:50:26.967 DEBUG 27155 --- [main] c.c.c.controllers.HealthWardController   : Processing Get Request --> geocode: geoCode
+2021-02-03 19:50:27.072  INFO 27155 --- [main] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2021-02-03 19:50:27.081  INFO 27155 --- [main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2021-02-03 19:50:27.083  INFO 27155 --- [main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2021-02-03 19:50:27.087 DEBUG 27155 --- [main] c.c.c.controllers.HealthWardController   : Processing Get Request --> All HealthWards
+2021-02-03 19:50:27.199  INFO 27155 --- [main] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2021-02-03 19:50:27.203  INFO 27155 --- [main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2021-02-03 19:50:27.204  INFO 27155 --- [main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2021-02-03 19:50:27.216 DEBUG 27155 --- [main] c.c.c.controllers.HealthWardController   : Processing Get Request --> health ward: name
+2021-02-03 19:50:27.315  INFO 27155 --- [main] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2021-02-03 19:50:27.318  INFO 27155 --- [main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2021-02-03 19:50:27.320  INFO 27155 --- [main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2021-02-03 19:50:27.325 DEBUG 27155 --- [main] c.c.c.controllers.HealthWardController   : Processing Get Request --> All HealthWards
