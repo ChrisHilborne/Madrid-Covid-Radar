@@ -13,7 +13,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
+
 
 @ExtendWith(MockitoExtension.class)
 class DailyRecordPipelineConfigTest {
@@ -30,34 +31,31 @@ class DailyRecordPipelineConfigTest {
     @InjectMocks
     DailyRecordPipelineConfig config;
 
-    private String testJSON = "{\n" +
-            "  \"data\": [\n" +
-            "    {\n" +
-            "      \"codigo_geometria\": \"079603\",\n" +
-            "      \"zona_basica_salud\": \"Madrid-Retiro\",\n" +
-            "      \"tasa_incidencia_acumulada_ultimos_14dias\": 23.4668991007149,\n" +
-            "      \"tasa_incidencia_acumulada_total\": 1417.23308497532,\n" +
-            "      \"casos_confirmados_totales\": 1691,\n" +
-            "      \"casos_confirmados_ultimos_14dias\": 28,\n" +
-            "      \"fecha_informe\": \"2020/07/01 09:00:00\"\n" +
-            "    } ] \n" +
-            "}";
 
     @Test
     void pipeline() {
-        //given
-        Pipeline<String, List<DailyRecord>> testPipeline =
-                new Pipeline(parser)
-                    .pipe(trimmer)
-                    .pipe(saver);
-
-        List<DailyRecord> expectedResults = testPipeline.execute(testJSON);
+        DailyRecord test = new DailyRecord();
+        test.setHealthWard("test");
+        test.setGeoCode("01");
+        List<DailyRecord> testList = List.of(test);
 
         //when
-        Pipeline<String, List<DailyRecord>> actualPipeline = config.pipeline();
-        List<DailyRecord> actualResults = actualPipeline.execute(testJSON);
+        Pipeline<String, List<DailyRecord>> configuredPipeline = config.pipeline();
+        when(parser.process("test")).thenReturn(testList);
+        when(trimmer.process(testList)).thenReturn(testList);
+        when(saver.process(testList)).thenReturn(testList);
+
+        List<DailyRecord> pipelineResult = configuredPipeline.execute("test");
 
         //verify
-        assertEquals(expectedResults, actualResults);
+        verify(parser, times(1)).process(anyString());
+        verify(parser, times(1)).process("test");
+        verify(trimmer, times(1)).process(anyList());
+        verify(trimmer, times(1)).process(testList);
+        verify(saver, times(1)).process(anyList());
+        verify(saver, times(1)).process(testList);
+
     }
+
+
 }

@@ -13,9 +13,11 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class DailyRecordToHealthWardPipelineConfigTest {
@@ -34,27 +36,32 @@ class DailyRecordToHealthWardPipelineConfigTest {
 
     @Test
     void pipeline() {
-        LocalDate testDate = LocalDate.now();
-
         //given
-        Pipeline<List<DailyRecord>, List<HealthWard>> testPipeline =
-                new Pipeline<>(sorter)
-                        .pipe(mapper)
-                        .pipe(converter);
-
         DailyRecord testDailyRecord = new DailyRecord();
         testDailyRecord.setHealthWard("test");
         testDailyRecord.setGeoCode("01");
-        testDailyRecord.setDateReported(testDate);
-        List<DailyRecord> testInput = List.of(testDailyRecord);
+        testDailyRecord.setDateReported(LocalDate.now());
+        List<DailyRecord> testList = List.of(testDailyRecord);
 
-        List<HealthWard> expectedResults = testPipeline.execute(testInput);
+        Map<String, List<DailyRecord>> testMap = new HashMap<>();
+        testMap.put("test", testList);
+
+        List<HealthWard> testHealthWard = List.of(new HealthWard(testList));
 
         //when
-        Pipeline<List<DailyRecord>, List<HealthWard>> actualPipeline = config.pipeline();
-        List<HealthWard> actualResults = actualPipeline.execute(testInput);
+        Pipeline<List<DailyRecord>, List<HealthWard>> configuredPipeline = config.pipeline();
+        when(sorter.process(testList)).thenReturn(testList);
+        when(mapper.process(testList)).thenReturn(testMap);
+        when(converter.process(testMap)).thenReturn(testHealthWard);
+
+        List<HealthWard> pipelineResults = configuredPipeline.execute(testList);
 
         //verify
-        assertEquals(expectedResults, actualResults);
+        verify(sorter, times(1)).process(anyList());
+        verify(sorter, times(1)).process(testList);
+        verify(mapper, times(1)).process(anyList());
+        verify(mapper, times(1)).process(testList);
+        verify(converter, times(1)).process(anyMap());
+        verify(converter, times(1)).process(testMap);
     }
 }
