@@ -1,4 +1,4 @@
-[![CircleCI](https://circleci.com/gh/ChrisHilborne/Madrid-Covid-Radar.svg?style=svg&circle-token=f7f09dcd23afa27d772e8d1390f4811789f41c8f)](<LINK>)
+[![CircleCI](https://circleci.com/gh/ChrisHilborne/Madrid-Covid-Radar.svg?style=svg&circle-token=efaef2f4e13a7303cc8bba9824c7a92398397433)](<LINK>)
 
 # Madrid-Covid-Radar
 
