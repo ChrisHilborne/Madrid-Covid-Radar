@@ -47,54 +47,42 @@ public class DailyRecordServiceImpl implements DailyRecordService {
     }
 
     @Override
-    public List&lt;DailyRecord&gt; getDailyRecordsByHealthWard(String healthWard) {
-<span class="fc" id="L51">        logger.debug(&quot;Fetching DailyRecords for health ward: &quot; + healthWard);</span>
-<span class="fc" id="L52">        List&lt;DailyRecord&gt; results = dailyRecordRepository.findByHealthWard(healthWard);</span>
-<span class="fc bfc" id="L53" title="All 2 branches covered.">        if (results.isEmpty()) {</span>
-<span class="fc" id="L54">            logger.error(&quot;No data found for healthward: &quot; + healthWard);</span>
-<span class="fc" id="L55">            throw new DataNotFoundException(&quot;No data found for health ward: &quot; + healthWard);</span>
-        }
-<span class="fc" id="L57">        return results;</span>
-    }
-
-    @Override
     @CacheEvict({
             &quot;healthWard-all&quot;,
-            &quot;healthWard-name&quot;,
             &quot;healthWard-geoCode&quot;,
             &quot;namesAndGeoCodes&quot;
     })
     public List&lt;DailyRecord&gt; save(List&lt;DailyRecord&gt; dailyRecordList) {
-<span class="fc" id="L68">        logger.debug(&quot;Saving dailyRecordList (hashcode: &quot; + dailyRecordList.hashCode() +&quot;)&quot;);</span>
-<span class="fc" id="L69">        List&lt;DailyRecord&gt; savedList = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L70">        dailyRecordList.forEach(dailyRecord -&gt; {</span>
-<span class="fc" id="L71">            dailyRecord.generateId();</span>
-<span class="fc" id="L72">            logger.debug(&quot;Saving DailyRecord id: &quot; + dailyRecord.getId());</span>
-<span class="fc" id="L73">            savedList.add(dailyRecordRepository.save(dailyRecord));</span>
-<span class="fc" id="L74">        });</span>
-<span class="fc bfc" id="L75" title="All 2 branches covered.">        if (!savedList.equals(dailyRecordList)) {</span>
-<span class="fc" id="L76">            logger.error(&quot;dailyRecordList to save and returned list to not match.&quot;);</span>
-<span class="fc" id="L77">            throw new DataSaveException(&quot;Error when saving dailyRecordList (hashcode &quot; + dailyRecordList.hashCode() + &quot;)&quot;);</span>
+<span class="fc" id="L56">        logger.debug(&quot;Saving dailyRecordList size: &quot; + dailyRecordList.size());</span>
+<span class="fc" id="L57">        List&lt;DailyRecord&gt; savedList = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L58">        dailyRecordList.forEach(dailyRecord -&gt; {</span>
+<span class="fc" id="L59">            dailyRecord.generateId();</span>
+<span class="fc" id="L60">            logger.debug(&quot;Saving DailyRecord id: &quot; + dailyRecord.getId());</span>
+<span class="fc" id="L61">            savedList.add(dailyRecordRepository.save(dailyRecord));</span>
+<span class="fc" id="L62">        });</span>
+<span class="fc bfc" id="L63" title="All 2 branches covered.">        if (!savedList.equals(dailyRecordList)) {</span>
+<span class="fc" id="L64">            logger.error(&quot;dailyRecordList to save and returned list to not match.&quot;);</span>
+<span class="fc" id="L65">            throw new DataSaveException(&quot;Error when saving dailyRecordList (hashcode &quot; + dailyRecordList.hashCode() + &quot;)&quot;);</span>
         }
-<span class="fc" id="L79">        return savedList;</span>
+<span class="fc" id="L67">        return savedList;</span>
     }
 
     @Override
     public List&lt;DailyRecord&gt; getDailyRecordsByGeoCode(String geoCode) {
-<span class="fc" id="L84">        logger.debug(&quot;Fetching DailyRecords for GeoCode: &quot; + geoCode);</span>
-<span class="fc" id="L85">        List&lt;DailyRecord&gt; results = dailyRecordRepository.findByGeoCode(geoCode);</span>
-<span class="fc bfc" id="L86" title="All 2 branches covered.">        if (results.isEmpty()) {</span>
-<span class="fc" id="L87">            logger.error(&quot;No data found for geocode: &quot; + geoCode);</span>
-<span class="fc" id="L88">            throw new DataNotFoundException(&quot;No data found for geocode: &quot; + geoCode);</span>
+<span class="fc" id="L72">        logger.debug(&quot;Fetching DailyRecords for GeoCode: &quot; + geoCode);</span>
+<span class="fc" id="L73">        List&lt;DailyRecord&gt; results = dailyRecordRepository.findByGeoCode(geoCode);</span>
+<span class="fc bfc" id="L74" title="All 2 branches covered.">        if (results.isEmpty()) {</span>
+<span class="fc" id="L75">            logger.error(&quot;No data found for geocode: &quot; + geoCode);</span>
+<span class="fc" id="L76">            throw new DataNotFoundException(&quot;No data found for geocode: &quot; + geoCode);</span>
         }
-<span class="fc" id="L90">        return results;</span>
+<span class="fc" id="L78">        return results;</span>
     }
 
     @Override
     public DailyRecord getDailyRecordByGeoCodeAndDate(String geoCode, LocalDate date) {
-<span class="fc" id="L95">        return dailyRecordRepository</span>
-<span class="fc" id="L96">                .findByGeoCodeAndDateReported(geoCode, date)</span>
-<span class="fc" id="L97">                .orElseThrow(() -&gt; new DataNotFoundException(&quot;No data found for geocode: &quot; + geoCode + &quot; and dateReported: &quot; + date.toString()));</span>
+<span class="fc" id="L83">        return dailyRecordRepository</span>
+<span class="fc" id="L84">                .findByGeoCodeAndDateReported(geoCode, date)</span>
+<span class="fc" id="L85">                .orElseThrow(() -&gt; new DataNotFoundException(&quot;No data found for geocode: &quot; + geoCode + &quot; and dateReported: &quot; + date.toString()));</span>
 
     }
 
