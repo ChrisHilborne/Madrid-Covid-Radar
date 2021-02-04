@@ -11,8 +11,6 @@ public interface DailyRecordService  {
 
     List<DailyRecord> getAll();
 
-    List<DailyRecord> getDailyRecordsByHealthWard(String municipalDistrict);
-
     List<DailyRecord> save(List<DailyRecord> dailyRecordList);
 
     List<DailyRecord> getDailyRecordsByGeoCode(String geoCode);

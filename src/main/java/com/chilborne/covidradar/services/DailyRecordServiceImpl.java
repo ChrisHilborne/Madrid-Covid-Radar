@@ -47,20 +47,8 @@ public class DailyRecordServiceImpl implements DailyRecordService {
     }
 
     @Override
-    public List<DailyRecord> getDailyRecordsByHealthWard(String healthWard) {
-        logger.debug("Fetching DailyRecords for health ward: " + healthWard);
-        List<DailyRecord> results = dailyRecordRepository.findByHealthWard(healthWard);
-        if (results.isEmpty()) {
-            logger.error("No data found for healthward: " + healthWard);
-            throw new DataNotFoundException("No data found for health ward: " + healthWard);
-        }
-        return results;
-    }
-
-    @Override
     @CacheEvict({
             "healthWard-all",
-            "healthWard-name",
             "healthWard-geoCode",
             "namesAndGeoCodes"
     })

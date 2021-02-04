@@ -160,62 +160,6 @@ class HealthWardControllerTest {
                 .andExpect(status().isNotFound());
     }
 
-    @Test
-    void getHealthWardByName_StatusIsOK() throws Exception {
-        //given
-        HealthWard testHealthWard = new HealthWard();
-        testHealthWard.setName("name");
-        testHealthWard.setLastUpdated(testDate);
-
-        //when
-        when(healthWardServiceService.getHealthWardByName("name")).thenReturn(testHealthWard);
-
-        //verify
-        mvc.perform(
-                     get("/api/name/name")
-                    .accept("application/json")
-                )
-                .andExpect(status().isOk())
-                .andExpect(header().dateValue("Last-Modified", testDateEpochMilli))
-                .andExpect(jsonPath("$.name").value("name"));
-
-        verify(healthWardServiceService, times(1)).getHealthWardByName(anyString());
-        verify(healthWardServiceService, times(1)).getHealthWardByName("name");
-    }
-
-    @Test
-    void getHealthWardByName_StatusIsNotFound() throws Exception {
-        //when
-        when(healthWardServiceService.getHealthWardByName("null")).thenThrow(new DataNotFoundException("Data Not Found"));
-
-        mvc.perform(
-                get("/api/name/null")
-                        .accept("application/json")
-        )
-                .andExpect(status().isNotFound());
-    }
-
-    @Test
-    void getHealthWardByName_StatusIs304() throws Exception {
-        //given
-        HealthWard testHealthWard = new HealthWard();
-        testHealthWard.setName("name");
-        testHealthWard.setLastUpdated(testDate);
-
-        //when
-        when(healthWardServiceService.getHealthWardByName("name")).thenReturn(testHealthWard);
-
-        //verify
-        mvc.perform(
-                 get("/api/name/name")
-                .accept("application/json")
-                .header("If-Modified-Since", testDateEpochMilli)
-        )
-        .andExpect(status().is(304));
-
-        verify(healthWardServiceService, times(1)).getHealthWardByName(anyString());
-        verify(healthWardServiceService, times(1)).getHealthWardByName("name");
-    }
 
     @Test
     void getDistrictNamesAndGeocodes() throws Exception {

@@ -42,16 +42,6 @@ class DailyRecordRepositoryIT {
 
         dailyRecordRepository.save(one);
     }
-
-
-    @Test
-    void findByName() {
-        //when
-        List<DailyRecord> optionalName = dailyRecordRepository.findByHealthWard("one");
-
-        //verify
-        assertEquals("1", optionalName.get(0).getGeoCode());
-    }
     
 
     @Test

@@ -13,8 +13,6 @@ public interface DailyRecordRepository extends MongoRepository<DailyRecord, Stri
 
     List<DailyRecord> findAll();
 
-    List<DailyRecord> findByHealthWard(String healthWard);
-
     List<DailyRecord> findByGeoCode(String geoCode);
 
     Optional<DailyRecord> findByGeoCodeAndDateReported(String geoCode, LocalDate dateReported);

@@ -142,36 +142,6 @@ class DailyRecordServiceImplTest {
         assertEquals("No Daily Records found.", e.getMessage());
     }
 
-    @Test
-    void getDailyRecordsByHealthWard() {
-        //given
-        DailyRecord test = new DailyRecord();
-        test.setHealthWard("test");
-        test.setDateReported(testDate);
-        List<DailyRecord> toGet = List.of(test);
-
-        //when
-        when(repository.findByHealthWard("test")).thenReturn(toGet);
-        List<DailyRecord> returned = service.getDailyRecordsByHealthWard("test");
-
-        //verify
-        assertAll("getByHealthWard",
-                () -> assertEquals(1, returned.size()),
-                () -> assertEquals("test", returned.get(0).getHealthWard()),
-                () -> assertEquals(testDate, returned.get(0).getDateReported())
-        );
-    }
-
-    @Test
-    void getDailyRecordsByHealthWard_Exception() {
-        //when
-        when(repository.findByHealthWard("test")).thenReturn(List.of());
-
-        //verify
-        Exception e = assertThrows(DataNotFoundException.class, () -> service.getDailyRecordsByHealthWard("test"));
-        assertEquals("No data found for health ward: test" , e.getMessage());
-    }
-
 
 
     @Test

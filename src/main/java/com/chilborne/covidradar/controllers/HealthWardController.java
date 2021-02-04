@@ -55,20 +55,6 @@ public class HealthWardController {
                 .body(result);
     }
 
-    @GetMapping(value = "/name/{name}", produces = "application/json")
-    public ResponseEntity<HealthWard> getHealthWardByName(@PathVariable String name, WebRequest request) {
-        logger.debug("Processing Get Request --> health ward: " + name);
-
-        HealthWard result = healthWardService.getHealthWardByName(name);
-        if (hasBeenModifiedSince(result, request)) {
-            return ResponseEntity.status(304).build();
-        }
-        return ResponseEntity.ok()
-                .cacheControl(getCacheControlHealthWard())
-                .lastModified(getEpochLastModified(result))
-                .body(result);
-    }
-
     @GetMapping(value = "/names+geocodes", produces = "application/json")
     public ResponseEntity<Map<String, String>> getNamesAndGeoCodes() {
         logger.debug("Processing Get Request --> Names and GeoCodes");
