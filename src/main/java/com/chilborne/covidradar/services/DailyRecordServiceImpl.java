@@ -65,7 +65,7 @@ public class DailyRecordServiceImpl implements DailyRecordService {
             "namesAndGeoCodes"
     })
     public List<DailyRecord> save(List<DailyRecord> dailyRecordList) {
-        logger.debug("Saving dailyRecordList (hashcode: " + dailyRecordList.hashCode() +")");
+        logger.debug("Saving dailyRecordList size: " + dailyRecordList.size());
         List<DailyRecord> savedList = new ArrayList<>();
         dailyRecordList.forEach(dailyRecord -> {
             dailyRecord.generateId();

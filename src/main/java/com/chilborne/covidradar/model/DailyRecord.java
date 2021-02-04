@@ -4,8 +4,10 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.IndexDirection;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Past;
@@ -16,34 +18,42 @@ import java.time.LocalDate;
  * @Author Chris Hilborne
  */
 
-@Document(collection = "daily_records")
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Document(collection = "daily_records")
 public class DailyRecord {
 
     @Id
-    @Indexed(unique = true)
+    @Indexed(name = "_id", unique = true, direction = IndexDirection.ASCENDING)
     private String id;
     @NotBlank
     @JsonProperty("codigo_geometria")
+    @Field("geocode")
+    @Indexed(name = "geocode")
     private String geoCode;
     @NotBlank
     @JsonProperty("zona_basica_salud")
+    @Field("healthward")
     private String healthWard;
     @PositiveOrZero
     @JsonProperty("tasa_incidencia_acumulada_ultimos_14dias")
+    @Field("infectionRate2Weeks")
     private double infectionRateLastTwoWeeks;
     @PositiveOrZero
     @JsonProperty("tasa_incidencia_acumulada_total")
+    @Field("infectionRateTotal")
     private double infectionRateTotal;
     @PositiveOrZero
     @JsonProperty("casos_confirmados_totales")
+    @Field("casesTotal")
     private int totalCases;
     @PositiveOrZero
     @JsonProperty("casos_confirmados_ultimos_14dias")
+    @Field("cases2Weeks")
     private int casesLastTwoWeeks;
     @Past
     @JsonProperty("fecha_informe")
     @JsonFormat(pattern = "yyyy/MM/dd HH:mm:ss")
+    @Field("date")
     private LocalDate dateReported;
 
 
