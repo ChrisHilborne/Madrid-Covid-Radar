@@ -23,12 +23,11 @@ import java.time.LocalDate;
 public class DailyRecord {
 
     @Id
-    @Indexed(name = &quot;_id&quot;, unique = true, direction = IndexDirection.ASCENDING)
     private String id;
     @NotBlank
     @JsonProperty(&quot;codigo_geometria&quot;)
     @Field(&quot;geocode&quot;)
-    @Indexed(name = &quot;geocode&quot;)
+    @Indexed(name = &quot;geocode&quot;, direction = IndexDirection.ASCENDING)
     private String geoCode;
     @NotBlank
     @JsonProperty(&quot;zona_basica_salud&quot;)
@@ -57,112 +56,112 @@ public class DailyRecord {
     private LocalDate dateReported;
 
 
-<span class="fc" id="L60">    public DailyRecord() {}</span>
+<span class="fc" id="L59">    public DailyRecord() {}</span>
 
     public void generateId() {
-<span class="fc" id="L63">        this.id = healthWard + &quot;::&quot; + dateReported.toString();</span>
-<span class="fc" id="L64">    }</span>
+<span class="fc" id="L62">        this.id = healthWard + &quot;::&quot; + dateReported.toString();</span>
+<span class="fc" id="L63">    }</span>
 
     public String getId() {
-<span class="fc" id="L67">        return id;</span>
+<span class="fc" id="L66">        return id;</span>
     }
 
     public String getGeoCode() {
-<span class="fc" id="L71">        return geoCode;</span>
+<span class="fc" id="L70">        return geoCode;</span>
     }
 
     public void setGeoCode(String geoCode) {
-<span class="fc" id="L75">        this.geoCode = geoCode;</span>
-<span class="fc" id="L76">    }</span>
+<span class="fc" id="L74">        this.geoCode = geoCode;</span>
+<span class="fc" id="L75">    }</span>
 
     public LocalDate getDateReported() {
-<span class="fc" id="L79">        return dateReported;</span>
+<span class="fc" id="L78">        return dateReported;</span>
     }
 
     public void setDateReported(LocalDate dateReported) {
-<span class="fc" id="L83">        this.dateReported = dateReported;</span>
-<span class="fc" id="L84">    }</span>
+<span class="fc" id="L82">        this.dateReported = dateReported;</span>
+<span class="fc" id="L83">    }</span>
 
     public String getHealthWard() {
-<span class="fc" id="L87">        return healthWard;</span>
+<span class="fc" id="L86">        return healthWard;</span>
     }
 
     public void setHealthWard(String healthWard) {
-<span class="fc" id="L91">        this.healthWard = healthWard;</span>
-<span class="fc" id="L92">    }</span>
+<span class="fc" id="L90">        this.healthWard = healthWard;</span>
+<span class="fc" id="L91">    }</span>
 
     public double getInfectionRateLastTwoWeeks() {
-<span class="fc" id="L95">        return infectionRateLastTwoWeeks;</span>
+<span class="fc" id="L94">        return infectionRateLastTwoWeeks;</span>
     }
 
     public void setInfectionRateLastTwoWeeks(double infectionRateLastTwoWeeks) {
-<span class="fc" id="L99">        this.infectionRateLastTwoWeeks = infectionRateLastTwoWeeks;</span>
-<span class="fc" id="L100">    }</span>
+<span class="fc" id="L98">        this.infectionRateLastTwoWeeks = infectionRateLastTwoWeeks;</span>
+<span class="fc" id="L99">    }</span>
 
     public double getInfectionRateTotal() {
-<span class="fc" id="L103">        return infectionRateTotal;</span>
+<span class="fc" id="L102">        return infectionRateTotal;</span>
     }
 
     public void setInfectionRateTotal(double infectionRateTotal) {
-<span class="fc" id="L107">        this.infectionRateTotal = infectionRateTotal;</span>
-<span class="fc" id="L108">    }</span>
+<span class="fc" id="L106">        this.infectionRateTotal = infectionRateTotal;</span>
+<span class="fc" id="L107">    }</span>
 
     public int getTotalCases() {
-<span class="fc" id="L111">        return totalCases;</span>
+<span class="fc" id="L110">        return totalCases;</span>
     }
 
     public void setTotalCases(int totalCases) {
-<span class="fc" id="L115">        this.totalCases = totalCases;</span>
-<span class="fc" id="L116">    }</span>
+<span class="fc" id="L114">        this.totalCases = totalCases;</span>
+<span class="fc" id="L115">    }</span>
 
     public int getCasesLastTwoWeeks() {
-<span class="fc" id="L119">        return casesLastTwoWeeks;</span>
+<span class="fc" id="L118">        return casesLastTwoWeeks;</span>
     }
 
     public void setCasesLastTwoWeeks(int casesLastTwoWeeks) {
-<span class="fc" id="L123">        this.casesLastTwoWeeks = casesLastTwoWeeks;</span>
-<span class="fc" id="L124">    }</span>
+<span class="fc" id="L122">        this.casesLastTwoWeeks = casesLastTwoWeeks;</span>
+<span class="fc" id="L123">    }</span>
 
     public void setId(String id) {
-<span class="nc" id="L127">        this.id = id;</span>
-<span class="nc" id="L128">    }</span>
+<span class="nc" id="L126">        this.id = id;</span>
+<span class="nc" id="L127">    }</span>
 
     @Override
     public boolean equals(Object o) {
-<span class="fc bfc" id="L132" title="All 2 branches covered.">        if (this == o) return true;</span>
-<span class="pc bpc" id="L133" title="2 of 4 branches missed.">        if (o == null || getClass() != o.getClass()) return false;</span>
+<span class="fc bfc" id="L131" title="All 2 branches covered.">        if (this == o) return true;</span>
+<span class="pc bpc" id="L132" title="2 of 4 branches missed.">        if (o == null || getClass() != o.getClass()) return false;</span>
 
-<span class="fc" id="L135">        DailyRecord that = (DailyRecord) o;</span>
+<span class="fc" id="L134">        DailyRecord that = (DailyRecord) o;</span>
 
-<span class="pc bpc" id="L137" title="1 of 2 branches missed.">        if (Double.compare(that.infectionRateLastTwoWeeks, infectionRateLastTwoWeeks) != 0) return false;</span>
-<span class="pc bpc" id="L138" title="1 of 2 branches missed.">        if (Double.compare(that.infectionRateTotal, infectionRateTotal) != 0) return false;</span>
-<span class="pc bpc" id="L139" title="1 of 2 branches missed.">        if (totalCases != that.totalCases) return false;</span>
-<span class="pc bpc" id="L140" title="1 of 2 branches missed.">        if (casesLastTwoWeeks != that.casesLastTwoWeeks) return false;</span>
-<span class="pc bpc" id="L141" title="2 of 6 branches missed.">        if (geoCode != null ? !geoCode.equals(that.geoCode) : that.geoCode != null) return false;</span>
-<span class="pc bpc" id="L142" title="2 of 6 branches missed.">        if (healthWard != null ? !healthWard.equals(that.healthWard) : that.healthWard != null)</span>
-<span class="fc" id="L143">            return false;</span>
-<span class="pc bpc" id="L144" title="3 of 4 branches missed.">        return dateReported != null ? dateReported.equals(that.dateReported) : that.dateReported == null;</span>
+<span class="pc bpc" id="L136" title="1 of 2 branches missed.">        if (Double.compare(that.infectionRateLastTwoWeeks, infectionRateLastTwoWeeks) != 0) return false;</span>
+<span class="pc bpc" id="L137" title="1 of 2 branches missed.">        if (Double.compare(that.infectionRateTotal, infectionRateTotal) != 0) return false;</span>
+<span class="pc bpc" id="L138" title="1 of 2 branches missed.">        if (totalCases != that.totalCases) return false;</span>
+<span class="pc bpc" id="L139" title="1 of 2 branches missed.">        if (casesLastTwoWeeks != that.casesLastTwoWeeks) return false;</span>
+<span class="pc bpc" id="L140" title="2 of 6 branches missed.">        if (geoCode != null ? !geoCode.equals(that.geoCode) : that.geoCode != null) return false;</span>
+<span class="pc bpc" id="L141" title="2 of 6 branches missed.">        if (healthWard != null ? !healthWard.equals(that.healthWard) : that.healthWard != null)</span>
+<span class="fc" id="L142">            return false;</span>
+<span class="pc bpc" id="L143" title="3 of 4 branches missed.">        return dateReported != null ? dateReported.equals(that.dateReported) : that.dateReported == null;</span>
     }
 
     @Override
     public int hashCode() {
         int result;
         long temp;
-<span class="fc bfc" id="L151" title="All 2 branches covered.">        result = geoCode != null ? geoCode.hashCode() : 0;</span>
-<span class="pc bpc" id="L152" title="1 of 2 branches missed.">        result = 31 * result + (healthWard != null ? healthWard.hashCode() : 0);</span>
-<span class="fc" id="L153">        temp = Double.doubleToLongBits(infectionRateLastTwoWeeks);</span>
-<span class="fc" id="L154">        result = 31 * result + (int) (temp ^ (temp &gt;&gt;&gt; 32));</span>
-<span class="fc" id="L155">        temp = Double.doubleToLongBits(infectionRateTotal);</span>
-<span class="fc" id="L156">        result = 31 * result + (int) (temp ^ (temp &gt;&gt;&gt; 32));</span>
-<span class="fc" id="L157">        result = 31 * result + totalCases;</span>
-<span class="fc" id="L158">        result = 31 * result + casesLastTwoWeeks;</span>
-<span class="fc bfc" id="L159" title="All 2 branches covered.">        result = 31 * result + (dateReported != null ? dateReported.hashCode() : 0);</span>
-<span class="fc" id="L160">        return result;</span>
+<span class="fc bfc" id="L150" title="All 2 branches covered.">        result = geoCode != null ? geoCode.hashCode() : 0;</span>
+<span class="pc bpc" id="L151" title="1 of 2 branches missed.">        result = 31 * result + (healthWard != null ? healthWard.hashCode() : 0);</span>
+<span class="fc" id="L152">        temp = Double.doubleToLongBits(infectionRateLastTwoWeeks);</span>
+<span class="fc" id="L153">        result = 31 * result + (int) (temp ^ (temp &gt;&gt;&gt; 32));</span>
+<span class="fc" id="L154">        temp = Double.doubleToLongBits(infectionRateTotal);</span>
+<span class="fc" id="L155">        result = 31 * result + (int) (temp ^ (temp &gt;&gt;&gt; 32));</span>
+<span class="fc" id="L156">        result = 31 * result + totalCases;</span>
+<span class="fc" id="L157">        result = 31 * result + casesLastTwoWeeks;</span>
+<span class="fc bfc" id="L158" title="All 2 branches covered.">        result = 31 * result + (dateReported != null ? dateReported.hashCode() : 0);</span>
+<span class="fc" id="L159">        return result;</span>
     }
 
     @Override
     public String toString() {
-<span class="nc" id="L165">        return &quot;DailyRecord{&quot; +</span>
+<span class="nc" id="L164">        return &quot;DailyRecord{&quot; +</span>
                 &quot;geoCode='&quot; + geoCode + '\'' +
                 &quot;, municipalDistrict='&quot; + healthWard + '\'' +
                 &quot;, infectionRateLastTwoWeeks=&quot; + infectionRateLastTwoWeeks +

@@ -23,12 +23,11 @@ import java.time.LocalDate;
 public class DailyRecord {
 
     @Id
-    @Indexed(name = "_id", unique = true, direction = IndexDirection.ASCENDING)
     private String id;
     @NotBlank
     @JsonProperty("codigo_geometria")
     @Field("geocode")
-    @Indexed(name = "geocode")
+    @Indexed(name = "geocode", direction = IndexDirection.ASCENDING)
     private String geoCode;
     @NotBlank
     @JsonProperty("zona_basica_salud")

@@ -9,8 +9,8 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.chilborne</groupId>
-	<artifactId>covidradar</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<artifactId>covidradar-madrid</artifactId>
+	<version>0.0.2-DEV</version>
 	<name>Covid Radar</name>
 	<description>Web Application to Visualize Madrid Covid-19 Data</description>
 
@@ -55,6 +55,7 @@
 		<dependency>
 			<groupId>de.flapdoodle.embed</groupId>
 			<artifactId>de.flapdoodle.embed.mongo</artifactId>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>io.micronaut.micrometer</groupId>

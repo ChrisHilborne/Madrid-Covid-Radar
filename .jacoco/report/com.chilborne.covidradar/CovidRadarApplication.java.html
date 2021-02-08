@@ -3,24 +3,23 @@
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.mongo.embedded.EmbeddedMongoAutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
-@SpringBootApplication(exclude = EmbeddedMongoAutoConfiguration.class)
+@SpringBootApplication
 @EnableScheduling
 @EnableConfigurationProperties
 @EnableCaching
-<span class="fc" id="L15">public class CovidRadarApplication {</span>
+<span class="fc" id="L14">public class CovidRadarApplication {</span>
 
 	public static void main(String[] args) {
 
-<span class="nc" id="L19">		SpringApplication.run(CovidRadarApplication.class, args);</span>
+<span class="nc" id="L18">		SpringApplication.run(CovidRadarApplication.class, args);</span>
 
 
 
-<span class="nc" id="L23">	}</span>
+<span class="nc" id="L22">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

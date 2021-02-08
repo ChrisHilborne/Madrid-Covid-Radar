@@ -10,6 +10,7 @@ import org.springframework.test.context.ActiveProfiles;
 @ActiveProfiles("test")
 class CovidRadarApplicationTests {
 
+
 	@Test
 	void contextLoads() {
 	}
