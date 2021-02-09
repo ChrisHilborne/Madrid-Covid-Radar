@@ -9,13 +9,11 @@ const Graph = () => {
         const year = date[0];
         return day + "/" + month + "/" + year;
     }
-
     const district = require('../data/Madrid-Retiro.json');
     const dailyRecords = district.dailyRecords;
-    console.log(dailyRecords[0].date.toString);
+
     return (
         <>
-        <h1>Retiro</h1>
           <Bar
             width={400}
             height={400}
