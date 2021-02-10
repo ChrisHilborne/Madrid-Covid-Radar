@@ -19,85 +19,95 @@ public class HealthWard {
     private int totalCases;
     @Past
     private LocalDate lastUpdated;
+    private int recordCount;
     @NotEmpty
     private List&lt;DailyRecordDTO&gt; dailyRecords;
 
-<span class="fc" id="L25">    public HealthWard(List&lt;DailyRecord&gt; dailyRecords) {</span>
-<span class="fc" id="L26">        DailyRecord lastRecord = dailyRecords.get(dailyRecords.size() - 1);</span>
-<span class="fc" id="L27">        this.geoCode = lastRecord.getGeoCode();</span>
-<span class="fc" id="L28">        this.name = lastRecord.getHealthWard();</span>
-<span class="fc" id="L29">        this.totalCases = lastRecord.getTotalCases();</span>
-<span class="fc" id="L30">        this.lastUpdated = lastRecord.getDateReported();</span>
-<span class="fc" id="L31">        this.dailyRecords = dailyRecords</span>
-<span class="fc" id="L32">                .stream()</span>
-<span class="fc" id="L33">                .map(DailyRecordDTO::new)</span>
-<span class="fc" id="L34">                .collect(Collectors.toList());</span>
-<span class="fc" id="L35">    }</span>
+<span class="fc" id="L26">    public HealthWard(List&lt;DailyRecord&gt; dailyRecords) {</span>
+<span class="fc" id="L27">        DailyRecord lastRecord = dailyRecords.get(dailyRecords.size() - 1);</span>
+<span class="fc" id="L28">        this.geoCode = lastRecord.getGeoCode();</span>
+<span class="fc" id="L29">        this.name = lastRecord.getHealthWard();</span>
+<span class="fc" id="L30">        this.totalCases = lastRecord.getTotalCases();</span>
+<span class="fc" id="L31">        this.lastUpdated = lastRecord.getDateReported();</span>
+<span class="fc" id="L32">        this.recordCount = dailyRecords.size();</span>
+<span class="fc" id="L33">        this.dailyRecords = dailyRecords</span>
+<span class="fc" id="L34">                .stream()</span>
+<span class="fc" id="L35">                .map(DailyRecordDTO::new)</span>
+<span class="fc" id="L36">                .collect(Collectors.toList());</span>
+<span class="fc" id="L37">    }</span>
 
-<span class="fc" id="L37">    public HealthWard() {</span>
-<span class="fc" id="L38">    }</span>
+<span class="fc" id="L39">    public HealthWard() {</span>
+<span class="fc" id="L40">    }</span>
 
-<span class="fc" id="L40">    public String getName() { return name; }</span>
+<span class="fc" id="L42">    public String getName() { return name; }</span>
 
     public String getGeoCode() {
-<span class="fc" id="L43">        return geoCode;</span>
+<span class="fc" id="L45">        return geoCode;</span>
     }
 
     public void setGeoCode(String geoCode) {
-<span class="fc" id="L47">        this.geoCode = geoCode;</span>
-<span class="fc" id="L48">    }</span>
+<span class="fc" id="L49">        this.geoCode = geoCode;</span>
+<span class="fc" id="L50">    }</span>
 
-<span class="fc" id="L50">    public List&lt;DailyRecordDTO&gt; getDailyRecords() { return dailyRecords; }</span>
+<span class="fc" id="L52">    public List&lt;DailyRecordDTO&gt; getDailyRecords() { return dailyRecords; }</span>
 
-<span class="nc" id="L52">    public void setDailyRecords(List&lt;DailyRecordDTO&gt; dailyRecords) { this.dailyRecords = dailyRecords; }</span>
+<span class="nc" id="L54">    public void setDailyRecords(List&lt;DailyRecordDTO&gt; dailyRecords) { this.dailyRecords = dailyRecords; }</span>
 
     public void setName(String name) {
-<span class="fc" id="L55">        this.name = name;</span>
-<span class="fc" id="L56">    }</span>
+<span class="fc" id="L57">        this.name = name;</span>
+<span class="fc" id="L58">    }</span>
 
     public int getTotalCases() {
-<span class="fc" id="L59">        return totalCases;</span>
+<span class="fc" id="L61">        return totalCases;</span>
     }
 
     public void setTotalCases(int totalCases) {
-<span class="nc" id="L63">        this.totalCases = totalCases;</span>
-<span class="nc" id="L64">    }</span>
+<span class="nc" id="L65">        this.totalCases = totalCases;</span>
+<span class="nc" id="L66">    }</span>
 
     public LocalDate getLastUpdated() {
-<span class="fc" id="L67">        return lastUpdated;</span>
+<span class="fc" id="L69">        return lastUpdated;</span>
     }
 
     public void setLastUpdated(LocalDate lastUpdated) {
-<span class="fc" id="L71">        this.lastUpdated = lastUpdated;</span>
-<span class="fc" id="L72">    }</span>
+<span class="fc" id="L73">        this.lastUpdated = lastUpdated;</span>
+<span class="fc" id="L74">    }</span>
+
+    public int getRecordCount() {
+<span class="fc" id="L77">        return recordCount;</span>
+    }
+
+    public void setRecordCount(int recordCount) {
+<span class="nc" id="L81">        this.recordCount = recordCount;</span>
+<span class="nc" id="L82">    }</span>
 
     @Override
     public boolean equals(Object o) {
-<span class="fc bfc" id="L76" title="All 2 branches covered.">        if (this == o) return true;</span>
-<span class="pc bpc" id="L77" title="2 of 4 branches missed.">        if (o == null || getClass() != o.getClass()) return false;</span>
+<span class="fc bfc" id="L86" title="All 2 branches covered.">        if (this == o) return true;</span>
+<span class="pc bpc" id="L87" title="2 of 4 branches missed.">        if (o == null || getClass() != o.getClass()) return false;</span>
 
-<span class="fc" id="L79">        HealthWard that = (HealthWard) o;</span>
+<span class="fc" id="L89">        HealthWard that = (HealthWard) o;</span>
 
-<span class="pc bpc" id="L81" title="1 of 2 branches missed.">        if (totalCases != that.totalCases) return false;</span>
-<span class="pc bpc" id="L82" title="1 of 2 branches missed.">        if (!Objects.equals(geoCode, that.geoCode)) return false;</span>
-<span class="pc bpc" id="L83" title="1 of 2 branches missed.">        if (!Objects.equals(name, that.name)) return false;</span>
-<span class="pc bpc" id="L84" title="1 of 2 branches missed.">        if (!Objects.equals(lastUpdated, that.lastUpdated)) return false;</span>
-<span class="fc" id="L85">        return Objects.equals(dailyRecords, that.dailyRecords);</span>
+<span class="pc bpc" id="L91" title="1 of 2 branches missed.">        if (totalCases != that.totalCases) return false;</span>
+<span class="pc bpc" id="L92" title="1 of 2 branches missed.">        if (!Objects.equals(geoCode, that.geoCode)) return false;</span>
+<span class="pc bpc" id="L93" title="1 of 2 branches missed.">        if (!Objects.equals(name, that.name)) return false;</span>
+<span class="pc bpc" id="L94" title="1 of 2 branches missed.">        if (!Objects.equals(lastUpdated, that.lastUpdated)) return false;</span>
+<span class="fc" id="L95">        return Objects.equals(dailyRecords, that.dailyRecords);</span>
     }
 
     @Override
     public int hashCode() {
-<span class="nc bnc" id="L90" title="All 2 branches missed.">        int result = geoCode != null ? geoCode.hashCode() : 0;</span>
-<span class="nc bnc" id="L91" title="All 2 branches missed.">        result = 31 * result + (name != null ? name.hashCode() : 0);</span>
-<span class="nc" id="L92">        result = 31 * result + totalCases;</span>
-<span class="nc bnc" id="L93" title="All 2 branches missed.">        result = 31 * result + (lastUpdated != null ? lastUpdated.hashCode() : 0);</span>
-<span class="nc bnc" id="L94" title="All 2 branches missed.">        result = 31 * result + (dailyRecords != null ? dailyRecords.hashCode() : 0);</span>
-<span class="nc" id="L95">        return result;</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">        int result = geoCode != null ? geoCode.hashCode() : 0;</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">        result = 31 * result + (name != null ? name.hashCode() : 0);</span>
+<span class="nc" id="L102">        result = 31 * result + totalCases;</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">        result = 31 * result + (lastUpdated != null ? lastUpdated.hashCode() : 0);</span>
+<span class="nc bnc" id="L104" title="All 2 branches missed.">        result = 31 * result + (dailyRecords != null ? dailyRecords.hashCode() : 0);</span>
+<span class="nc" id="L105">        return result;</span>
     }
 
     @Override
     public String toString() {
-<span class="nc" id="L100">        return &quot;HealthWard{&quot; +</span>
+<span class="nc" id="L110">        return &quot;HealthWard{&quot; +</span>
                 &quot;geoCode='&quot; + geoCode + '\'' +
                 &quot;, name='&quot; + name + '\'' +
                 &quot;, totalCases=&quot; + totalCases +

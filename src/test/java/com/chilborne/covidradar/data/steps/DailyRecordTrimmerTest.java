@@ -18,6 +18,7 @@ class DailyRecordTrimmerTest {
         DailyRecord one = new DailyRecord();
         one.setInfectionRateTotal(100.543);
         one.setInfectionRateLastTwoWeeks(10.999);
+        one.setGeoCode("01   ");
 
         List<DailyRecord> dataToTrim = List.of(one);
 
@@ -28,7 +29,8 @@ class DailyRecordTrimmerTest {
         //verify
         assertAll("trimming",
                 () -> assertEquals(100.54, trimmedRecord.getInfectionRateTotal()),
-                () -> assertEquals(11.00, trimmedRecord.getInfectionRateLastTwoWeeks())
+                () -> assertEquals(11.00, trimmedRecord.getInfectionRateLastTwoWeeks()),
+                () -> assertEquals("01", trimmedRecord.getGeoCode())
         );
     }
 
@@ -39,6 +41,7 @@ class DailyRecordTrimmerTest {
         DailyRecord test = new DailyRecord();
         test.setHealthWard("lowTwoWeekInfectionRate");
         test.setInfectionRateLastTwoWeeks(-10.00);
+        test.setGeoCode("test");
 
         //when
         Exception twoWeekInfectionRateTooLow = assertThrows(PipeLineProcessException.class,
@@ -54,6 +57,7 @@ class DailyRecordTrimmerTest {
         DailyRecord test = new DailyRecord();
         test.setHealthWard("lowTotalInfectionRate");
         test.setInfectionRateTotal(-10.00);
+        test.setGeoCode("test");
 
         //when
         Exception totalInfectionRateTooLow = assertThrows(PipeLineProcessException.class,

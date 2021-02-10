@@ -22,6 +22,9 @@ public class DailyRecordTrimmer implements Step<List<DailyRecord>, List<DailyRec
         transformedData
                 .forEach(dailyRecord ->
                 {
+                    //trim spaces from geoCode
+                    String geoCode = dailyRecord.getGeoCode().trim();
+                    dailyRecord.setGeoCode(geoCode);
                     //round to 2dp
                     dailyRecord.setInfectionRateLastTwoWeeks(Math.round( dailyRecord.getInfectionRateLastTwoWeeks() * 100.0) / 100.0 );
                     if (dailyRecord.getInfectionRateLastTwoWeeks() < 0) {

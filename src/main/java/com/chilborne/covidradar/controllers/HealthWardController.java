@@ -27,6 +27,12 @@ public class HealthWardController {
         this.healthWardService = healthWardService;
     }
 
+    @GetMapping(value = "/healthcheck")
+    public ResponseEntity<String> healthCheck() {
+        logger.debug("Health check request...");
+        return ResponseEntity.ok().build();
+    }
+
     @GetMapping(value = "/all", produces = "application/json")
     public ResponseEntity<List<HealthWard>> getAllHealthWards(WebRequest request) {
         logger.debug("Processing Get Request --> All HealthWards");

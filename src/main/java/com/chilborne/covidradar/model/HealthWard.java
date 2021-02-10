@@ -19,6 +19,7 @@ public class HealthWard {
     private int totalCases;
     @Past
     private LocalDate lastUpdated;
+    private int recordCount;
     @NotEmpty
     private List<DailyRecordDTO> dailyRecords;
 
@@ -28,6 +29,7 @@ public class HealthWard {
         this.name = lastRecord.getHealthWard();
         this.totalCases = lastRecord.getTotalCases();
         this.lastUpdated = lastRecord.getDateReported();
+        this.recordCount = dailyRecords.size();
         this.dailyRecords = dailyRecords
                 .stream()
                 .map(DailyRecordDTO::new)
@@ -69,6 +71,14 @@ public class HealthWard {
 
     public void setLastUpdated(LocalDate lastUpdated) {
         this.lastUpdated = lastUpdated;
+    }
+
+    public int getRecordCount() {
+        return recordCount;
+    }
+
+    public void setRecordCount(int recordCount) {
+        this.recordCount = recordCount;
     }
 
     @Override

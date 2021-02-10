@@ -16,6 +16,8 @@ import java.util.List;
 @Service
 public class DailyRecordServiceImpl implements DailyRecordService {
 
+    private int savedCount = 0;
+
     private final DailyRecordRepository dailyRecordRepository;
     private final Logger logger = LoggerFactory.getLogger(DailyRecordServiceImpl.class);
 
@@ -58,7 +60,8 @@ public class DailyRecordServiceImpl implements DailyRecordService {
         dailyRecordList.forEach(dailyRecord -> {
             dailyRecord.generateId();
             logger.debug("Saving DailyRecord id: " + dailyRecord.getId());
-            savedList.add(dailyRecordRepository.save(dailyRecord));
+            DailyRecord saved = dailyRecordRepository.save(dailyRecord);
+            savedList.add(saved);
         });
         if (!savedList.equals(dailyRecordList)) {
             logger.error("dailyRecordList to save and returned list to not match.");
