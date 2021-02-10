@@ -12,17 +12,16 @@ const GraphUI = ( { healthWard } ) => {
 
     var dailyRecords = healthWard.dailyRecords;
     var labels = dailyRecords.map(dailyRecord => toString(dailyRecord.date));
-    var figures = dailyRecords.map(dailyRecord => dailyRecord.twoWeekCases);
-    
+    var figures = dailyRecords.map(dailyRecord => dailyRecord.totalCases);
 
     const data = () => { 
         var data = {
+            labels: labels,
             datasets: [{
-                labels: {labels},
                 label: "Cases Last Two Weeks",
                 hoverBackgroundColor: "red",
                 backgroundColor: "pink",
-                data: {figures},
+                data: figures,
                 barThickness: "flex",
             }]
         };
