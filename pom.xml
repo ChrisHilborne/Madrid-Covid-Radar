@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.chilborne</groupId>
-	<artifactId>covidradar</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>Madrid Covid Radar</name>
+	<artifactId>covidradar-madrid</artifactId>
+	<version>0.0.3-DEV</version>
+	<name>Covid Radar</name>
 	<description>Web Application to Visualize Madrid Covid-19 Data</description>
 
 	<properties>
@@ -55,6 +55,12 @@
 		<dependency>
 			<groupId>de.flapdoodle.embed</groupId>
 			<artifactId>de.flapdoodle.embed.mongo</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.micronaut.micrometer</groupId>
+			<artifactId>micronaut-micrometer-registry-prometheus</artifactId>
+			<version>3.2.0</version>
 		</dependency>
 
 	</dependencies>
@@ -103,8 +109,29 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>
+								test
+							</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-failsafe-plugin</artifactId>
+				<version>3.0.0-M5</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>integration-test</goal>
+							<goal>verify</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin><plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
 				<version>0.8.6</version>

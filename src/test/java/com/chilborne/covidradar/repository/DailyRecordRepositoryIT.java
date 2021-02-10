@@ -8,6 +8,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.LocalDate;
@@ -18,9 +19,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @DataMongoTest
 @DirtiesContext
+@ActiveProfiles("test")
 @ExtendWith(SpringExtension.class)
 class DailyRecordRepositoryIT {
-
 
     @Autowired
     DailyRecordRepository dailyRecordRepository;
@@ -41,16 +42,6 @@ class DailyRecordRepositoryIT {
         one.setDateReported(now);
 
         dailyRecordRepository.save(one);
-    }
-
-
-    @Test
-    void findByName() {
-        //when
-        List<DailyRecord> optionalName = dailyRecordRepository.findByHealthWard("one");
-
-        //verify
-        assertEquals("1", optionalName.get(0).getGeoCode());
     }
     
 

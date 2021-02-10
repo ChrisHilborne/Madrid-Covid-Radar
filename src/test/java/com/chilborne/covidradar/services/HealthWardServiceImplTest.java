@@ -62,30 +62,6 @@ class HealthWardServiceImplTest {
     }
 
     @Test
-    void getHealthWardByName() {
-        //given
-        DailyRecord dailyRecordOne = new DailyRecord();
-        dailyRecordOne.setHealthWard("one");
-        dailyRecordOne.setDateReported(testDate);
-        dailyRecordOne.setGeoCode("01");
-        List<DailyRecord> dailyRecordList = List.of(dailyRecordOne);
-
-        HealthWard healthWard = new HealthWard(dailyRecordList);
-
-        //when
-        when(dailyRecordService.getDailyRecordsByHealthWard("one")).thenReturn(dailyRecordList);
-        when(pipeline.startPipeline(dailyRecordList)).thenReturn(List.of(healthWard));
-        HealthWard result = healthWardService.getHealthWardByName("one");
-
-        //verify
-        verify(dailyRecordService, times(1)).getDailyRecordsByHealthWard(anyString());
-        verify(dailyRecordService, times(1)).getDailyRecordsByHealthWard("one");
-        verify(pipeline, times(1)).startPipeline(anyList());
-        verify(pipeline, times(1)).startPipeline(dailyRecordList);
-        assertEquals(healthWard, result);
-    }
-
-    @Test
     void getHealthWardByGeoCode() {
         //given
         DailyRecord dailyRecordOne = new DailyRecord();

@@ -35,35 +35,27 @@ public class HealthWardServiceImpl implements HealthWardService {
 <span class="fc" id="L35">        return healthWardPipeline.startPipeline(data);</span>
     }
 
-    @Override
-    @Cacheable(&quot;healthWard-name&quot;)
-    public HealthWard getHealthWardByName(String name) throws DataNotFoundException {
-<span class="fc" id="L41">        logger.debug(&quot;Fetching Data for: &quot; + name);</span>
-<span class="fc" id="L42">        List&lt;DailyRecord&gt; dailyRecords = healthWardService.getDailyRecordsByHealthWard(name);</span>
-
-<span class="fc" id="L44">        return healthWardPipeline.startPipeline(dailyRecords).get(0);</span>
-    }
 
     @Override
     @Cacheable(&quot;healthWard-geoCode&quot;)
     public HealthWard getHealthWardByGeoCode(String geoCode) throws DataNotFoundException {
-<span class="fc" id="L50">        logger.debug(&quot;Fetching data for GeoCode: &quot; + geoCode);</span>
-<span class="fc" id="L51">        List&lt;DailyRecord&gt; dailyRecords = healthWardService.getDailyRecordsByGeoCode(geoCode);</span>
+<span class="fc" id="L42">        logger.debug(&quot;Fetching data for GeoCode: &quot; + geoCode);</span>
+<span class="fc" id="L43">        List&lt;DailyRecord&gt; dailyRecords = healthWardService.getDailyRecordsByGeoCode(geoCode);</span>
 
-<span class="fc" id="L53">        return healthWardPipeline.startPipeline(dailyRecords).get(0);</span>
+<span class="fc" id="L45">        return healthWardPipeline.startPipeline(dailyRecords).get(0);</span>
     }
 
     @Override
     @Cacheable(&quot;namesAndGeoCodes&quot;)
     public Map&lt;String, String&gt; getHealthWardGeoCodesAndNames() {
-<span class="fc" id="L59">        Map&lt;String, String&gt; namesAndGeocodes = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L51">        Map&lt;String, String&gt; namesAndGeocodes = new HashMap&lt;&gt;();</span>
 
-<span class="fc" id="L61">        List&lt;HealthWard&gt; allData = getAllHealthWards();</span>
-<span class="fc" id="L62">        allData.forEach(healthWard -&gt; {</span>
-<span class="fc" id="L63">            namesAndGeocodes.put(healthWard.getName(), healthWard.getGeoCode());</span>
-<span class="fc" id="L64">        });</span>
+<span class="fc" id="L53">        List&lt;HealthWard&gt; allData = getAllHealthWards();</span>
+<span class="fc" id="L54">        allData.forEach(healthWard -&gt; {</span>
+<span class="fc" id="L55">            namesAndGeocodes.put(healthWard.getName(), healthWard.getGeoCode());</span>
+<span class="fc" id="L56">        });</span>
 
-<span class="fc" id="L66">        return namesAndGeocodes;</span>
+<span class="fc" id="L58">        return namesAndGeocodes;</span>
     }
 
 

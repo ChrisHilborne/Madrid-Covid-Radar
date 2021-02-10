@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-@CrossOrigin(origins = "http://localhost:8081")
+@CrossOrigin
 @RestController
 @RequestMapping("/api")
 public class HealthWardController {
@@ -46,20 +46,6 @@ public class HealthWardController {
         logger.debug("Processing Get Request --> geocode: " + geoCode);
 
         HealthWard result = healthWardService.getHealthWardByGeoCode(geoCode);
-        if (hasBeenModifiedSince(result, request)) {
-            return ResponseEntity.status(304).build();
-        }
-        return ResponseEntity.ok()
-                .cacheControl(getCacheControlHealthWard())
-                .lastModified(getEpochLastModified(result))
-                .body(result);
-    }
-
-    @GetMapping(value = "/name/{name}", produces = "application/json")
-    public ResponseEntity<HealthWard> getHealthWardByName(@PathVariable String name, WebRequest request) {
-        logger.debug("Processing Get Request --> health ward: " + name);
-
-        HealthWard result = healthWardService.getHealthWardByName(name);
         if (hasBeenModifiedSince(result, request)) {
             return ResponseEntity.status(304).build();
         }

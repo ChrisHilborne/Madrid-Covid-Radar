@@ -35,14 +35,6 @@ public class HealthWardServiceImpl implements HealthWardService {
         return healthWardPipeline.startPipeline(data);
     }
 
-    @Override
-    @Cacheable("healthWard-name")
-    public HealthWard getHealthWardByName(String name) throws DataNotFoundException {
-        logger.debug("Fetching Data for: " + name);
-        List<DailyRecord> dailyRecords = healthWardService.getDailyRecordsByHealthWard(name);
-
-        return healthWardPipeline.startPipeline(dailyRecords).get(0);
-    }
 
     @Override
     @Cacheable("healthWard-geoCode")
