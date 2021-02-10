@@ -1,41 +1,32 @@
-import { React } from "react";
-import { Bar } from "react-chartjs-2";
+import { React, useState, useEffect } from "react";
+import GraphUI from './GraphUI.js';
+import axios from 'axios';
 
-const Graph = () => {
+const Graph = (geoCode) => {
+    const [healthWard, setHealthWard] = useState(null);
 
-    function toString(date) {
-        const day = date[1];
-        const month = date[2];
-        const year = date[0];
-        return day + "/" + month + "/" + year;
+    const url = 'http://covidradarmadrid-env.eba-wbgad2ub.eu-south-1.elasticbeanstalk.com/api/geocode/';
+
+    useEffect(() => {
+        const data = (geoCode) => {
+        axios.get(url.concat(geoCode.geoCode))
+            .then( response => {
+                setHealthWard(response.data);
+            })
+            .catch( error => console.error(`Error: ${error}`))
+        };
+        data(geoCode);
+    }, [geoCode]);
+
+    if (healthWard !== null) {
+        return (
+            <GraphUI healthWard={healthWard} />
+        );
+    } else {
+        return (
+            <div></div>
+        );
     }
-    const district = require('../data/Madrid-Retiro.json');
-    const dailyRecords = district.dailyRecords;
-
-    return (
-        <>
-          <Bar
-            width={400}
-            height={400}
-            data={{
-                labels: dailyRecords.map(dailyRecord => toString(dailyRecord.date)),
-                datasets: [{
-                    label: "Cases Last Two Weeks",
-                    hoverBackgroundColor: "red",
-                    backgroundColor: "pink",
-                    data: dailyRecords.map(dailyRecord => dailyRecord.twoWeekCases),
-                    barThickness: "flex",
-                }]
-                  
-            }}
-            options={{
-                maintainAspectRatio: false,
-            }}
-            
-        />
-        </>
-    );
-
 }
 
 export default Graph
