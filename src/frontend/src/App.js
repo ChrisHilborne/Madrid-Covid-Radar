@@ -1,9 +1,10 @@
-import Graph from "./Components/Graph.js";
-
+import MainPage from "./Components/MainPage.js";
 
 function App() {
   return (
-    <Graph />
+    <>
+      <MainPage />
+    </>
   );
 }
 

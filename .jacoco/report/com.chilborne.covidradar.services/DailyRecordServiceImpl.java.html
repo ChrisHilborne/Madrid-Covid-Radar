@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DailyRecordServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Covid Radar</a> &gt; <a href="index.source.html" class="el_package">com.chilborne.covidradar.services</a> &gt; <span class="el_source">DailyRecordServiceImpl.java</span></div><h1>DailyRecordServiceImpl.java</h1><pre class="source lang-java linenums">package com.chilborne.covidradar.services;
+
+import com.chilborne.covidradar.exceptions.DataNotFoundException;
+import com.chilborne.covidradar.exceptions.DataSaveException;
+import com.chilborne.covidradar.model.DailyRecord;
+import com.chilborne.covidradar.repository.DailyRecordRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+@Service
+public class DailyRecordServiceImpl implements DailyRecordService {
+
+    private final DailyRecordRepository dailyRecordRepository;
+<span class="fc" id="L20">    private final Logger logger = LoggerFactory.getLogger(DailyRecordServiceImpl.class);</span>
+
+<span class="fc" id="L22">    public DailyRecordServiceImpl(DailyRecordRepository dailyRecordRepository) {</span>
+<span class="fc" id="L23">        this.dailyRecordRepository = dailyRecordRepository;</span>
+<span class="fc" id="L24">    }</span>
+
+    @Override
+    public DailyRecord save(DailyRecord dailyRecord) {
+<span class="fc" id="L28">        logger.debug(&quot;Saving dailyRecord id: &quot; + dailyRecord.getId());</span>
+<span class="fc" id="L29">        dailyRecord.generateId();</span>
+<span class="fc" id="L30">        DailyRecord saved = dailyRecordRepository.save(dailyRecord);</span>
+<span class="fc bfc" id="L31" title="All 2 branches covered.">        if (saved.equals(dailyRecord)) {</span>
+<span class="fc" id="L32">            return saved;</span>
+        } else {
+<span class="fc" id="L34">            throw new DataSaveException(&quot;Failed to save DailyRecord id: &quot; + dailyRecord.getId());</span>
+        }
+    }
+
+    @Override
+    public List&lt;DailyRecord&gt; getAll() {
+<span class="fc" id="L40">        logger.debug(&quot;Fetching all DailyRecords...&quot;);</span>
+<span class="fc" id="L41">        List&lt;DailyRecord&gt; results = dailyRecordRepository.findAll();</span>
+<span class="fc bfc" id="L42" title="All 2 branches covered.">        if (results.isEmpty()) {</span>
+<span class="fc" id="L43">            logger.error(&quot;No DailyRecords found.&quot;);</span>
+<span class="fc" id="L44">            throw new DataNotFoundException(&quot;No Daily Records found.&quot;);</span>
+        }
+<span class="fc" id="L46">        return results;</span>
+    }
+
+    @Override
+    public List&lt;DailyRecord&gt; getDailyRecordsByHealthWard(String healthWard) {
+<span class="fc" id="L51">        logger.debug(&quot;Fetching DailyRecords for health ward: &quot; + healthWard);</span>
+<span class="fc" id="L52">        List&lt;DailyRecord&gt; results = dailyRecordRepository.findByHealthWard(healthWard);</span>
+<span class="fc bfc" id="L53" title="All 2 branches covered.">        if (results.isEmpty()) {</span>
+<span class="fc" id="L54">            logger.error(&quot;No data found for healthward: &quot; + healthWard);</span>
+<span class="fc" id="L55">            throw new DataNotFoundException(&quot;No data found for health ward: &quot; + healthWard);</span>
+        }
+<span class="fc" id="L57">        return results;</span>
+    }
+
+    @Override
+    @CacheEvict({
+            &quot;healthWard-all&quot;,
+            &quot;healthWard-name&quot;,
+            &quot;healthWard-geoCode&quot;,
+            &quot;namesAndGeoCodes&quot;
+    })
+    public List&lt;DailyRecord&gt; save(List&lt;DailyRecord&gt; dailyRecordList) {
+<span class="fc" id="L68">        logger.debug(&quot;Saving dailyRecordList (hashcode: &quot; + dailyRecordList.hashCode() +&quot;)&quot;);</span>
+<span class="fc" id="L69">        List&lt;DailyRecord&gt; savedList = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L70">        dailyRecordList.forEach(dailyRecord -&gt; {</span>
+<span class="fc" id="L71">            dailyRecord.generateId();</span>
+<span class="fc" id="L72">            logger.debug(&quot;Saving DailyRecord id: &quot; + dailyRecord.getId());</span>
+<span class="fc" id="L73">            savedList.add(dailyRecordRepository.save(dailyRecord));</span>
+<span class="fc" id="L74">        });</span>
+<span class="fc bfc" id="L75" title="All 2 branches covered.">        if (!savedList.equals(dailyRecordList)) {</span>
+<span class="fc" id="L76">            logger.error(&quot;dailyRecordList to save and returned list to not match.&quot;);</span>
+<span class="fc" id="L77">            throw new DataSaveException(&quot;Error when saving dailyRecordList (hashcode &quot; + dailyRecordList.hashCode() + &quot;)&quot;);</span>
+        }
+<span class="fc" id="L79">        return savedList;</span>
+    }
+
+    @Override
+    public List&lt;DailyRecord&gt; getDailyRecordsByGeoCode(String geoCode) {
+<span class="fc" id="L84">        logger.debug(&quot;Fetching DailyRecords for GeoCode: &quot; + geoCode);</span>
+<span class="fc" id="L85">        List&lt;DailyRecord&gt; results = dailyRecordRepository.findByGeoCode(geoCode);</span>
+<span class="fc bfc" id="L86" title="All 2 branches covered.">        if (results.isEmpty()) {</span>
+<span class="fc" id="L87">            logger.error(&quot;No data found for geocode: &quot; + geoCode);</span>
+<span class="fc" id="L88">            throw new DataNotFoundException(&quot;No data found for geocode: &quot; + geoCode);</span>
+        }
+<span class="fc" id="L90">        return results;</span>
+    }
+
+    @Override
+    public DailyRecord getDailyRecordByGeoCodeAndDate(String geoCode, LocalDate date) {
+<span class="fc" id="L95">        return dailyRecordRepository</span>
+<span class="fc" id="L96">                .findByGeoCodeAndDateReported(geoCode, date)</span>
+<span class="fc" id="L97">                .orElseThrow(() -&gt; new DataNotFoundException(&quot;No data found for geocode: &quot; + geoCode + &quot; and dateReported: &quot; + date.toString()));</span>
+
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>
