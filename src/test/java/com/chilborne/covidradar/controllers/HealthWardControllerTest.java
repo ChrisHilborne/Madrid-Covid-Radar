@@ -174,7 +174,7 @@ class HealthWardControllerTest {
 
         //verify
         mvc.perform(
-                get("/api/names+geocodes")
+                get("/api/names&geocodes")
                         .accept("application/json")
         )
                 .andExpect(status().isOk())

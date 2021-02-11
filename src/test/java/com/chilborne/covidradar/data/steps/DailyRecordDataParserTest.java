@@ -39,8 +39,8 @@ class DailyRecordDataParserTest {
         DailyRecord dailyRecord = new DailyRecord();
         dailyRecord.setGeoCode("079603");
         dailyRecord.setHealthWard("Madrid-Retiro");
-        dailyRecord.setInfectionRateLastTwoWeeks(23.4668991007149);
-        dailyRecord.setInfectionRateTotal(1417.23308497532);
+        dailyRecord.setInfectionRateLastTwoWeeks(23);
+        dailyRecord.setInfectionRateTotal(1417);
         dailyRecord.setCasesLastTwoWeeks(28);
         dailyRecord.setTotalCases(1691);
         dailyRecord.setDateReported(LocalDate.of(2020, 07, 01));

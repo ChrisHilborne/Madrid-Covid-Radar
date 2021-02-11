@@ -3,7 +3,7 @@ package com.chilborne.covidradar.config;
 import com.chilborne.covidradar.data.pipeline.Pipeline;
 import com.chilborne.covidradar.data.steps.DailyRecordParser;
 import com.chilborne.covidradar.data.steps.DailyRecordSaver;
-import com.chilborne.covidradar.data.steps.DailyRecordTrimmer;
+import com.chilborne.covidradar.data.steps.DailyRecordFixer;
 import com.chilborne.covidradar.model.DailyRecord;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -23,7 +23,7 @@ class DailyRecordPipelineConfigTest {
     DailyRecordParser parser;
 
     @Mock
-    DailyRecordTrimmer trimmer;
+    DailyRecordFixer trimmer;
 
     @Mock
     DailyRecordSaver saver;

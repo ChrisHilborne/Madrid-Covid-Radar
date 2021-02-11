@@ -36,11 +36,11 @@ public class DailyRecord {
     @PositiveOrZero
     @JsonProperty("tasa_incidencia_acumulada_ultimos_14dias")
     @Field("infectionRate2Weeks")
-    private double infectionRateLastTwoWeeks;
+    private int infectionRateLastTwoWeeks;
     @PositiveOrZero
     @JsonProperty("tasa_incidencia_acumulada_total")
     @Field("infectionRateTotal")
-    private double infectionRateTotal;
+    private int infectionRateTotal;
     @PositiveOrZero
     @JsonProperty("casos_confirmados_totales")
     @Field("casesTotal")
@@ -54,7 +54,6 @@ public class DailyRecord {
     @JsonFormat(pattern = "yyyy/MM/dd HH:mm:ss")
     @Field("date")
     private LocalDate dateReported;
-
 
     public DailyRecord() {}
 
@@ -90,19 +89,19 @@ public class DailyRecord {
         this.healthWard = healthWard;
     }
 
-    public double getInfectionRateLastTwoWeeks() {
+    public int getInfectionRateLastTwoWeeks() {
         return infectionRateLastTwoWeeks;
     }
 
-    public void setInfectionRateLastTwoWeeks(double infectionRateLastTwoWeeks) {
+    public void setInfectionRateLastTwoWeeks(int infectionRateLastTwoWeeks) {
         this.infectionRateLastTwoWeeks = infectionRateLastTwoWeeks;
     }
 
-    public double getInfectionRateTotal() {
+    public int getInfectionRateTotal() {
         return infectionRateTotal;
     }
 
-    public void setInfectionRateTotal(double infectionRateTotal) {
+    public void setInfectionRateTotal(int infectionRateTotal) {
         this.infectionRateTotal = infectionRateTotal;
     }
 

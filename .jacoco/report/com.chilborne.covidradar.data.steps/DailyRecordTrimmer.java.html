@@ -22,23 +22,28 @@ import java.util.List;
 <span class="fc" id="L22">        transformedData</span>
 <span class="fc" id="L23">                .forEach(dailyRecord -&gt;</span>
                 {
-                    //trim spaces from geoCode
-<span class="fc" id="L26">                    String geoCode = dailyRecord.getGeoCode().trim();</span>
-<span class="fc" id="L27">                    dailyRecord.setGeoCode(geoCode);</span>
+
+                    //convert HealthWard name to lowercase
+<span class="fc" id="L27">                    String healthWard = dailyRecord.getHealthWard()</span>
+<span class="fc" id="L28">                            .toLowerCase()</span>
+<span class="fc" id="L29">                            .replace(' ', '_');</span>
+<span class="fc" id="L30">                    dailyRecord.setGeoCode(healthWard);</span>
+
                     //round to 2dp
-<span class="fc" id="L29">                    dailyRecord.setInfectionRateLastTwoWeeks(Math.round( dailyRecord.getInfectionRateLastTwoWeeks() * 100.0) / 100.0 );</span>
-<span class="fc bfc" id="L30" title="All 2 branches covered.">                    if (dailyRecord.getInfectionRateLastTwoWeeks() &lt; 0) {</span>
-<span class="fc" id="L31">                        throw new PipeLineProcessException(&quot;Two Week Infection Rate rounded to less than zero&quot;);</span>
-                    }
-                    //round to 2dp
-<span class="fc" id="L34">                    dailyRecord.setInfectionRateTotal(Math.round( dailyRecord.getInfectionRateTotal() * 100.0) / 100.0 );</span>
-<span class="fc bfc" id="L35" title="All 2 branches covered.">                    if (dailyRecord.getInfectionRateTotal() &lt; 0) {</span>
-<span class="fc" id="L36">                        throw new PipeLineProcessException(&quot;Total Infection Rate rounded to less than zero&quot;);</span>
+<span class="fc" id="L33">                    dailyRecord.setInfectionRateLastTwoWeeks(Math.round( dailyRecord.getInfectionRateLastTwoWeeks() * 100.0) / 100.0 );</span>
+<span class="fc bfc" id="L34" title="All 2 branches covered.">                    if (dailyRecord.getInfectionRateLastTwoWeeks() &lt; 0) {</span>
+<span class="fc" id="L35">                        throw new PipeLineProcessException(&quot;Two Week Infection Rate rounded to less than zero&quot;);</span>
                     }
 
-<span class="fc" id="L39">                });</span>
-<span class="fc" id="L40">        logger.debug(&quot;Finished trimming DailyRecord data.&quot;);</span>
-<span class="fc" id="L41">        return transformedData;</span>
+                    //round to 2dp
+<span class="fc" id="L39">                    dailyRecord.setInfectionRateTotal(Math.round( dailyRecord.getInfectionRateTotal() * 100.0) / 100.0 );</span>
+<span class="fc bfc" id="L40" title="All 2 branches covered.">                    if (dailyRecord.getInfectionRateTotal() &lt; 0) {</span>
+<span class="fc" id="L41">                        throw new PipeLineProcessException(&quot;Total Infection Rate rounded to less than zero&quot;);</span>
+                    }
+
+<span class="fc" id="L44">                });</span>
+<span class="fc" id="L45">        logger.debug(&quot;Finished trimming DailyRecord data.&quot;);</span>
+<span class="fc" id="L46">        return transformedData;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

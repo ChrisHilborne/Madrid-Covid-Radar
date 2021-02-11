@@ -10,15 +10,15 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class DailyRecordTrimmerTest {
 
-    DailyRecordTrimmer dailyRecordTrimmer = new DailyRecordTrimmer();
+    DailyRecordFixer dailyRecordTrimmer = new DailyRecordFixer();
 
     @Test
     void process() {
         //given
         DailyRecord one = new DailyRecord();
-        one.setInfectionRateTotal(100.543);
-        one.setInfectionRateLastTwoWeeks(10.999);
-        one.setGeoCode("01   ");
+        one.setInfectionRateTotal(101);
+        one.setInfectionRateLastTwoWeeks(10);
+        one.setHealthWard("Test Test");
 
         List<DailyRecord> dataToTrim = List.of(one);
 
@@ -28,9 +28,9 @@ class DailyRecordTrimmerTest {
 
         //verify
         assertAll("trimming",
-                () -> assertEquals(100.54, trimmedRecord.getInfectionRateTotal()),
-                () -> assertEquals(11.00, trimmedRecord.getInfectionRateLastTwoWeeks()),
-                () -> assertEquals("01", trimmedRecord.getGeoCode())
+                () -> assertEquals(101, trimmedRecord.getInfectionRateTotal()),
+                () -> assertEquals(10, trimmedRecord.getInfectionRateLastTwoWeeks()),
+                () -> assertEquals("test_test", trimmedRecord.getGeoCode())
         );
     }
 
@@ -40,7 +40,7 @@ class DailyRecordTrimmerTest {
         //given
         DailyRecord test = new DailyRecord();
         test.setHealthWard("lowTwoWeekInfectionRate");
-        test.setInfectionRateLastTwoWeeks(-10.00);
+        test.setInfectionRateLastTwoWeeks(-10);
         test.setGeoCode("test");
 
         //when
@@ -56,7 +56,7 @@ class DailyRecordTrimmerTest {
     void processException_TotalInfectionRateTooLow() {
         DailyRecord test = new DailyRecord();
         test.setHealthWard("lowTotalInfectionRate");
-        test.setInfectionRateTotal(-10.00);
+        test.setInfectionRateTotal(-10);
         test.setGeoCode("test");
 
         //when

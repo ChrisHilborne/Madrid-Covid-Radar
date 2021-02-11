@@ -8,9 +8,9 @@ import java.util.Objects;
 public class DailyRecordDTO {
 
     @PositiveOrZero
-    private double twoWeekRate;
+    private int twoWeekRate;
     @PositiveOrZero
-    private double totalRate;
+    private int totalRate;
     @PositiveOrZero
     private int twoWeekCases;
     @PositiveOrZero
@@ -35,7 +35,7 @@ public class DailyRecordDTO {
 <span class="nc" id="L35">        return twoWeekRate;</span>
     }
 
-    public void setTwoWeekRate(double twoWeekRate) {
+    public void setTwoWeekRate(int twoWeekRate) {
 <span class="nc" id="L39">        this.twoWeekRate = twoWeekRate;</span>
 <span class="nc" id="L40">    }</span>
 
@@ -43,7 +43,7 @@ public class DailyRecordDTO {
 <span class="nc" id="L43">        return totalRate;</span>
     }
 
-    public void setTotalRate(double totalRate) {
+    public void setTotalRate(int totalRate) {
 <span class="nc" id="L47">        this.totalRate = totalRate;</span>
 <span class="nc" id="L48">    }</span>
 

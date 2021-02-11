@@ -27,12 +27,6 @@ public class HealthWardController {
         this.healthWardService = healthWardService;
     }
 
-    @GetMapping(value = "/healthcheck")
-    public ResponseEntity<String> healthCheck() {
-        logger.debug("Health check request...");
-        return ResponseEntity.ok().build();
-    }
-
     @GetMapping(value = "/all", produces = "application/json")
     public ResponseEntity<List<HealthWard>> getAllHealthWards(WebRequest request) {
         logger.debug("Processing Get Request --> All HealthWards");
@@ -61,7 +55,7 @@ public class HealthWardController {
                 .body(result);
     }
 
-    @GetMapping(value = "/names+geocodes", produces = "application/json")
+    @GetMapping(value = "/names&geocodes", produces = "application/json")
     public ResponseEntity<Map<String, String>> getNamesAndGeoCodes() {
         logger.debug("Processing Get Request --> Names and GeoCodes");
         return ResponseEntity.ok()

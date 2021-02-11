@@ -38,7 +38,7 @@ public class DailyRecordParser implements Step<String, List<DailyRecord>> {
 
             logger.debug(dailyRecordList.size() + " Records Parsed.");
 
-            return dailyRecordList;
+        return dailyRecordList;
         }
 }
 

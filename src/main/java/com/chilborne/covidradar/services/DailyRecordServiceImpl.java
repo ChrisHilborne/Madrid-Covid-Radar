@@ -16,8 +16,6 @@ import java.util.List;
 @Service
 public class DailyRecordServiceImpl implements DailyRecordService {
 
-    private int savedCount = 0;
-
     private final DailyRecordRepository dailyRecordRepository;
     private final Logger logger = LoggerFactory.getLogger(DailyRecordServiceImpl.class);
 
