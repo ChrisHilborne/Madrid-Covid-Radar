@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 HELP.md
 target/
 logs/
@@ -8,6 +7,9 @@ logs/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
+
+### Node.js ###
+/src/frontend/node_modules
 
 ### STS ###
 .apt_generated
