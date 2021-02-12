@@ -1,8 +1,0 @@
-{
-  "short_name": "Covid Radar Madrid",
-  "name": "Covid-19 Datos para Madrid",
-  "start_url": ".",
-  "display": "standalone",
-  "theme_color": "grey",
-  "background_color": "grey"
-}

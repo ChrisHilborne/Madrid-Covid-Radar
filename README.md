@@ -3,11 +3,11 @@
 
 # Madrid-Covid-Radar
 
-A Spring-Boot / React web-app made to fetch covid-19 data from La Communidad de Madrid API and serve it to clients in an  easy-to-undersand way.
+A Spring-Boot server  made to fetch covid-19 data from La Communidad de Madrid API - process it and serve it up as a RESTful API.
 
 ## Why make it?
 
-I've made this app to continue learning Java and Spring-Boot, Javascript and React and webdev in general.
+I've made this app to continue learning Java and Spring-Boot. I've also decided to make it because at the time the municipal government in Madrid had not made the data available in an easy-to-understand form.
 
 ## Licence
 MIT
