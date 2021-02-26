@@ -1,5 +1,6 @@
 package com.chilborne.covidradar.data.pipeline;
 
+import com.chilborne.covidradar.events.InitialDataEvent;
 import com.chilborne.covidradar.events.UpdatedDataEvent;
 import com.chilborne.covidradar.exceptions.PipeLineProcessException;
 import com.chilborne.covidradar.model.DailyRecord;
@@ -26,7 +27,16 @@ public class DailyRecordProcessingPipeline {
     }
 
     @EventListener
-    public void startPipeline(UpdatedDataEvent updatedDataEvent) {
+    public void startInitializePipeline(InitialDataEvent initialDataEvent) {
+        try {
+            initializePipeline.execute(initialDataEvent.getData());
+        } catch (PipeLineProcessException pipeLineProcessException) {
+            logger.error(pipeLineProcessException.getMessage(), pipeLineProcessException);
+        }
+    }
+
+    @EventListener
+    public void startUpdatePipeline(UpdatedDataEvent updatedDataEvent) {
         try {
             updatePipeline.execute(updatedDataEvent.getData());
         } catch (PipeLineProcessException pipeLineProcessException) {

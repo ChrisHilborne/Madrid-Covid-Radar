@@ -30,7 +30,7 @@ class DailyRecordDataPipelineTest {
         UpdatedDataEvent newDataEvent = new UpdatedDataEvent(this, testInput);
 
         //when
-        dailyRecordDataPipeline.startPipeline(newDataEvent);
+        dailyRecordDataPipeline.startUpdatePipeline(newDataEvent);
 
         //verify
         verify(pipeline, times(1)).execute(any());
