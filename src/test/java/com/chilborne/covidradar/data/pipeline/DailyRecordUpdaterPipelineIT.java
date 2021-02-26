@@ -1,6 +1,6 @@
 package com.chilborne.covidradar.data.pipeline;
 
-import com.chilborne.covidradar.config.DailyRecordPipelineConfig;
+import com.chilborne.covidradar.config.DailyRecordUpdatePipelineConfig;
 import com.chilborne.covidradar.data.steps.DailyRecordFixer;
 import com.chilborne.covidradar.data.steps.DailyRecordParser;
 import com.chilborne.covidradar.data.steps.DailyRecordSaver;
@@ -23,7 +23,7 @@ import static org.mockito.Mockito.when;
 @ActiveProfiles("test")
 @ExtendWith(MockitoExtension.class)
 @SpringBootTest
-class DailyRecordPipelineIT {
+class DailyRecordUpdaterPipelineIT {
 
     @Autowired
     DailyRecordParser parser;
@@ -34,7 +34,7 @@ class DailyRecordPipelineIT {
     @Mock
     DailyRecordSaver saver;
 
-    DailyRecordPipelineConfig config;
+    DailyRecordUpdatePipelineConfig config;
 
     private final String testJSON = "{\n" +
             "  \"data\": [\n" +
@@ -51,7 +51,7 @@ class DailyRecordPipelineIT {
 
     @BeforeEach
     void init() {
-        config = new DailyRecordPipelineConfig(
+        config = new DailyRecordUpdatePipelineConfig(
                 parser,
                 trimmer,
                 saver

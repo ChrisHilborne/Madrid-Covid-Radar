@@ -1,5 +1,6 @@
 package com.chilborne.covidradar.events;
 
+import com.chilborne.covidradar.data.collection.DataFetchAction;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -21,10 +22,10 @@ class NewDataEventPublisherTest {
     ApplicationEventPublisher applicationEventPublisher;
 
     @InjectMocks
-    NewDataEventPublisher newDataEventPublisher;
+    DataEventPublisher newDataEventPublisher;
 
     @Captor
-    ArgumentCaptor<NewDataEvent> argumentCaptor;
+    ArgumentCaptor<UpdatedDataEvent> argumentCaptor;
 
     @Test
     void publishNewDataEvent() {
@@ -32,11 +33,11 @@ class NewDataEventPublisherTest {
         String testData = "test data";
 
         //when
-        newDataEventPublisher.publishNewDataEvent(testData);
+        newDataEventPublisher.publishDataEvent(testData, DataFetchAction.UPDATE);
 
         //verify
         verify(applicationEventPublisher).publishEvent(argumentCaptor.capture());
-        NewDataEvent newDataEvent = argumentCaptor.getValue();
+        UpdatedDataEvent newDataEvent = argumentCaptor.getValue();
 
         assertEquals(testData, newDataEvent.getData());
         verify(applicationEventPublisher, times(1)).publishEvent(any());

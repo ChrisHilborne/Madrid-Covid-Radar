@@ -1,6 +1,6 @@
 package com.chilborne.covidradar.data.pipeline;
 
-import com.chilborne.covidradar.events.NewDataEvent;
+import com.chilborne.covidradar.events.UpdatedDataEvent;
 import com.chilborne.covidradar.exceptions.PipeLineProcessException;
 import com.chilborne.covidradar.model.DailyRecord;
 import org.slf4j.Logger;
@@ -14,17 +14,21 @@ import java.util.List;
 @Service
 public class DailyRecordProcessingPipeline {
 
-    private final Pipeline<String, List<DailyRecord>> pipeline;
+    private final Pipeline<String, List<DailyRecord>> initializePipeline;
+    private final Pipeline<String, List<DailyRecord>> updatePipeline;
     private final Logger logger = LoggerFactory.getLogger(DailyRecordProcessingPipeline.class);
 
-    public DailyRecordProcessingPipeline(@Qualifier("dailyRecord-Pipeline") Pipeline pipeline) {
-        this.pipeline = pipeline;
+    public DailyRecordProcessingPipeline(
+            @Qualifier("dailyRecord-initialize-pipeline") Pipeline initializePipeline,
+            @Qualifier("dailyRecord-update-pipeline") Pipeline updatePipeline) {
+        this.initializePipeline = initializePipeline;
+        this.updatePipeline = updatePipeline;
     }
 
     @EventListener
-    public void startPipeline(NewDataEvent newDataEvent) {
+    public void startPipeline(UpdatedDataEvent updatedDataEvent) {
         try {
-            pipeline.execute(newDataEvent.getData());
+            updatePipeline.execute(updatedDataEvent.getData());
         } catch (PipeLineProcessException pipeLineProcessException) {
             logger.error(pipeLineProcessException.getMessage(), pipeLineProcessException);
         }

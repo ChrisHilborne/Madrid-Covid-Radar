@@ -4,6 +4,6 @@ public interface DataFetcher {
 
     void fetchData(DataFetchAction type) ;
 
-    void publishData(String data);
+    void publishData(String data, DataFetchAction action);
 }
 

@@ -2,11 +2,11 @@ package com.chilborne.covidradar.events;
 
 import org.springframework.context.ApplicationEvent;
 
-public class NewDataEvent extends ApplicationEvent {
+public class InitialDataEvent extends ApplicationEvent {
 
     private String data;
 
-    public NewDataEvent(Object source, String data) {
+    public InitialDataEvent(Object source, String data) {
         super(source);
         this.data = data;
     }
@@ -19,3 +19,4 @@ public class NewDataEvent extends ApplicationEvent {
         this.data = data;
     }
 }
+

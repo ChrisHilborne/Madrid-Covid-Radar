@@ -1,6 +1,6 @@
 package com.chilborne.covidradar.data.collection;
 
-import com.chilborne.covidradar.events.NewDataEventPublisher;
+import com.chilborne.covidradar.events.DataEventPublisher;
 import com.chilborne.covidradar.exceptions.DataFetchException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +25,7 @@ public class HttpDailyRecordFetcher implements DataFetcher {
 
     private final HttpClient httpClient;
     private final Map<DataFetchAction, URI> uriMap;
-    private final NewDataEventPublisher newDataEventPublisher;
+    private final DataEventPublisher newDataEventPublisher;
     private final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.RFC_1123_DATE_TIME;
 
     private OffsetDateTime lastModified;
@@ -34,16 +34,16 @@ public class HttpDailyRecordFetcher implements DataFetcher {
 
     public HttpDailyRecordFetcher(HttpClient httpClient,
                                   Map<DataFetchAction, URI> uriMap,
-                                  NewDataEventPublisher newDataEventPublisher) {
+                                  DataEventPublisher newDataEventPublisher) {
         this.httpClient = httpClient;
         this.uriMap = uriMap;
         this.newDataEventPublisher = newDataEventPublisher;
     }
 
     @Override
-    public void fetchData(DataFetchAction type)  {
+    public void fetchData(DataFetchAction action)  {
         logger.debug("Fetching data...");
-        HttpRequest httpRequest = buildHttpRequest(type);
+        HttpRequest httpRequest = buildHttpRequest(action);
         HttpResponse<String> httpResponse = makeHttpRequest(httpRequest);
 
         if(httpResponse.statusCode() == 304) {
@@ -51,7 +51,7 @@ public class HttpDailyRecordFetcher implements DataFetcher {
             return;
         }
         lastModified = getLastModified(httpResponse);
-        publishData(httpResponse.body());
+        publishData(httpResponse.body(), action);
     }
 
     private HttpResponse<String> makeHttpRequest(HttpRequest initialHttpRequest) {
@@ -101,7 +101,7 @@ public class HttpDailyRecordFetcher implements DataFetcher {
     }
 
     @Override
-    public void publishData(String responseBody) {
-        newDataEventPublisher.publishNewDataEvent(responseBody);
+    public void publishData(String responseBody, DataFetchAction action) {
+        newDataEventPublisher.publishDataEvent(responseBody, action);
     }
 }

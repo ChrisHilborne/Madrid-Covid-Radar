@@ -29,7 +29,7 @@ class DailyRecordPipelineConfigTest {
     DailyRecordSaver saver;
 
     @InjectMocks
-    DailyRecordPipelineConfig config;
+    DailyRecordUpdatePipelineConfig config;
 
 
     @Test

@@ -1,6 +1,6 @@
 package com.chilborne.covidradar.data.pipeline;
 
-import com.chilborne.covidradar.events.NewDataEvent;
+import com.chilborne.covidradar.events.UpdatedDataEvent;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.*;
@@ -27,7 +27,7 @@ class DailyRecordDataPipelineTest {
     void startPipeline() {
         //given
         String testInput = "test";
-        NewDataEvent newDataEvent = new NewDataEvent(this, testInput);
+        UpdatedDataEvent newDataEvent = new UpdatedDataEvent(this, testInput);
 
         //when
         dailyRecordDataPipeline.startPipeline(newDataEvent);
