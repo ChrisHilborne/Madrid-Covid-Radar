@@ -7,27 +7,31 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 @Component
-public class DailyRecordAggregator implements Step<List<DailyRecord>, List<DailyRecord>> {
+public class DailyRecordAggregator implements Step<Map<String,List<DailyRecord>>, List<DailyRecord>> {
 
     @Override
-    public List<DailyRecord> process(List<DailyRecord> input) throws PipeLineProcessException {
+    public List<DailyRecord> process(Map<String,List<DailyRecord>> input) throws PipeLineProcessException {
         LinkedList<DailyRecord> results = new LinkedList<>();
 
-        for (int i = 0; i < input.size(); i+=7) {
-            DailyRecord firstRecord = input.get(i);
-            ArrayList<DailyRecord> toAggregate = new ArrayList<>(6);
-            for (int j = i + 1; j <= i + 6; j++) {
-                if (j == input.size()) {
-                    break;
+        for (List<DailyRecord> dailyRecordList: input.values()) {
+
+
+            for (int i = 0; i < dailyRecordList.size(); i += 7) {
+                DailyRecord firstRecord = dailyRecordList.get(i);
+                ArrayList<DailyRecord> toAggregate = new ArrayList<>(6);
+                for (int j = i + 1; j <= i + 6; j++) {
+                    if (j == dailyRecordList.size()) {
+                        break;
+                    } else {
+                        toAggregate.add(dailyRecordList.get(j));
+                    }
                 }
-                else {
-                    toAggregate.add(input.get(j));
-                }
+                DailyRecord aggregate = aggregateDailyRecords(firstRecord, toAggregate);
+                results.add(aggregate);
             }
-            DailyRecord aggregate = aggregateDailyRecords(firstRecord, toAggregate);
-            results.add(aggregate);
         }
 
         return results;

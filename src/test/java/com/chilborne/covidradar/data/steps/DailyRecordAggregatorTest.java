@@ -3,6 +3,7 @@ package com.chilborne.covidradar.data.steps;
 import com.chilborne.covidradar.model.DailyRecord;
 import org.junit.jupiter.api.Test;
 
+import java.util.HashMap;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -10,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class DailyRecordAggregatorTest {
 
-    DailyRecordAggregator aggregator = new DailyRecordAggregator();
+    private DailyRecordAggregator aggregator = new DailyRecordAggregator();
 
     @Test
     void process_7_Records() {
@@ -53,8 +54,11 @@ class DailyRecordAggregatorTest {
 
         List<DailyRecord> toAggregate = List.of(one, two, three, four, five, six, seven);
 
+        HashMap<String, List<DailyRecord>> map = new HashMap<>();
+        map.put("test", toAggregate);
+
         //when
-        List<DailyRecord> results = aggregator.process(toAggregate);
+        List<DailyRecord> results = aggregator.process(map);
 
 
         //verify
@@ -90,8 +94,12 @@ class DailyRecordAggregatorTest {
 
         List<DailyRecord> toAggregate = List.of(three, nine, twelve);
 
+        HashMap<String, List<DailyRecord>> map = new HashMap<>();
+
+        map.put("test", toAggregate);
+
         //when
-        List<DailyRecord> results = aggregator.process(toAggregate);
+        List<DailyRecord> results = aggregator.process(map);
 
         //verify
         assertAll("three records",
@@ -151,8 +159,12 @@ class DailyRecordAggregatorTest {
 
         List<DailyRecord> toAggregate = List.of(one, two, three, four, five, six, seven, oneHundred);
 
+        HashMap<String, List<DailyRecord>> map = new HashMap<>();
+
+        map.put("test", toAggregate);
+
         //when
-        List<DailyRecord> results = aggregator.process(toAggregate);
+        List<DailyRecord> results = aggregator.process(map);
 
         //verify
         assertAll("one week + one day",

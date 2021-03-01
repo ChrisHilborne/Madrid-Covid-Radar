@@ -10,7 +10,7 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 @Service
@@ -54,7 +54,7 @@ public class DailyRecordServiceImpl implements DailyRecordService {
     })
     public List<DailyRecord> save(List<DailyRecord> dailyRecordList) {
         logger.debug("Saving dailyRecordList size: " + dailyRecordList.size());
-        List<DailyRecord> savedList = new ArrayList<>();
+        List<DailyRecord> savedList = new LinkedList<>();
         dailyRecordList.forEach(dailyRecord -> {
             dailyRecord.generateId();
             logger.debug("Saving DailyRecord id: " + dailyRecord.getId());

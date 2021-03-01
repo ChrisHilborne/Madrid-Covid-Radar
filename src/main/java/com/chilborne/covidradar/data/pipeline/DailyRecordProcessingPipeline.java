@@ -29,6 +29,7 @@ public class DailyRecordProcessingPipeline {
     @EventListener
     public void startInitializePipeline(InitialDataEvent initialDataEvent) {
         try {
+            logger.info("Starting DailyRecordPipeline - INIT...");
             initializePipeline.execute(initialDataEvent.getData());
         } catch (PipeLineProcessException pipeLineProcessException) {
             logger.error(pipeLineProcessException.getMessage(), pipeLineProcessException);
@@ -37,6 +38,7 @@ public class DailyRecordProcessingPipeline {
 
     @EventListener
     public void startUpdatePipeline(UpdatedDataEvent updatedDataEvent) {
+        logger.info("Starting DailyRecordPipeline - UPDATE...");
         try {
             updatePipeline.execute(updatedDataEvent.getData());
         } catch (PipeLineProcessException pipeLineProcessException) {

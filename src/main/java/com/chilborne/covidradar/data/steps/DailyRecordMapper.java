@@ -5,10 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Component
 public class DailyRecordMapper implements Step<List<DailyRecord>, Map<String, List<DailyRecord>>> {
@@ -29,7 +26,7 @@ public class DailyRecordMapper implements Step<List<DailyRecord>, Map<String, Li
                                 .add(dailyRecord);
                     }
                     else {
-                        List<DailyRecord> districtDailyResults = new ArrayList<DailyRecord>();
+                        List<DailyRecord> districtDailyResults = new LinkedList<>();
                         districtDailyResults.add(dailyRecord);
                         dailyRecordsMappedByDistrict.put(dailyRecord.getHealthWard(), districtDailyResults);
                     }
