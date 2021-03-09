@@ -16,3 +16,4 @@ workflows:
           label: version-<<pipeline.number>>
           requires:
             - maven/test
+
