@@ -7,6 +7,7 @@ import com.chilborne.covidradar.repository.DailyRecordRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -47,10 +48,9 @@ public class DailyRecordServiceImpl implements DailyRecordService {
     }
 
     @Override
-    @CacheEvict({
-            "healthWard-all",
-            "healthWard-geoCode",
-            "namesAndGeoCodes"
+    @Caching(evict = {
+            @CacheEvict(value = "healthWard-all", allEntries = true),
+            @CacheEvict(value = "healthWard-geoCode", allEntries = true)
     })
     public List<DailyRecord> save(List<DailyRecord> dailyRecordList) {
         logger.debug("Saving dailyRecordList size: " + dailyRecordList.size());

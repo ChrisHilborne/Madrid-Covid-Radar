@@ -12,4 +12,6 @@ public interface HealthWardService {
     HealthWard getHealthWardByGeoCode(String geoCode);
 
     Map<String, String> getHealthWardGeoCodesAndNames();
+
+    void clearCache();
 }

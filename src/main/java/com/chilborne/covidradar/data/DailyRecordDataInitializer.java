@@ -27,7 +27,7 @@ public class DailyRecordDataInitializer implements DataInitializer {
     public void initializeData() {
         logger.debug("Initialising DailyRecord data...");
         dataFetcher.fetchData(DataFetchAction.INIT);
-        //dataFetcher.fetchData(DataFetchAction.UPDATE);
+        dataFetcher.fetchData(DataFetchAction.UPDATE);
         logger.debug("Data successfully initialised.");
     }
 }

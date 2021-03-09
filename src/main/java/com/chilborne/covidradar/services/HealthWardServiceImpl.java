@@ -6,7 +6,9 @@ import com.chilborne.covidradar.model.DailyRecord;
 import com.chilborne.covidradar.model.HealthWard;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -48,6 +50,7 @@ public class HealthWardServiceImpl implements HealthWardService {
     @Override
     @Cacheable("namesAndGeoCodes")
     public Map<String, String> getHealthWardGeoCodesAndNames() {
+        logger.debug("Fetching names and geocodes");
         Map<String, String> namesAndGeocodes = new HashMap<>();
 
         List<HealthWard> allData = getAllHealthWards();
@@ -57,6 +60,16 @@ public class HealthWardServiceImpl implements HealthWardService {
 
         return namesAndGeocodes;
     }
+
+    @Override
+    @Caching(evict = {
+            @CacheEvict(value = "healthWard-all", allEntries = true),
+            @CacheEvict(value = "healthWard-geoCode", allEntries = true)
+    })
+    public void clearCache() {
+        logger.debug("Clearing caches");
+    }
+
 
 
 

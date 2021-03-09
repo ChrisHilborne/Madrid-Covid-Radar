@@ -1,5 +1,7 @@
 GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+Covid Radar,com.chilborne.covidradar.data.steps,DailyRecordFilter,0,32,0,2,0,9,0,4,0,3
 Covid Radar,com.chilborne.covidradar.data.steps,DailyRecordConverter,0,28,0,0,0,10,0,2,0,2
+Covid Radar,com.chilborne.covidradar.data.steps,DailyRecordAggregator,0,138,0,8,0,28,0,8,0,4
 Covid Radar,com.chilborne.covidradar.data.steps,DailyRecordFixer,0,70,0,4,0,23,0,5,0,3
 Covid Radar,com.chilborne.covidradar.data.steps,DailyRecordSaver,0,40,0,2,0,11,0,3,0,2
 Covid Radar,com.chilborne.covidradar.data.steps,DailyRecordSorter,0,28,0,0,0,10,0,2,0,2
@@ -13,20 +15,22 @@ Covid Radar,com.chilborne.covidradar.exceptions,DataSaveException,8,4,0,0,4,2,2,
 Covid Radar,com.chilborne.covidradar.exceptions,PipeLineProcessException,7,9,0,0,4,4,2,2,2,2
 Covid Radar,com.chilborne.covidradar.exceptions,DataFetchException,12,0,0,0,6,0,3,0,3,0
 Covid Radar,com.chilborne.covidradar.data.collection,DataFetchAction,0,24,0,0,0,3,0,1,0,1
-Covid Radar,com.chilborne.covidradar.data.collection,HttpDailyRecordFetcher,127,19,4,0,39,7,7,1,5,1
+Covid Radar,com.chilborne.covidradar.data.collection,HttpDailyRecordFetcher,129,19,4,0,39,7,7,1,5,1
 Covid Radar,com.chilborne.covidradar.data,DailyRecordDataInitializer,3,27,0,0,2,9,1,2,1,2
 Covid Radar,com.chilborne.covidradar.data,DailyRecordDataUpdater,0,19,0,0,0,7,0,2,0,2
 Covid Radar,com.chilborne.covidradar.controllers,HealthWardController,0,125,0,4,0,37,0,11,0,9
 Covid Radar,com.chilborne.covidradar.controllers,AppController,14,7,0,0,4,2,2,1,2,1
 Covid Radar,com.chilborne.covidradar.data.pipeline,DailyRecordsToHealthWardPipeline,0,22,0,0,0,6,0,2,0,2
-Covid Radar,com.chilborne.covidradar.data.pipeline,DailyRecordProcessingPipeline,7,18,0,0,2,7,0,2,0,2
+Covid Radar,com.chilborne.covidradar.data.pipeline,DailyRecordProcessingPipeline,26,25,0,0,8,9,1,2,1,2
 Covid Radar,com.chilborne.covidradar.data.pipeline,Pipeline,0,25,0,0,0,5,0,4,0,4
 Covid Radar,com.chilborne.covidradar.services,DailyRecordServiceImpl,0,153,0,8,0,37,0,12,0,8
 Covid Radar,com.chilborne.covidradar.services,HealthWardServiceImpl,0,65,0,0,0,17,0,5,0,5
 Covid Radar,com.chilborne.covidradar,CovidRadarApplication,5,3,0,0,2,1,1,1,1,1
-Covid Radar,com.chilborne.covidradar.events,NewDataEvent,4,10,0,0,2,4,1,2,1,2
-Covid Radar,com.chilborne.covidradar.events,NewDataEventPublisher,0,27,0,0,0,8,0,2,0,2
+Covid Radar,com.chilborne.covidradar.events,UpdatedDataEvent,4,10,0,0,2,4,1,2,1,2
+Covid Radar,com.chilborne.covidradar.events,DataEventPublisher,10,33,1,1,2,10,1,2,0,2
+Covid Radar,com.chilborne.covidradar.events,InitialDataEvent,14,0,0,0,6,0,3,0,3,0
 Covid Radar,com.chilborne.covidradar.config,DailyRecordParserConfig,0,11,0,0,0,3,0,2,0,2
-Covid Radar,com.chilborne.covidradar.config,DailyRecordPipelineConfig,0,24,0,0,0,8,0,2,0,2
+Covid Radar,com.chilborne.covidradar.config,DailyRecordUpdatePipelineConfig,0,24,0,0,0,8,0,2,0,2
 Covid Radar,com.chilborne.covidradar.config,HttpDailyRecordFetcherConfig,0,38,0,0,0,11,0,5,0,5
 Covid Radar,com.chilborne.covidradar.config,DailyRecordToHealthWardPipelineConfig,0,24,0,0,0,8,0,2,0,2
+Covid Radar,com.chilborne.covidradar.config,DailyRecordInitializePipelineConfig,0,42,0,0,0,14,0,2,0,2

@@ -25,7 +25,7 @@ public class HttpDailyRecordFetcher implements DataFetcher {
 
     private final HttpClient httpClient;
     private final Map&lt;DataFetchAction, URI&gt; uriMap;
-    private final NewDataEventPublisher newDataEventPublisher;
+    private final DataEventPublisher newDataEventPublisher;
 <span class="fc" id="L29">    private final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.RFC_1123_DATE_TIME;</span>
 
     private OffsetDateTime lastModified;
@@ -34,16 +34,16 @@ public class HttpDailyRecordFetcher implements DataFetcher {
 
     public HttpDailyRecordFetcher(HttpClient httpClient,
                                   Map&lt;DataFetchAction, URI&gt; uriMap,
-<span class="fc" id="L37">                                  NewDataEventPublisher newDataEventPublisher) {</span>
+<span class="fc" id="L37">                                  DataEventPublisher newDataEventPublisher) {</span>
 <span class="fc" id="L38">        this.httpClient = httpClient;</span>
 <span class="fc" id="L39">        this.uriMap = uriMap;</span>
 <span class="fc" id="L40">        this.newDataEventPublisher = newDataEventPublisher;</span>
 <span class="fc" id="L41">    }</span>
 
     @Override
-    public void fetchData(DataFetchAction type)  {
+    public void fetchData(DataFetchAction action)  {
 <span class="nc" id="L45">        logger.debug(&quot;Fetching data...&quot;);</span>
-<span class="nc" id="L46">        HttpRequest httpRequest = buildHttpRequest(type);</span>
+<span class="nc" id="L46">        HttpRequest httpRequest = buildHttpRequest(action);</span>
 <span class="nc" id="L47">        HttpResponse&lt;String&gt; httpResponse = makeHttpRequest(httpRequest);</span>
 
 <span class="nc bnc" id="L49" title="All 2 branches missed.">        if(httpResponse.statusCode() == 304) {</span>
@@ -51,7 +51,7 @@ public class HttpDailyRecordFetcher implements DataFetcher {
 <span class="nc" id="L51">            return;</span>
         }
 <span class="nc" id="L53">        lastModified = getLastModified(httpResponse);</span>
-<span class="nc" id="L54">        publishData(httpResponse.body());</span>
+<span class="nc" id="L54">        publishData(httpResponse.body(), action);</span>
 <span class="nc" id="L55">    }</span>
 
     private HttpResponse&lt;String&gt; makeHttpRequest(HttpRequest initialHttpRequest) {
@@ -101,8 +101,8 @@ public class HttpDailyRecordFetcher implements DataFetcher {
     }
 
     @Override
-    public void publishData(String responseBody) {
-<span class="nc" id="L105">        newDataEventPublisher.publishNewDataEvent(responseBody);</span>
+    public void publishData(String responseBody, DataFetchAction action) {
+<span class="nc" id="L105">        newDataEventPublisher.publishDataEvent(responseBody, action);</span>
 <span class="nc" id="L106">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

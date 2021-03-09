@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/")
 public class HealthWardController {
 
     private final HealthWardService healthWardService;
