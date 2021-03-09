@@ -1,9 +1,18 @@
-version: 2.1
-
+version: '2.1'
 orbs:
+  eb: circleci/aws-elastic-beanstalk@1.0.0
   maven: circleci/maven@1.1.0
-
 workflows:
-  maven_test:
+  elastic-beanstalk-workflow:
     jobs:
       - maven/test # checkout, build, test, and upload test results
+      - eb/deploy:
+          context: aws-eb
+          environment-name: Covidradarmadrid-env
+          filters:
+            branches:
+              only:
+                - production
+          label: version-<<pipeline.number>>
+          requires:
+            - maven/test
