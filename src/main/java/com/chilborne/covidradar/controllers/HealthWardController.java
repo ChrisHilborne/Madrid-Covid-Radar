@@ -76,7 +76,7 @@ public class HealthWardController {
     }
 
     private CacheControl getCacheControlNamesAndGeocodes() {
-        return CacheControl.maxAge(7, TimeUnit.DAYS)
+        return CacheControl.maxAge(1, TimeUnit.HOURS)
                 .noTransform()
                 .mustRevalidate();
     }

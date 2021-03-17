@@ -15,7 +15,7 @@ public class DailyRecordMapper implements Step<List<DailyRecord>, Map<String, Li
     @Override
     public Map<String, List<DailyRecord>> process(List<DailyRecord> data) {
         logger.debug("Mapping DailyRecords By Health Ward");
-        HashMap<String, List<DailyRecord>> dailyRecordsMappedByDistrict = new HashMap<>();
+        Map<String, List<DailyRecord>> dailyRecordsMappedByDistrict = new LinkedHashMap<>();
 
         data.forEach(
                 dailyRecord ->

@@ -11,9 +11,10 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -51,13 +52,10 @@ public class HealthWardServiceImpl implements HealthWardService {
     @Cacheable("namesAndGeoCodes")
     public Map<String, String> getHealthWardGeoCodesAndNames() {
         logger.debug("Fetching names and geocodes");
-        Map<String, String> namesAndGeocodes = new HashMap<>();
-
-        List<HealthWard> allData = getAllHealthWards();
-        allData.forEach(healthWard -> {
-            namesAndGeocodes.put(healthWard.getName(), healthWard.getGeoCode());
-        });
-
+        Map<String, String> namesAndGeocodes = getAllHealthWards()
+                .stream()
+                .collect(Collectors.toMap(HealthWard::getName, HealthWard::getGeoCode,
+                        (oldValue, newValue) -> oldValue, LinkedHashMap::new));
         return namesAndGeocodes;
     }
 

@@ -10,11 +10,11 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -35,11 +35,11 @@ class HealthWardServiceImplTest {
     void getAllHealthWards() {
         //given
         DailyRecord dailyRecordOne = new DailyRecord();
-        dailyRecordOne.setHealthWard("one");
+        dailyRecordOne.setHealthWard("a");
         dailyRecordOne.setDateReported(testDate);
         dailyRecordOne.setGeoCode("01");
         DailyRecord dailyRecordTwo = new DailyRecord();
-        dailyRecordTwo.setHealthWard("two");
+        dailyRecordTwo.setHealthWard("b");
         dailyRecordTwo.setDateReported(testDate);
         dailyRecordTwo.setGeoCode("02");
         List<DailyRecord> dailyRecordList = List.of(dailyRecordOne, dailyRecordTwo);
@@ -90,15 +90,19 @@ class HealthWardServiceImplTest {
         //given
         HealthWard one = new HealthWard();
         one.setGeoCode("01");
-        one.setName("one");
+        one.setName("b");
         HealthWard two = new HealthWard();
         two.setGeoCode("02");
-        two.setName("two");
-        List<HealthWard> healthWardList = List.of(one, two);
+        two.setName("a");
+        HealthWard three = new HealthWard();
+        three.setGeoCode("03");
+        three.setName("c");
+        List<HealthWard> healthWardList = List.of(one, two, three);
 
-        Map<String, String> expectedResults = new HashMap<>();
-        expectedResults.put("one", "01");
-        expectedResults.put("two", "02");
+        Map<String, String> expectedResults = new LinkedHashMap<>();
+        expectedResults.put("b", "01");
+        expectedResults.put("a", "02");
+        expectedResults.put("c", "03");
 
         //when
         when(healthWardService.getAllHealthWards()).thenReturn(healthWardList);

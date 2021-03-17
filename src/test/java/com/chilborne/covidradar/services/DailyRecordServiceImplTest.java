@@ -51,6 +51,7 @@ class DailyRecordServiceImplTest {
         //verify
         verify(repository).save(dailyRecordArgumentCaptor.capture());
         assertAll("save",
+                () -> assertNotEquals(null, dailyRecordArgumentCaptor.getValue().getId()),
                 () -> assertEquals(test, dailyRecordArgumentCaptor.getValue()),
                 () -> assertEquals("test", saved.getHealthWard()),
                 () -> assertEquals(testDate, saved.getDateReported())

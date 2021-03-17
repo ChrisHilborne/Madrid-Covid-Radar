@@ -25,9 +25,14 @@ public class DailyRecordServiceImpl implements DailyRecordService {
     }
 
     @Override
+    @Caching(evict = {
+            @CacheEvict(value = "healthWard-all", allEntries = true),
+            @CacheEvict(value = "healthWard-geoCode", allEntries = true),
+            @CacheEvict(value = "namesAndGeoCodes", allEntries = true)
+    })
     public DailyRecord save(DailyRecord dailyRecord) {
-        logger.debug("Saving dailyRecord id: " + dailyRecord.getId());
         dailyRecord.generateId();
+        logger.debug("Saving dailyRecord id: " + dailyRecord.getId());
         DailyRecord saved = dailyRecordRepository.save(dailyRecord);
         if (saved.equals(dailyRecord)) {
             return saved;
@@ -48,18 +53,19 @@ public class DailyRecordServiceImpl implements DailyRecordService {
     }
 
     @Override
-    @Caching(evict = {
-            @CacheEvict(value = "healthWard-all", allEntries = true),
-            @CacheEvict(value = "healthWard-geoCode", allEntries = true)
-    })
     public List<DailyRecord> save(List<DailyRecord> dailyRecordList) {
         logger.debug("Saving dailyRecordList size: " + dailyRecordList.size());
         List<DailyRecord> savedList = new LinkedList<>();
         dailyRecordList.forEach(dailyRecord -> {
-            dailyRecord.generateId();
-            logger.debug("Saving DailyRecord id: " + dailyRecord.getId());
-            DailyRecord saved = dailyRecordRepository.save(dailyRecord);
-            savedList.add(saved);
+
+            try {
+                DailyRecord saved = save(dailyRecord);
+                savedList.add(saved);
+            }
+            catch (DataSaveException e) {
+                logger.error(e.getMessage(), e);
+                throw new DataSaveException("Error when saving dailyRecordList (hashcode " + dailyRecordList.hashCode() + ")");
+            }
         });
         if (!savedList.equals(dailyRecordList)) {
             logger.error("dailyRecordList to save and returned list to not match.");

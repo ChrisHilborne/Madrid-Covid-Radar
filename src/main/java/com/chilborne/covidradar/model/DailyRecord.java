@@ -162,7 +162,7 @@ public class DailyRecord {
     public String toString() {
         return "DailyRecord{" +
                 "geoCode='" + geoCode + '\'' +
-                ", municipalDistrict='" + healthWard + '\'' +
+                ", healthWard='" + healthWard + '\'' +
                 ", infectionRateLastTwoWeeks=" + infectionRateLastTwoWeeks +
                 ", infectionRateTotal=" + infectionRateTotal +
                 ", totalCases=" + totalCases +

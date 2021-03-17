@@ -37,9 +37,9 @@ class DailyRecordSorterTest {
 
         //verify
         assertAll("sorted",
-                () -> assertEquals(one, sorted.get(2)),
-                () -> assertEquals(two, sorted.get(1)),
-                () -> assertEquals(three, sorted.get(0))
+                () -> assertEquals(three, sorted.get(0)),
+                () -> assertEquals(one, sorted.get(1)),
+                () -> assertEquals(two, sorted.get(2))
         );
     }
 }

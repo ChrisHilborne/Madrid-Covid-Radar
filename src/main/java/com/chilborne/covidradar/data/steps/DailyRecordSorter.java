@@ -14,14 +14,19 @@ public class DailyRecordSorter implements Step<List<DailyRecord>, List<DailyReco
 
     private final Logger logger = LoggerFactory.getLogger(DailyRecordSorter.class);
 
+    private final Comparator<DailyRecord> COMPARATOR = Comparator
+                                                                .comparing(DailyRecord::getHealthWard)
+                                                                .thenComparing(DailyRecord::getDateReported);
+
     @Override
     public List<DailyRecord> process(List<DailyRecord> data) {
         logger.debug("Sorting DailyRecord data...");
 
+
+
         List<DailyRecord> sortedData = data
                 .stream()
-                .sorted(Comparator.comparing(DailyRecord::getDateReported)
-                        .thenComparing(DailyRecord::getHealthWard))
+                .sorted(COMPARATOR)
                 .collect(Collectors.toList());
 
         logger.debug("Finished sorting DailyRecord data.");
