@@ -1,0 +1,2 @@
+deploy:
+  artifact: target/covidradar-madrid-1.0.jar
