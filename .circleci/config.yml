@@ -6,7 +6,7 @@ workflows:
   elastic-beanstalk-workflow:
     jobs:
       - maven/test: # checks that the program will build, tests it, and packages it as a .jar
-        command: mvn clean install -P prod
+        command: clean install -P prod
           requires: maven/test
       - eb/deploy: #deploys to ews/elastic beanstalk environment
         context: aws-eb
@@ -17,5 +17,5 @@ workflows:
               - production
         label: version-<<pipeline.number>>
         requires:
-          - mvn/test
+          - maven/test
 
