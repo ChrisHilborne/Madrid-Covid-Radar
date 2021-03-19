@@ -27,5 +27,3 @@ HELP.md
 
 ### Application ###
 /logs/
-/resources/application-dev.properties
-/resources/application-release.properties
