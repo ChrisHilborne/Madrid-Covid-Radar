@@ -5,7 +5,6 @@ orbs:
 workflows:
   elastic-beanstalk-workflow:
     jobs:
-      - maven/test # checkout, build, test, and upload test results
       - maven/test:  # packages program into .jar for deployment to eb
           command: 'package -P prod'
           filters:
