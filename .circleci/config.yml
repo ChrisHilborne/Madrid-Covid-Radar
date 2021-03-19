@@ -5,25 +5,17 @@ orbs:
 workflows:
   elastic-beanstalk-workflow:
     jobs:
-      - maven/test # checks that the program will build and tests it
-      - install:  # packages program into .jar for deployment to eb
-          steps:
-            - run:
-              name: install
-              command: mvn clean install -P prod
-          filters:
-            branches:
-              only:
-                - production
+      - maven/test: # checks that the program will build, tests it, and packages it as a .jar
+        command: mvn clean install -P prod
           requires: maven/test
       - eb/deploy: #deploys to ews/elastic beanstalk environment
-          context: aws-eb
-          environment-name: Covidradarmadrid-env
-          filters:
-            branches:
-              only:
-                - production
-          label: version-<<pipeline.number>>
-          requires:
-            - install
+        context: aws-eb
+        environment-name: Covidradarmadrid-env
+        filters:
+          branches:
+            only:
+              - production
+        label: version-<<pipeline.number>>
+        requires:
+          - mvn/test
 
