@@ -6,15 +6,15 @@ workflows:
   elastic-beanstalk-workflow:
     jobs:
       - maven/test: # checks that the program will build, tests it, and packages it as a .jar
-        command: clean install -P prod
+          command: clean install -P prod
       - eb/deploy: #deploys to ews/elastic beanstalk environment
-        context: aws-eb
-        environment-name: Covidradarmadrid-env
-        filters:
-          branches:
-            only:
-              - production
-        label: version-<<pipeline.number>>
-        requires:
-          - maven/test
+          context: aws-eb
+          environment-name: Covidradarmadrid-env
+          filters:
+            branches:
+              only:
+                - production
+          label: version-<<pipeline.number>>
+          requires:
+            - maven/test
 
