@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.chilborne</groupId>
 	<artifactId>covidradar-madrid</artifactId>
-	<version>1.0</version>
+	<version>1.0.0</version>
 	<name>Covid Radar</name>
 	<description>Web Application to Visualize Madrid Covid-19 Data</description>
 
