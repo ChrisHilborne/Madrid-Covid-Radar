@@ -26,6 +26,20 @@ jobs:
          root: ./
          paths:
            - target/
+
+  deploy:
+    docker:
+      - image: mini/eb-cli
+        auth:
+          username: $DOCKERHUB_USER
+          password: $DOCKERHUB_KEY
+    steps:
+      - checkout
+      - run:
+        command: |
+          eb deploy --profile default
+           
+         
  
 workflows:
   version: 2
@@ -36,3 +50,11 @@ workflows:
       - test:
           requires:
             - build
+      - deploy:
+          requires:
+            - test
+          filters:
+            branches:
+              only: release
+
+
