@@ -1,2 +1,5 @@
+branch-defaults:
+  release:
+    environment: Covidradar-madrid
 deploy:
   artifact: target/covidradar-madird-1.0.jar
