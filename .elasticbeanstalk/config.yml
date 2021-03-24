@@ -2,6 +2,6 @@ branch-defaults:
   release:
     environment: Covidradarmadrid-env
 deploy:
-  artifact: target/covidradar-madird-1.0.jar
+  artifact: ./target/covidradar-madird-1.0.jar
 global:
   application_name: covid-radar-madrid 

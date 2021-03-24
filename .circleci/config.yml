@@ -34,10 +34,9 @@ jobs:
           username: $DOCKERHUB_USER
           password: $DOCKERHUB_KEY
     steps:
-      - checkout
-      - run:
-        command: |
-          eb deploy --profile default
+      - attach_workspace:
+            at: ./target
+      - run: eb deploy --profile default
            
          
  
@@ -55,6 +54,6 @@ workflows:
             - test
           filters:
             branches:
-              only: release
+              only: production
 
 
