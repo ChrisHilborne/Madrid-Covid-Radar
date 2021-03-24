@@ -5,3 +5,4 @@ deploy:
   artifact: ./target/covidradar-madird-1.0.jar
 global:
   application_name: covid-radar-madrid 
+  default_region: eu-south-1

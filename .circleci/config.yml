@@ -38,7 +38,7 @@ jobs:
             at: ./target
       - run: |
           eb init
-          eb deploy
+          eb deploy Covidradarmadrid-env
            
          
  
