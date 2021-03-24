@@ -36,8 +36,7 @@ jobs:
     steps:
       - attach_workspace:
             at: ./target
-      - run:
-        command: |
+      - run: |
           eb init --profile default
           eb deploy
            
