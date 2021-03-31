@@ -12,6 +12,7 @@ jobs:
          root: ./
          paths:
            - target/
+           - target/covidradar-madrid-1.0.jar
 
   test:
     docker:
