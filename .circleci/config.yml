@@ -1,14 +1,6 @@
 version: 2.0
 
 jobs:
-  test:
-    docker:
-      - image: circleci/openjdk:stretch
-    steps:
-      - checkout
-      - attach_workspace:
-          at: ./target
-      - run: ./mvnw test
 
   build:
     docker:
@@ -17,9 +9,18 @@ jobs:
       - checkout
       - run: ./mvnw -Dmaven.test.skip=true package -P release
       - persist_to_workspace:
-         root: .
+         root: ./
          paths:
-           - /target/
+           - target/
+
+  test:
+    docker:
+      - image: circleci/openjdk:stretch
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ./target
+      - run: ./mvnw test
 
   deploy:
     docker:
