@@ -12,7 +12,6 @@ jobs:
          root: ./
          paths:
            - target/
-           - target/covidradar-madrid-1.0.jar
 
   test:
     docker:
@@ -21,6 +20,9 @@ jobs:
       - checkout
       - attach_workspace:
           at: ./target
+      - run:
+        name: target contents
+        command: ls /target
       - run: ./mvnw test
 
   deploy:
@@ -29,7 +31,10 @@ jobs:
     steps:
       - checkout
       - attach_workspace:
-          at: ./target/covidradar-madrid-1.0.jar
+          at: ./target
+      - run:
+        name: target contents
+        command: ls /target      
       - run:
           name: Install awscli
           command: |
