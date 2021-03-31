@@ -1,8 +1,21 @@
 branch-defaults:
-  release:
+  production:
     environment: Covidradarmadrid-env
 deploy:
-  artifact: ./target/covidradar-madird-1.0.jar
+  artifact: ./target/covidradar-madrid-1.0.jar
+environment-defaults:
+  Covidradarmadrid-env:
+    branch: null
+    repository: null
 global:
-  application_name: covid-radar-madrid 
+  application_name: covid-radar-madrid
+  default_ec2_keyname: null
+  default_platform: Corretto 11 running on 64bit Amazon Linux 2
   default_region: eu-south-1
+  include_git_submodules: true
+  instance_profile: null
+  platform_name: null
+  platform_version: null
+  profile: eb-cli
+  sc: git
+  workspace_type: Application

@@ -27,3 +27,8 @@ HELP.md
 
 ### Application ###
 /logs/
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml

@@ -17,8 +17,8 @@ public class CovidRadarApplication {
 
 		SpringApplication.run(CovidRadarApplication.class, args);
 
-
-
 	}
 
 }
+
+

@@ -7,6 +7,7 @@ import com.chilborne.covidradar.repository.DailyRecordRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -17,40 +18,39 @@ import java.util.List;
 public class DailyRecordServiceImpl implements DailyRecordService {
 
     private final DailyRecordRepository dailyRecordRepository;
-<span class="fc" id="L20">    private final Logger logger = LoggerFactory.getLogger(DailyRecordServiceImpl.class);</span>
+<span class="fc" id="L21">    private final Logger logger = LoggerFactory.getLogger(DailyRecordServiceImpl.class);</span>
 
-<span class="fc" id="L22">    public DailyRecordServiceImpl(DailyRecordRepository dailyRecordRepository) {</span>
-<span class="fc" id="L23">        this.dailyRecordRepository = dailyRecordRepository;</span>
-<span class="fc" id="L24">    }</span>
+<span class="fc" id="L23">    public DailyRecordServiceImpl(DailyRecordRepository dailyRecordRepository) {</span>
+<span class="fc" id="L24">        this.dailyRecordRepository = dailyRecordRepository;</span>
+<span class="fc" id="L25">    }</span>
 
     @Override
     public DailyRecord save(DailyRecord dailyRecord) {
-<span class="fc" id="L28">        logger.debug(&quot;Saving dailyRecord id: &quot; + dailyRecord.getId());</span>
-<span class="fc" id="L29">        dailyRecord.generateId();</span>
-<span class="fc" id="L30">        DailyRecord saved = dailyRecordRepository.save(dailyRecord);</span>
-<span class="fc bfc" id="L31" title="All 2 branches covered.">        if (saved.equals(dailyRecord)) {</span>
-<span class="fc" id="L32">            return saved;</span>
+<span class="fc" id="L29">        logger.debug(&quot;Saving dailyRecord id: &quot; + dailyRecord.getId());</span>
+<span class="fc" id="L30">        dailyRecord.generateId();</span>
+<span class="fc" id="L31">        DailyRecord saved = dailyRecordRepository.save(dailyRecord);</span>
+<span class="fc bfc" id="L32" title="All 2 branches covered.">        if (saved.equals(dailyRecord)) {</span>
+<span class="fc" id="L33">            return saved;</span>
         } else {
-<span class="fc" id="L34">            throw new DataSaveException(&quot;Failed to save DailyRecord id: &quot; + dailyRecord.getId());</span>
+<span class="fc" id="L35">            throw new DataSaveException(&quot;Failed to save DailyRecord id: &quot; + dailyRecord.getId());</span>
         }
     }
 
     @Override
     public List&lt;DailyRecord&gt; getAll() {
-<span class="fc" id="L40">        logger.debug(&quot;Fetching all DailyRecords...&quot;);</span>
-<span class="fc" id="L41">        List&lt;DailyRecord&gt; results = dailyRecordRepository.findAll();</span>
-<span class="fc bfc" id="L42" title="All 2 branches covered.">        if (results.isEmpty()) {</span>
-<span class="fc" id="L43">            logger.error(&quot;No DailyRecords found.&quot;);</span>
-<span class="fc" id="L44">            throw new DataNotFoundException(&quot;No Daily Records found.&quot;);</span>
+<span class="fc" id="L41">        logger.debug(&quot;Fetching all DailyRecords...&quot;);</span>
+<span class="fc" id="L42">        List&lt;DailyRecord&gt; results = dailyRecordRepository.findAll();</span>
+<span class="fc bfc" id="L43" title="All 2 branches covered.">        if (results.isEmpty()) {</span>
+<span class="fc" id="L44">            logger.error(&quot;No DailyRecords found.&quot;);</span>
+<span class="fc" id="L45">            throw new DataNotFoundException(&quot;No Daily Records found.&quot;);</span>
         }
-<span class="fc" id="L46">        return results;</span>
+<span class="fc" id="L47">        return results;</span>
     }
 
     @Override
-    @CacheEvict({
-            &quot;healthWard-all&quot;,
-            &quot;healthWard-geoCode&quot;,
-            &quot;namesAndGeoCodes&quot;
+    @Caching(evict = {
+            @CacheEvict(value = &quot;healthWard-all&quot;, allEntries = true),
+            @CacheEvict(value = &quot;healthWard-geoCode&quot;, allEntries = true)
     })
     public List&lt;DailyRecord&gt; save(List&lt;DailyRecord&gt; dailyRecordList) {
 <span class="fc" id="L56">        logger.debug(&quot;Saving dailyRecordList size: &quot; + dailyRecordList.size());</span>
