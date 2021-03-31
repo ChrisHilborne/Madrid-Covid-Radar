@@ -9,9 +9,9 @@ jobs:
       - checkout
       - run: ./mvnw -Dmaven.test.skip=true package -P release
       - persist_to_workspace:
-         root: ./
+         root: .
          paths:
-           - target/
+           - .
 
   test:
     docker:
@@ -19,7 +19,7 @@ jobs:
     steps:
       - checkout
       - attach_workspace:
-          at: ./target
+          at: .
       - run:
           name: target contents
           command: ls ./target
@@ -31,7 +31,7 @@ jobs:
     steps:
       - checkout
       - attach_workspace:
-          at: ./target
+          at: .
       - run:
           name: target contents
           command: ls ./target      
