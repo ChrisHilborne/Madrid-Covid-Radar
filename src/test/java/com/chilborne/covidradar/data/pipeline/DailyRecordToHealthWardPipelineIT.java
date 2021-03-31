@@ -22,13 +22,17 @@ class DailyRecordToHealthWardPipelineIT {
     @Test
     void pipeline() {
         //given
-        DailyRecord testDailyRecord = new DailyRecord();
-        testDailyRecord.setHealthWard("test");
-        testDailyRecord.setGeoCode("01");
-        testDailyRecord.setDateReported(LocalDate.now());
-        List<DailyRecord> testInput = List.of(testDailyRecord);
+        DailyRecord one = new DailyRecord();
+        one.setHealthWard("b");
+        one.setGeoCode("01");
+        one.setDateReported(LocalDate.of(2020, 01, 01));
+        DailyRecord two = new DailyRecord();
+        two.setHealthWard("a");
+        two.setGeoCode("02");
+        two.setDateReported(LocalDate.of(2020, 02, 01));
 
-        List<HealthWard> expectedResults = List.of(new HealthWard((testInput)));
+        List<DailyRecord> testInput = List.of(one, two);
+        List<HealthWard> expectedResults = List.of(new HealthWard(List.of(two)), new HealthWard(List.of(one)));
 
         //when
         Pipeline<List<DailyRecord>, List<HealthWard>> actualPipeline = config.pipeline();

@@ -24,7 +24,7 @@ public class DailyRecordConverter implements Step<Map<String, List<DailyRecord>>
                 .map(HealthWard::new)
                 .collect(Collectors.toList());
 
-        logger.debug("Finished converting DailyRecord data into " + HealthWard.size() + "HealthWard objects.");
+        logger.debug("Finished converting DailyRecord data into " + HealthWard.size() + " HealthWard objects.");
         return HealthWard;
     }
 }
