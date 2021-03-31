@@ -27,6 +27,10 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Install awscli
+          command: |
+            sudo pip install awsebcli --upgrade
+      - run:
           name: Deploy to EB if branch is Production
           command: |
             eb deploy -l $CIRCLE_BUILD_NUM-deploy 
