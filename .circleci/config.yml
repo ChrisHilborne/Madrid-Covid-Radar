@@ -19,15 +19,15 @@ jobs:
       - persist_to_workspace:
          root: .
          paths:
-           - target/covidradar-madrid-1.0.jar
+           - /target/
 
   deploy:
     docker:
       - image: circleci/python:2.7
     steps:
-      - attach_workspace:
-        at: .    
       - checkout
+      - attach_workspace:
+          at: ./target
       - run:
           name: Install awscli
           command: |
