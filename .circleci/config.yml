@@ -22,7 +22,7 @@ jobs:
           at: ./target
       - run:
           name: target contents
-          command: ls /target
+          command: ls ./target
       - run: ./mvnw test
 
   deploy:
@@ -34,7 +34,7 @@ jobs:
           at: ./target
       - run:
           name: target contents
-          command: ls /target      
+          command: ls ./target      
       - run:
           name: Install awscli
           command: |
