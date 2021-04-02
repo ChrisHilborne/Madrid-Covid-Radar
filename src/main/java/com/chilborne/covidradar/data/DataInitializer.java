@@ -4,6 +4,6 @@ import org.springframework.boot.CommandLineRunner;
 
 public interface DataInitializer extends CommandLineRunner {
 
-    void initializeData();
+    void initializeData() throws Exception;
 
 }

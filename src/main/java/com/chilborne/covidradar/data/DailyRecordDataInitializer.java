@@ -20,11 +20,15 @@ public class DailyRecordDataInitializer implements DataInitializer {
 
     @Override
     public void run(String... args) throws Exception {
-        //initializeData();
+        try {
+            initializeData();
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+        }
     }
 
     @Override
-    public void initializeData() {
+    public void initializeData() throws Exception {
         logger.debug("Initialising DailyRecord data...");
         dataFetcher.fetchData(DataFetchAction.INIT);
         dataFetcher.fetchData(DataFetchAction.UPDATE);

@@ -1,5 +1,6 @@
 package com.chilborne.covidradar.data;
 
+import com.chilborne.covidradar.data.collection.DataFetchAction;
 import com.chilborne.covidradar.data.collection.DataFetcher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,11 +17,14 @@ public class DailyRecordDataUpdater implements DataUpdater {
         this.dataFetcher = dataFetcher;
     }
 
-
-    @Overrides
+    @Override
     @Scheduled(cron = "0 0 6,9,12,15,18,21 ? * *")
     public void updateData() {
         logger.debug("Updating DailyRecord data...");
-        //dataFetcher.fetchData(DataFetchAction.UPDATE);
+        try {
+            dataFetcher.fetchData(DataFetchAction.UPDATE);
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+        }
     }
 }

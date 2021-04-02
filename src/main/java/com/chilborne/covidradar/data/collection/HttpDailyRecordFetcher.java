@@ -41,7 +41,7 @@ public class HttpDailyRecordFetcher implements DataFetcher {
     }
 
     @Override
-    public void fetchData(DataFetchAction action)  {
+    public void fetchData(DataFetchAction action) throws DataFetchException {
         logger.debug("Fetching data...");
         HttpRequest httpRequest = buildHttpRequest(action);
         HttpResponse<String> httpResponse = makeHttpRequest(httpRequest);
@@ -54,7 +54,7 @@ public class HttpDailyRecordFetcher implements DataFetcher {
         publishData(httpResponse.body(), action);
     }
 
-    private HttpResponse<String> makeHttpRequest(HttpRequest initialHttpRequest) {
+    private HttpResponse<String> makeHttpRequest(HttpRequest initialHttpRequest) throws DataFetchException {
         try {
             logger.debug("Making HttpRequest");
             HttpResponse<String> httpResponse = httpClient.send(initialHttpRequest, HttpResponse.BodyHandlers.ofString());
