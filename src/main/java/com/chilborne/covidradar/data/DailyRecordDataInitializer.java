@@ -20,7 +20,7 @@ public class DailyRecordDataInitializer implements DataInitializer {
 
     @Override
     public void run(String... args) throws Exception {
-        initializeData();
+        //initializeData();
     }
 
     @Override
