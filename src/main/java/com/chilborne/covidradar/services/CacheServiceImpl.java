@@ -1,8 +1,10 @@
 package com.chilborne.covidradar.services;
 
+import com.chilborne.covidradar.events.UpdatedDataEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.CacheManager;
+import org.springframework.context.event.EventListener;
 
 public class CacheServiceImpl implements CacheService {
 
@@ -13,9 +15,16 @@ public class CacheServiceImpl implements CacheService {
         this.cacheManager = cacheManager;
     }
 
-
     @Override
     public void clearCache() {
+        logger.debug("*** Clearing Cache ***");
+        for(String name:cacheManager.getCacheNames()){
+            cacheManager.getCache(name).clear();
+        }
+    }
+
+    @EventListener
+    public void clearCache(UpdatedDataEvent updatedDataEvent) {
         logger.debug("*** Clearing Cache ***");
         for(String name:cacheManager.getCacheNames()){
             cacheManager.getCache(name).clear();

@@ -29,6 +29,7 @@ public class HttpDailyRecordFetcher implements DataFetcher {
     private final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.RFC_1123_DATE_TIME;
 
     private OffsetDateTime lastModified;
+    private int dataHash;
 
     private final Logger logger = LoggerFactory.getLogger(DataFetcher.class);
 
@@ -45,19 +46,25 @@ public class HttpDailyRecordFetcher implements DataFetcher {
         logger.debug("Fetching data...");
         HttpRequest httpRequest = buildHttpRequest(action);
         HttpResponse<String> httpResponse = makeHttpRequest(httpRequest);
+        String body = httpResponse.body();
+        int fetchedDataHash = body.hashCode();
 
-        if(httpResponse.statusCode() == 304) {
+        logger.debug("HTTP RESPONSE STATUS CODE =" + httpResponse.statusCode());
+
+        if(httpResponse.statusCode() == 304 || dataHash == fetchedDataHash) {
             logger.info("Data has not been updated since it was last received.");
-            return;
         }
-        lastModified = getLastModified(httpResponse);
-        publishData(httpResponse.body(), action);
+        else {
+            lastModified = getLastModified(httpResponse);
+            dataHash = fetchedDataHash;
+            publishData(body, action);
+        }
     }
 
-    private HttpResponse<String> makeHttpRequest(HttpRequest initialHttpRequest) throws DataFetchException {
+    private HttpResponse<String> makeHttpRequest(HttpRequest httpRequest) throws DataFetchException {
         try {
             logger.debug("Making HttpRequest");
-            HttpResponse<String> httpResponse = httpClient.send(initialHttpRequest, HttpResponse.BodyHandlers.ofString());
+            HttpResponse<String> httpResponse = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
             logger.debug("HttpRequest successfully made - data received.");
             return httpResponse;
 
@@ -70,13 +77,13 @@ public class HttpDailyRecordFetcher implements DataFetcher {
         }
     }
 
-    private HttpRequest buildHttpRequest(DataFetchAction type) {
-        logger.debug("Building HttpRequest type: " + type);
+    private HttpRequest buildHttpRequest(DataFetchAction dataFetchAction) {
+        logger.debug("Building HttpRequest type: " + dataFetchAction);
         if (lastModified != null) {
             return HttpRequest
                     .newBuilder()
                     .GET()
-                    .uri(uriMap.get(type))
+                    .uri(uriMap.get(dataFetchAction))
                     .header(HttpHeaders.IF_MODIFIED_SINCE,
                             dateTimeFormatter.format(lastModified))
                     .build();
@@ -85,7 +92,7 @@ public class HttpDailyRecordFetcher implements DataFetcher {
             return HttpRequest
                     .newBuilder()
                     .GET()
-                    .uri(uriMap.get(type))
+                    .uri(uriMap.get(dataFetchAction))
                     .build();
             }
     }
