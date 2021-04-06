@@ -6,8 +6,6 @@ import com.chilborne.covidradar.model.DailyRecord;
 import com.chilborne.covidradar.repository.DailyRecordRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -18,18 +16,14 @@ import java.util.List;
 public class DailyRecordServiceImpl implements DailyRecordService {
 
     private final DailyRecordRepository dailyRecordRepository;
+    private final CacheService cacheService;
     private final Logger logger = LoggerFactory.getLogger(DailyRecordServiceImpl.class);
 
-    public DailyRecordServiceImpl(DailyRecordRepository dailyRecordRepository) {
+    public DailyRecordServiceImpl(DailyRecordRepository dailyRecordRepository, CacheService cacheService) {
         this.dailyRecordRepository = dailyRecordRepository;
+        this.cacheService = cacheService;
     }
 
-    @Override
-    @Caching(evict = {
-            @CacheEvict(value = "healthWard-all", allEntries = true),
-            @CacheEvict(value = "healthWard-geoCode", allEntries = true),
-            @CacheEvict(value = "namesAndGeoCodes", allEntries = true)
-    })
     public DailyRecord save(DailyRecord dailyRecord) {
         dailyRecord.generateId();
         logger.debug("Saving dailyRecord id: " + dailyRecord.getId());
@@ -65,6 +59,9 @@ public class DailyRecordServiceImpl implements DailyRecordService {
             catch (DataSaveException e) {
                 logger.error(e.getMessage(), e);
                 throw new DataSaveException("Error when saving dailyRecordList (hashcode " + dailyRecordList.hashCode() + ")");
+            }
+            finally {
+                cacheService.clearCache();
             }
         });
         if (!savedList.equals(dailyRecordList)) {

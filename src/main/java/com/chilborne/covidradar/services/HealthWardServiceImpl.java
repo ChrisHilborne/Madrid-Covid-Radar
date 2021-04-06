@@ -8,7 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 import java.util.LinkedHashMap;
@@ -58,18 +57,5 @@ public class HealthWardServiceImpl implements HealthWardService {
                         (oldValue, newValue) -> oldValue, LinkedHashMap::new));
         return namesAndGeocodes;
     }
-
-    @Override
-    @Caching(evict = {
-            @CacheEvict(value = "healthWard-all", allEntries = true),
-            @CacheEvict(value = "healthWard-geoCode", allEntries = true)
-    })
-    public void clearCache() {
-        logger.debug("Clearing caches");
-    }
-
-
-
-
 
 }

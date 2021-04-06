@@ -13,5 +13,4 @@ public interface HealthWardService {
 
     Map<String, String> getHealthWardGeoCodesAndNames();
 
-    void clearCache();
 }
