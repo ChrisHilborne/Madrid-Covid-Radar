@@ -25,7 +25,7 @@ public class HttpDailyRecordFetcher implements DataFetcher {
 
     private final HttpClient httpClient;
     private final Map<DataFetchAction, URI> uriMap;
-    private final DataEventPublisher newDataEventPublisher;
+    private final DataEventPublisher dataEventPublisher;
     private final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.RFC_1123_DATE_TIME;
 
     private OffsetDateTime lastModified;
@@ -38,7 +38,7 @@ public class HttpDailyRecordFetcher implements DataFetcher {
                                   DataEventPublisher newDataEventPublisher) {
         this.httpClient = httpClient;
         this.uriMap = uriMap;
-        this.newDataEventPublisher = newDataEventPublisher;
+        this.dataEventPublisher = newDataEventPublisher;
     }
 
     @Override
@@ -49,7 +49,7 @@ public class HttpDailyRecordFetcher implements DataFetcher {
         String body = httpResponse.body();
         int fetchedDataHash = body.hashCode();
 
-        logger.debug("HTTP RESPONSE STATUS CODE =" + httpResponse.statusCode());
+        logger.debug("HTTP response headers =" + httpResponse.headers());
 
         if(httpResponse.statusCode() == 304 || dataHash == fetchedDataHash) {
             logger.info("Data has not been updated since it was last received.");
@@ -63,16 +63,16 @@ public class HttpDailyRecordFetcher implements DataFetcher {
 
     private HttpResponse<String> makeHttpRequest(HttpRequest httpRequest) throws DataFetchException {
         try {
-            logger.debug("Making HttpRequest");
+            logger.debug("Making HTTP Request: " + httpRequest.toString());
             HttpResponse<String> httpResponse = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
-            logger.debug("HttpRequest successfully made - data received.");
+            logger.debug("HTTP Request successfully made - data received.");
             return httpResponse;
 
         } catch (IOException e) {
-            logger.error("Problem when making Http Request", e);
+            logger.error("Problem when making HTTP Request", e);
             throw new DataFetchException(e.getMessage(), e);
         } catch (InterruptedException e) {
-            logger.error("Http Request interrupted", e);
+            logger.error("HTTP Request interrupted", e);
             throw new DataFetchException(e.getMessage(), e);
         }
     }
@@ -109,6 +109,6 @@ public class HttpDailyRecordFetcher implements DataFetcher {
 
     @Override
     public void publishData(String responseBody, DataFetchAction action) {
-        newDataEventPublisher.publishDataEvent(responseBody, action);
+        dataEventPublisher.publishDataEvent(responseBody, action);
     }
 }

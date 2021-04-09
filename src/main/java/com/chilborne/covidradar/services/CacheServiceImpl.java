@@ -5,7 +5,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.CacheManager;
 import org.springframework.context.event.EventListener;
+import org.springframework.stereotype.Service;
 
+@Service
 public class CacheServiceImpl implements CacheService {
 
     private final CacheManager cacheManager;

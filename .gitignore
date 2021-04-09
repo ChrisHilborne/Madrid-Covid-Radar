@@ -14,7 +14,7 @@ HELP.md
 .vscode/
 
 ### Application ###
-/logs/
+logs/*
 
 # Elastic Beanstalk Files
 !.elasticbeanstalk/*.config.yml

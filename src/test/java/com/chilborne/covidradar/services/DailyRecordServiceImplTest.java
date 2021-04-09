@@ -17,14 +17,16 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class DailyRecordServiceImplTest {
 
     @Mock
     DailyRecordRepository repository;
+
+    @Mock
+    CacheService cacheService;
 
     @InjectMocks
     DailyRecordServiceImpl service;
@@ -95,6 +97,7 @@ class DailyRecordServiceImplTest {
                 () -> assertEquals("test", returned.get(0).getHealthWard()),
                 () -> assertEquals(testDate, returned.get(0).getDateReported())
         );
+        verify(cacheService, times(1)).clearCache();
     }
 
     @Test
