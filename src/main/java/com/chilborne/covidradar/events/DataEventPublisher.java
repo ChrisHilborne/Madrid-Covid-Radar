@@ -18,7 +18,7 @@ public class DataEventPublisher {
     }
 
     public void publishDataEvent(final String data, DataFetchAction eventType) {
-        logger.debug("Publishing" + eventType + " DataEvent with data " + data.hashCode() + " (hashcode)");
+        logger.debug("Publishing " + eventType + " DataEvent with data " + data.hashCode() + " (hashcode)");
 
         if (eventType.equals(DataFetchAction.UPDATE)) {
             UpdatedDataEvent updatedDataEvent = new UpdatedDataEvent(this, data);
