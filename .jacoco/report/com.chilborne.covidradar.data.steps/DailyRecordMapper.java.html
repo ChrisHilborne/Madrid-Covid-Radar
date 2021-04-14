@@ -15,7 +15,7 @@ import java.util.*;
     @Override
     public Map&lt;String, List&lt;DailyRecord&gt;&gt; process(List&lt;DailyRecord&gt; data) {
 <span class="fc" id="L17">        logger.debug(&quot;Mapping DailyRecords By Health Ward&quot;);</span>
-<span class="fc" id="L18">        HashMap&lt;String, List&lt;DailyRecord&gt;&gt; dailyRecordsMappedByDistrict = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L18">        Map&lt;String, List&lt;DailyRecord&gt;&gt; dailyRecordsMappedByDistrict = new LinkedHashMap&lt;&gt;();</span>
 
 <span class="fc" id="L20">        data.forEach(</span>
                 dailyRecord -&gt;
