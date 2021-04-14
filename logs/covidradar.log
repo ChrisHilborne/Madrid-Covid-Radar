@@ -307,3 +307,407 @@ Caused by: sun.security.provider.certpath.SunCertPathBuilderException: unable to
 
 2021-04-02 18:51:08.814  INFO 54054 --- [main] o.s.s.c.ThreadPoolTaskScheduler          : Shutting down ExecutorService 'taskScheduler'
 2021-04-02 18:51:08.821  INFO 54054 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
+2021-04-14 13:27:27.798  INFO 11802 --- [main] c.c.covidradar.CovidRadarApplication     : Starting CovidRadarApplication using Java 11.0.10 on v1ru5-ma551v3 with PID 11802 (/home/chris/Development/covidradar/backend/target/classes started by chris in /home/chris/Development/covidradar/backend)
+2021-04-14 13:27:27.824 DEBUG 11802 --- [main] c.c.covidradar.CovidRadarApplication     : Running with Spring Boot v2.4.1, Spring v5.3.2
+2021-04-14 13:27:27.825  INFO 11802 --- [main] c.c.covidradar.CovidRadarApplication     : The following profiles are active: release
+2021-04-14 13:27:31.964  INFO 11802 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data MongoDB repositories in DEFAULT mode.
+2021-04-14 13:27:32.155  INFO 11802 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 181 ms. Found 1 MongoDB repository interfaces.
+2021-04-14 13:27:32.759  INFO 11802 --- [main] ptablePropertiesBeanFactoryPostProcessor : Post-processing PropertySource instances
+2021-04-14 13:27:32.823  INFO 11802 --- [main] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource configurationProperties [org.springframework.boot.context.properties.source.ConfigurationPropertySourcesPropertySource] to AOP Proxy
+2021-04-14 13:27:32.827  INFO 11802 --- [main] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource commandLineArgs [org.springframework.core.env.SimpleCommandLinePropertySource] to EncryptableEnumerablePropertySourceWrapper
+2021-04-14 13:27:32.828  INFO 11802 --- [main] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource servletConfigInitParams [org.springframework.core.env.PropertySource$StubPropertySource] to EncryptablePropertySourceWrapper
+2021-04-14 13:27:32.829  INFO 11802 --- [main] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource servletContextInitParams [org.springframework.core.env.PropertySource$StubPropertySource] to EncryptablePropertySourceWrapper
+2021-04-14 13:27:32.830  INFO 11802 --- [main] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource systemProperties [org.springframework.core.env.PropertiesPropertySource] to EncryptableMapPropertySourceWrapper
+2021-04-14 13:27:32.831  INFO 11802 --- [main] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource systemEnvironment [org.springframework.boot.env.SystemEnvironmentPropertySourceEnvironmentPostProcessor$OriginAwareSystemEnvironmentPropertySource] to EncryptableSystemEnvironmentPropertySourceWrapper
+2021-04-14 13:27:32.832  INFO 11802 --- [main] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource random [org.springframework.boot.env.RandomValuePropertySource] to EncryptablePropertySourceWrapper
+2021-04-14 13:27:32.833  INFO 11802 --- [main] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource Config resource 'class path resource [application-release.properties]' via location 'optional:classpath:/' [org.springframework.boot.env.OriginTrackedMapPropertySource] to EncryptableMapPropertySourceWrapper
+2021-04-14 13:27:32.834  INFO 11802 --- [main] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource Config resource 'class path resource [application.properties]' via location 'optional:classpath:/' [org.springframework.boot.env.OriginTrackedMapPropertySource] to EncryptableMapPropertySourceWrapper
+2021-04-14 13:27:33.126  INFO 11802 --- [main] c.u.j.filter.DefaultLazyPropertyFilter   : Property Filter custom Bean not found with name 'encryptablePropertyFilter'. Initializing Default Property Filter
+2021-04-14 13:27:33.776  INFO 11802 --- [main] c.u.j.r.DefaultLazyPropertyResolver      : Property Resolver custom Bean not found with name 'encryptablePropertyResolver'. Initializing Default Property Resolver
+2021-04-14 13:27:33.810  INFO 11802 --- [main] c.u.j.d.DefaultLazyPropertyDetector      : Property Detector custom Bean not found with name 'encryptablePropertyDetector'. Initializing Default Property Detector
+2021-04-14 13:27:34.800  INFO 11802 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2021-04-14 13:27:34.865  INFO 11802 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2021-04-14 13:27:34.866  INFO 11802 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.41]
+2021-04-14 13:27:35.115  INFO 11802 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2021-04-14 13:27:35.116  INFO 11802 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 6846 ms
+2021-04-14 13:27:36.317  INFO 11802 --- [main] c.u.j.encryptor.DefaultLazyEncryptor     : String Encryptor custom Bean not found with name 'jasyptStringEncryptor'. Initializing Default String Encryptor
+2021-04-14 13:27:36.393  INFO 11802 --- [main] c.u.j.c.StringEncryptorBuilder           : Encryptor config not found for property jasypt.encryptor.algorithm, using default value: PBEWITHHMACSHA512ANDAES_256
+2021-04-14 13:27:36.395  INFO 11802 --- [main] c.u.j.c.StringEncryptorBuilder           : Encryptor config not found for property jasypt.encryptor.key-obtention-iterations, using default value: 1000
+2021-04-14 13:27:36.396  INFO 11802 --- [main] c.u.j.c.StringEncryptorBuilder           : Encryptor config not found for property jasypt.encryptor.pool-size, using default value: 1
+2021-04-14 13:27:36.398  INFO 11802 --- [main] c.u.j.c.StringEncryptorBuilder           : Encryptor config not found for property jasypt.encryptor.provider-name, using default value: null
+2021-04-14 13:27:36.399  INFO 11802 --- [main] c.u.j.c.StringEncryptorBuilder           : Encryptor config not found for property jasypt.encryptor.provider-class-name, using default value: null
+2021-04-14 13:27:36.400  INFO 11802 --- [main] c.u.j.c.StringEncryptorBuilder           : Encryptor config not found for property jasypt.encryptor.salt-generator-classname, using default value: org.jasypt.salt.RandomSaltGenerator
+2021-04-14 13:27:36.403  INFO 11802 --- [main] c.u.j.c.StringEncryptorBuilder           : Encryptor config not found for property jasypt.encryptor.iv-generator-classname, using default value: org.jasypt.iv.RandomIvGenerator
+2021-04-14 13:27:36.406  INFO 11802 --- [main] c.u.j.c.StringEncryptorBuilder           : Encryptor config not found for property jasypt.encryptor.string-output-type, using default value: base64
+2021-04-14 13:27:37.317  INFO 11802 --- [main] org.mongodb.driver.cluster               : Cluster created with settings {hosts=[127.0.0.1:27017], srvHost=test.gah45.mongodb.net, mode=MULTIPLE, requiredClusterType=REPLICA_SET, serverSelectionTimeout='30000 ms', requiredReplicaSetName='atlas-iz988d-shard-0'}
+2021-04-14 13:27:37.479  INFO 11802 --- [cluster-ClusterId{value='6076d1a9fd1fee3936258c50', description='null'}-srv-test.gah45.mongodb.net] org.mongodb.driver.cluster               : Adding discovered server test-shard-00-02.gah45.mongodb.net:27017 to client view of cluster
+2021-04-14 13:27:37.645  INFO 11802 --- [cluster-ClusterId{value='6076d1a9fd1fee3936258c50', description='null'}-srv-test.gah45.mongodb.net] org.mongodb.driver.cluster               : Adding discovered server test-shard-00-00.gah45.mongodb.net:27017 to client view of cluster
+2021-04-14 13:27:37.658  INFO 11802 --- [cluster-ClusterId{value='6076d1a9fd1fee3936258c50', description='null'}-srv-test.gah45.mongodb.net] org.mongodb.driver.cluster               : Adding discovered server test-shard-00-01.gah45.mongodb.net:27017 to client view of cluster
+2021-04-14 13:27:39.722  INFO 11802 --- [cluster-ClusterId{value='6076d1a9fd1fee3936258c50', description='null'}-test-shard-00-01.gah45.mongodb.net:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:5, serverValue:1224468}] to test-shard-00-01.gah45.mongodb.net:27017
+2021-04-14 13:27:39.723  INFO 11802 --- [cluster-rtt-ClusterId{value='6076d1a9fd1fee3936258c50', description='null'}-test-shard-00-01.gah45.mongodb.net:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:6, serverValue:1224440}] to test-shard-00-01.gah45.mongodb.net:27017
+2021-04-14 13:27:39.723  INFO 11802 --- [cluster-rtt-ClusterId{value='6076d1a9fd1fee3936258c50', description='null'}-test-shard-00-00.gah45.mongodb.net:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:4, serverValue:1258742}] to test-shard-00-00.gah45.mongodb.net:27017
+2021-04-14 13:27:39.725  INFO 11802 --- [cluster-ClusterId{value='6076d1a9fd1fee3936258c50', description='null'}-test-shard-00-01.gah45.mongodb.net:27017] org.mongodb.driver.cluster               : Monitor thread successfully connected to server with description ServerDescription{address=test-shard-00-01.gah45.mongodb.net:27017, type=REPLICA_SET_PRIMARY, state=CONNECTED, ok=true, minWireVersion=0, maxWireVersion=9, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=1114226460, setName='atlas-iz988d-shard-0', canonicalAddress=test-shard-00-01.gah45.mongodb.net:27017, hosts=[test-shard-00-02.gah45.mongodb.net:27017, test-shard-00-01.gah45.mongodb.net:27017, test-shard-00-00.gah45.mongodb.net:27017], passives=[], arbiters=[], primary='test-shard-00-01.gah45.mongodb.net:27017', tagSet=TagSet{[Tag{name='nodeType', value='ELECTABLE'}, Tag{name='provider', value='AWS'}, Tag{name='region', value='EU_WEST_1'}, Tag{name='workloadType', value='OPERATIONAL'}]}, electionId=7fffffff0000000000000005, setVersion=1, topologyVersion=TopologyVersion{processId=605f3074e1b5db0004df1353, counter=6}, lastWriteDate=Wed Apr 14 13:27:38 CEST 2021, lastUpdateTimeNanos=8081640823430}
+2021-04-14 13:27:39.724  INFO 11802 --- [cluster-rtt-ClusterId{value='6076d1a9fd1fee3936258c50', description='null'}-test-shard-00-02.gah45.mongodb.net:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:2, serverValue:1257554}] to test-shard-00-02.gah45.mongodb.net:27017
+2021-04-14 13:27:39.724  INFO 11802 --- [cluster-ClusterId{value='6076d1a9fd1fee3936258c50', description='null'}-test-shard-00-00.gah45.mongodb.net:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:3, serverValue:1258742}] to test-shard-00-00.gah45.mongodb.net:27017
+2021-04-14 13:27:39.727  INFO 11802 --- [cluster-ClusterId{value='6076d1a9fd1fee3936258c50', description='null'}-test-shard-00-02.gah45.mongodb.net:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:1, serverValue:1257554}] to test-shard-00-02.gah45.mongodb.net:27017
+2021-04-14 13:27:39.741  INFO 11802 --- [cluster-ClusterId{value='6076d1a9fd1fee3936258c50', description='null'}-test-shard-00-01.gah45.mongodb.net:27017] org.mongodb.driver.cluster               : Setting max election id to 7fffffff0000000000000005 from replica set primary test-shard-00-01.gah45.mongodb.net:27017
+2021-04-14 13:27:39.742  INFO 11802 --- [cluster-ClusterId{value='6076d1a9fd1fee3936258c50', description='null'}-test-shard-00-02.gah45.mongodb.net:27017] org.mongodb.driver.cluster               : Monitor thread successfully connected to server with description ServerDescription{address=test-shard-00-02.gah45.mongodb.net:27017, type=REPLICA_SET_SECONDARY, state=CONNECTED, ok=true, minWireVersion=0, maxWireVersion=9, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=1128344209, setName='atlas-iz988d-shard-0', canonicalAddress=test-shard-00-02.gah45.mongodb.net:27017, hosts=[test-shard-00-02.gah45.mongodb.net:27017, test-shard-00-01.gah45.mongodb.net:27017, test-shard-00-00.gah45.mongodb.net:27017], passives=[], arbiters=[], primary='test-shard-00-01.gah45.mongodb.net:27017', tagSet=TagSet{[Tag{name='nodeType', value='ELECTABLE'}, Tag{name='provider', value='AWS'}, Tag{name='region', value='EU_WEST_1'}, Tag{name='workloadType', value='OPERATIONAL'}]}, electionId=null, setVersion=1, topologyVersion=TopologyVersion{processId=605f3193ab9351327ae36ece, counter=4}, lastWriteDate=Wed Apr 14 13:27:38 CEST 2021, lastUpdateTimeNanos=8081650442184}
+2021-04-14 13:27:39.742  INFO 11802 --- [cluster-ClusterId{value='6076d1a9fd1fee3936258c50', description='null'}-test-shard-00-01.gah45.mongodb.net:27017] org.mongodb.driver.cluster               : Setting max set version to 1 from replica set primary test-shard-00-01.gah45.mongodb.net:27017
+2021-04-14 13:27:39.742  INFO 11802 --- [cluster-ClusterId{value='6076d1a9fd1fee3936258c50', description='null'}-test-shard-00-00.gah45.mongodb.net:27017] org.mongodb.driver.cluster               : Monitor thread successfully connected to server with description ServerDescription{address=test-shard-00-00.gah45.mongodb.net:27017, type=REPLICA_SET_SECONDARY, state=CONNECTED, ok=true, minWireVersion=0, maxWireVersion=9, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=1121776179, setName='atlas-iz988d-shard-0', canonicalAddress=test-shard-00-00.gah45.mongodb.net:27017, hosts=[test-shard-00-02.gah45.mongodb.net:27017, test-shard-00-01.gah45.mongodb.net:27017, test-shard-00-00.gah45.mongodb.net:27017], passives=[], arbiters=[], primary='test-shard-00-01.gah45.mongodb.net:27017', tagSet=TagSet{[Tag{name='nodeType', value='ELECTABLE'}, Tag{name='provider', value='AWS'}, Tag{name='region', value='EU_WEST_1'}, Tag{name='workloadType', value='OPERATIONAL'}]}, electionId=null, setVersion=1, topologyVersion=TopologyVersion{processId=605f2f6bfa98ad1a2381d5d1, counter=4}, lastWriteDate=Wed Apr 14 13:27:38 CEST 2021, lastUpdateTimeNanos=8081644243503}
+2021-04-14 13:27:39.744  INFO 11802 --- [cluster-ClusterId{value='6076d1a9fd1fee3936258c50', description='null'}-test-shard-00-01.gah45.mongodb.net:27017] org.mongodb.driver.cluster               : Discovered replica set primary test-shard-00-01.gah45.mongodb.net:27017
+2021-04-14 13:27:40.352  INFO 11802 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2021-04-14 13:27:41.310  INFO 11802 --- [main] o.s.s.c.ThreadPoolTaskScheduler          : Initializing ExecutorService 'taskScheduler'
+2021-04-14 13:27:41.352  INFO 11802 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint(s) beneath base path '/actuator'
+2021-04-14 13:27:41.499  INFO 11802 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2021-04-14 13:27:41.606  INFO 11802 --- [main] c.c.covidradar.CovidRadarApplication     : Started CovidRadarApplication in 16.865 seconds (JVM running for 20.546)
+2021-04-14 13:27:41.908 DEBUG 11802 --- [main] c.c.c.data.DailyRecordDataInitializer    : Initialising DailyRecord data...
+2021-04-14 13:27:41.909 DEBUG 11802 --- [main] c.c.c.data.collection.DataFetcher        : Fetching data...
+2021-04-14 13:27:41.919 DEBUG 11802 --- [main] c.c.c.data.collection.DataFetcher        : Building HttpRequest type: INIT
+2021-04-14 13:27:41.926 DEBUG 11802 --- [main] c.c.c.data.collection.DataFetcher        : Making HttpRequest
+2021-04-14 13:27:45.114 DEBUG 11802 --- [main] c.c.c.data.collection.DataFetcher        : HttpRequest successfully made - data received.
+2021-04-14 13:27:45.154 DEBUG 11802 --- [main] c.c.c.events.DataEventPublisher          : PublishingINIT DataEvent with data -1820188682 (hashcode)
+2021-04-14 13:27:45.158  INFO 11802 --- [main] c.c.c.d.p.DailyRecordProcessingPipeline  : Starting DailyRecordPipeline - INIT...
+2021-04-14 13:27:45.163 DEBUG 11802 --- [main] c.c.c.data.steps.DailyRecordParser       : Parsing JSON (hashcode: -1820188682)
+2021-04-14 13:27:47.905 DEBUG 11802 --- [main] c.c.c.data.steps.DailyRecordParser       : 36322 Records Parsed.
+2021-04-14 13:27:47.915 DEBUG 11802 --- [main] c.c.c.data.steps.DailyRecordFixer        : Trimming DailyRecord data...
+2021-04-14 13:27:47.921 DEBUG 11802 --- [main] c.c.c.data.steps.DailyRecordFixer        : Removing unnecessary characters from DistrictName...
+2021-04-14 13:27:47.925 DEBUG 11802 --- [main] c.c.c.data.steps.DailyRecordFixer        : Rounding infection rates to 2 decimal places...
+2021-04-14 13:27:48.298 DEBUG 11802 --- [main] c.c.c.data.steps.DailyRecordFixer        : Finished trimming DailyRecord data.
+2021-04-14 13:27:48.299 DEBUG 11802 --- [main] c.c.c.data.steps.DailyRecordMapper       : Mapping DailyRecords By Health Ward
+2021-04-14 13:27:48.320 DEBUG 11802 --- [main] c.c.c.data.steps.DailyRecordMapper       : Results Mapped to 286 Health Wards In Total
+2021-04-14 13:27:48.375 DEBUG 11802 --- [main] c.chilborne.covidradar.model.HealthWard  : Starting to save DailyRecords (hashcode: 1079822568...)
+2021-04-14 13:27:48.384 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecordList size: 3432
+2021-04-14 13:27:48.387 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Abrantes::2020-05-19
+2021-04-14 13:27:49.147  INFO 11802 --- [main] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:7, serverValue:1224473}] to test-shard-00-01.gah45.mongodb.net:27017
+2021-04-14 13:27:49.228 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Abrantes::2020-05-12
+2021-04-14 13:27:49.279 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Abrantes::2020-05-05
+2021-04-14 13:27:49.325 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Abrantes::2020-04-28
+2021-04-14 13:27:49.371 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Abrantes::2020-04-21
+2021-04-14 13:27:49.425 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Abrantes::2020-04-14
+2021-04-14 13:27:49.473 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Abrantes::2020-04-07
+2021-04-14 13:27:49.519 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Abrantes::2020-03-31
+2021-04-14 13:27:49.568 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Abrantes::2020-03-24
+2021-04-14 13:27:49.629 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Abrantes::2020-03-17
+2021-04-14 13:27:49.681 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Abrantes::2020-03-10
+2021-04-14 13:27:49.737 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Abrantes::2020-03-03
+2021-04-14 13:27:49.785 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Acacias::2020-05-19
+2021-04-14 13:27:49.836 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Acacias::2020-05-12
+2021-04-14 13:27:49.881 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Acacias::2020-05-05
+2021-04-14 13:27:49.926 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Acacias::2020-04-28
+2021-04-14 13:27:49.976 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Acacias::2020-04-21
+2021-04-14 13:27:50.023 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Acacias::2020-04-14
+2021-04-14 13:27:50.068 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Acacias::2020-04-07
+2021-04-14 13:27:50.112 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Acacias::2020-03-31
+2021-04-14 13:27:50.155 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Acacias::2020-03-24
+2021-04-14 13:27:50.199 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Acacias::2020-03-17
+2021-04-14 13:27:50.247 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Acacias::2020-03-10
+2021-04-14 13:27:50.293 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Acacias::2020-03-03
+2021-04-14 13:27:50.337 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Adelfas::2020-05-19
+2021-04-14 13:27:50.380 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Adelfas::2020-05-12
+2021-04-14 13:27:50.427 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Adelfas::2020-05-05
+2021-04-14 13:27:50.727 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Adelfas::2020-04-28
+2021-04-14 13:27:50.780 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Adelfas::2020-04-21
+2021-04-14 13:27:50.834 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Adelfas::2020-04-14
+2021-04-14 13:27:50.892 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Adelfas::2020-04-07
+2021-04-14 13:27:50.946 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Adelfas::2020-03-31
+2021-04-14 13:27:51.002 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Adelfas::2020-03-24
+2021-04-14 13:27:51.052 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Adelfas::2020-03-17
+2021-04-14 13:27:51.182 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Adelfas::2020-03-10
+2021-04-14 13:27:51.231 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Adelfas::2020-03-03
+2021-04-14 13:27:51.277 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Alameda::2020-05-19
+2021-04-14 13:27:51.329 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Alameda::2020-05-12
+2021-04-14 13:27:51.378 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Alameda::2020-05-05
+2021-04-14 13:27:51.435 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Alameda::2020-04-28
+2021-04-14 13:27:51.483 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Alameda::2020-04-21
+2021-04-14 13:27:51.531 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Alameda::2020-04-14
+2021-04-14 13:27:51.578 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Alameda::2020-04-07
+2021-04-14 13:27:51.628 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Alameda::2020-03-31
+2021-04-14 13:27:51.687 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Alameda::2020-03-24
+2021-04-14 13:27:51.733 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Alameda::2020-03-17
+2021-04-14 13:27:51.778 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Alameda::2020-03-10
+2021-04-14 13:27:51.825 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Alameda::2020-03-03
+2021-04-14 13:27:51.875 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Alameda de Osuna::2020-05-19
+2021-04-14 13:27:51.925 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Alameda de Osuna::2020-05-12
+2021-04-14 13:27:51.968 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Alameda de Osuna::2020-05-05
+2021-04-14 13:27:52.013 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Alameda de Osuna::2020-04-28
+2021-04-14 13:27:52.059 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Alameda de Osuna::2020-04-21
+2021-04-14 13:27:52.144 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Alameda de Osuna::2020-04-14
+2021-04-14 13:27:52.205 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Alameda de Osuna::2020-04-07
+2021-04-14 13:27:52.249 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Alameda de Osuna::2020-03-31
+2021-04-14 13:27:52.295 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Alameda de Osuna::2020-03-24
+2021-04-14 13:27:52.351 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Alameda de Osuna::2020-03-17
+2021-04-14 13:27:52.398 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Alameda de Osuna::2020-03-10
+2021-04-14 13:27:52.442 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Alameda de Osuna::2020-03-03
+2021-04-14 13:27:52.485 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Alcalde Bartolomé González::2020-05-19
+2021-04-14 13:27:52.533 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Alcalde Bartolomé González::2020-05-12
+2021-04-14 13:27:52.576 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Alcalde Bartolomé González::2020-05-05
+2021-04-14 13:27:52.620 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Alcalde Bartolomé González::2020-04-28
+2021-04-14 13:27:52.668 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Alcalde Bartolomé González::2020-04-21
+2021-04-14 13:27:52.718 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Alcalde Bartolomé González::2020-04-14
+2021-04-14 13:27:52.762 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Alcalde Bartolomé González::2020-04-07
+2021-04-14 13:27:52.809 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Alcalde Bartolomé González::2020-03-31
+2021-04-14 13:27:52.858 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Alcalde Bartolomé González::2020-03-24
+2021-04-14 13:27:52.911 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Alcalde Bartolomé González::2020-03-17
+2021-04-14 13:27:52.963 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Alcalde Bartolomé González::2020-03-10
+2021-04-14 13:27:53.012 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Alcalde Bartolomé González::2020-03-03
+2021-04-14 13:27:53.064 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Alcalá de Guadaira::2020-05-19
+2021-04-14 13:27:53.127 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Alcalá de Guadaira::2020-05-12
+2021-04-14 13:27:53.175 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Alcalá de Guadaira::2020-05-05
+2021-04-14 13:27:53.223 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Alcalá de Guadaira::2020-04-28
+2021-04-14 13:27:53.274 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Alcalá de Guadaira::2020-04-21
+2021-04-14 13:27:53.332 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Alcalá de Guadaira::2020-04-14
+2021-04-14 13:27:53.626 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Alcalá de Guadaira::2020-04-07
+2021-04-14 13:27:53.673 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Alcalá de Guadaira::2020-03-31
+2021-04-14 13:27:53.718 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Alcalá de Guadaira::2020-03-24
+2021-04-14 13:27:53.765 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Alcalá de Guadaira::2020-03-17
+2021-04-14 13:27:53.816 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Alcalá de Guadaira::2020-03-10
+2021-04-14 13:27:53.859 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Alcalá de Guadaira::2020-03-03
+2021-04-14 13:27:53.906 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Alcobendas - Chopera::2020-05-19
+2021-04-14 13:27:53.955 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Alcobendas - Chopera::2020-05-12
+2021-04-14 13:27:54.000 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Alcobendas - Chopera::2020-05-05
+2021-04-14 13:27:54.044 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Alcobendas - Chopera::2020-04-28
+2021-04-14 13:27:54.087 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Alcobendas - Chopera::2020-04-21
+2021-04-14 13:27:54.129 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Alcobendas - Chopera::2020-04-14
+2021-04-14 13:27:54.175 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Alcobendas - Chopera::2020-04-07
+2021-04-14 13:27:54.227 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Alcobendas - Chopera::2020-03-31
+2021-04-14 13:27:54.279 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Alcobendas - Chopera::2020-03-24
+2021-04-14 13:27:54.328 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Alcobendas - Chopera::2020-03-17
+2021-04-14 13:27:54.392 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Alcobendas - Chopera::2020-03-10
+2021-04-14 13:27:54.436 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Alcobendas - Chopera::2020-03-03
+2021-04-14 13:27:54.481 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Alcocer::2020-05-19
+2021-04-14 13:27:54.542 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Alcocer::2020-05-12
+2021-04-14 13:27:54.603 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Alcocer::2020-05-05
+2021-04-14 13:27:54.656 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Alcocer::2020-04-28
+2021-04-14 13:27:54.700 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Alcocer::2020-04-21
+2021-04-14 13:27:54.748 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Alcocer::2020-04-14
+2021-04-14 13:27:54.798 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Alcocer::2020-04-07
+2021-04-14 13:27:54.851 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Alcocer::2020-03-31
+2021-04-14 13:27:54.910 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Alcocer::2020-03-24
+2021-04-14 13:27:54.954 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Alcocer::2020-03-17
+2021-04-14 13:27:55.008 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Alcocer::2020-03-10
+2021-04-14 13:27:55.061 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Alcocer::2020-03-03
+2021-04-14 13:27:55.110 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Algete::2020-05-19
+2021-04-14 13:27:55.159 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Algete::2020-05-12
+2021-04-14 13:27:55.207 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Algete::2020-05-05
+2021-04-14 13:27:55.249 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Algete::2020-04-28
+2021-04-14 13:27:55.292 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Algete::2020-04-21
+2021-04-14 13:27:55.336 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Algete::2020-04-14
+2021-04-14 13:27:55.381 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Algete::2020-04-07
+2021-04-14 13:27:55.429 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Algete::2020-03-31
+2021-04-14 13:27:55.479 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Algete::2020-03-24
+2021-04-14 13:27:55.522 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Algete::2020-03-17
+2021-04-14 13:27:55.567 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Algete::2020-03-10
+2021-04-14 13:27:55.617 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Algete::2020-03-03
+2021-04-14 13:27:55.660 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Alicante::2020-05-19
+2021-04-14 13:27:55.709 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Alicante::2020-05-12
+2021-04-14 13:27:55.758 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Alicante::2020-05-05
+2021-04-14 13:27:55.816 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Alicante::2020-04-28
+2021-04-14 13:27:55.869 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Alicante::2020-04-21
+2021-04-14 13:27:55.921 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Alicante::2020-04-14
+2021-04-14 13:27:55.967 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Alicante::2020-04-07
+2021-04-14 13:27:56.017 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Alicante::2020-03-31
+2021-04-14 13:27:56.099 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Alicante::2020-03-24
+2021-04-14 13:27:56.145 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Alicante::2020-03-17
+2021-04-14 13:27:56.206 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Alicante::2020-03-10
+2021-04-14 13:27:56.302 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Alicante::2020-03-03
+2021-04-14 13:27:56.325  INFO 11802 --- [SpringContextShutdownHook] o.s.s.c.ThreadPoolTaskScheduler          : Shutting down ExecutorService 'taskScheduler'
+2021-04-14 13:27:56.343  INFO 11802 --- [SpringContextShutdownHook] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
+2021-04-14 13:27:56.369 DEBUG 11802 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: Almendrales::2020-05-19
+2021-04-14 13:27:56.394  INFO 11802 --- [main] ConditionEvaluationReportLoggingListener : 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2021-04-14 13:27:56.408  INFO 11802 --- [SpringContextShutdownHook] org.mongodb.driver.connection            : Closed connection [connectionId{localValue:7, serverValue:1224473}] to test-shard-00-01.gah45.mongodb.net:27017 because the pool has been closed.
+2021-04-14 13:32:20.709  INFO 12149 --- [main] c.c.c.CovidRadarApplicationTests         : Starting CovidRadarApplicationTests using Java 11.0.10 on v1ru5-ma551v3 with PID 12149 (started by chris in /home/chris/Development/covidradar/backend)
+2021-04-14 13:32:20.713 DEBUG 12149 --- [main] c.c.c.CovidRadarApplicationTests         : Running with Spring Boot v2.4.1, Spring v5.3.2
+2021-04-14 13:32:20.714  INFO 12149 --- [main] c.c.c.CovidRadarApplicationTests         : The following profiles are active: test
+2021-04-14 13:32:26.401  INFO 12149 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data MongoDB repositories in DEFAULT mode.
+2021-04-14 13:32:26.590  INFO 12149 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 171 ms. Found 1 MongoDB repository interfaces.
+2021-04-14 13:32:27.549  INFO 12149 --- [main] ptablePropertiesBeanFactoryPostProcessor : Post-processing PropertySource instances
+2021-04-14 13:32:27.729  INFO 12149 --- [main] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource configurationProperties [org.springframework.boot.context.properties.source.ConfigurationPropertySourcesPropertySource] to AOP Proxy
+2021-04-14 13:32:27.764  INFO 12149 --- [main] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource Inlined Test Properties [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+2021-04-14 13:32:27.768  INFO 12149 --- [main] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource test [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+2021-04-14 13:32:27.771  INFO 12149 --- [main] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource systemProperties [org.springframework.core.env.PropertiesPropertySource] to EncryptableMapPropertySourceWrapper
+2021-04-14 13:32:27.776  INFO 12149 --- [main] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource systemEnvironment [org.springframework.boot.env.SystemEnvironmentPropertySourceEnvironmentPostProcessor$OriginAwareSystemEnvironmentPropertySource] to EncryptableSystemEnvironmentPropertySourceWrapper
+2021-04-14 13:32:27.778  INFO 12149 --- [main] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource random [org.springframework.boot.env.RandomValuePropertySource] to EncryptablePropertySourceWrapper
+2021-04-14 13:32:27.789  INFO 12149 --- [main] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource Config resource 'class path resource [application-test.properties]' via location 'optional:classpath:/' [org.springframework.boot.env.OriginTrackedMapPropertySource] to EncryptableMapPropertySourceWrapper
+2021-04-14 13:32:27.795  INFO 12149 --- [main] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource Config resource 'class path resource [application.properties]' via location 'optional:classpath:/' [org.springframework.boot.env.OriginTrackedMapPropertySource] to EncryptableMapPropertySourceWrapper
+2021-04-14 13:32:28.156  INFO 12149 --- [main] c.u.j.filter.DefaultLazyPropertyFilter   : Property Filter custom Bean not found with name 'encryptablePropertyFilter'. Initializing Default Property Filter
+2021-04-14 13:32:29.147  INFO 12149 --- [main] c.u.j.r.DefaultLazyPropertyResolver      : Property Resolver custom Bean not found with name 'encryptablePropertyResolver'. Initializing Default Property Resolver
+2021-04-14 13:32:29.162  INFO 12149 --- [main] c.u.j.d.DefaultLazyPropertyDetector      : Property Detector custom Bean not found with name 'encryptablePropertyDetector'. Initializing Default Property Detector
+2021-04-14 13:32:30.318  INFO 12149 --- [main] d.f.e.process.runtime.ProcessControl     : stopOrDestroyProcess: process hasn't exited 
+2021-04-14 13:32:30.396  INFO 12149 --- [Thread-3] o.s.b.a.mongo.embedded.EmbeddedMongo     : note: noprealloc may hurt performance in many applications
+2021-04-14 13:32:30.414  INFO 12149 --- [Thread-3] o.s.b.a.mongo.embedded.EmbeddedMongo     : 2021-04-14T13:32:30.408+0200 I CONTROL  [initandlisten] MongoDB starting : pid=12202 port=46395 dbpath=/tmp/embedmongo-db-e8e3105f-92f9-44d8-b17c-6666c49b310b 64-bit host=v1ru5-ma551v3
+2021-04-14 13:32:30.415  INFO 12149 --- [Thread-3] o.s.b.a.mongo.embedded.EmbeddedMongo     : 2021-04-14T13:32:30.408+0200 I CONTROL  [initandlisten] db version v3.5.5
+2021-04-14 13:32:30.415  INFO 12149 --- [Thread-3] o.s.b.a.mongo.embedded.EmbeddedMongo     : 2021-04-14T13:32:30.408+0200 I CONTROL  [initandlisten] git version: 98515c812b6fa893613f063dae568ff8319cbfbd
+2021-04-14 13:32:30.415  INFO 12149 --- [Thread-3] o.s.b.a.mongo.embedded.EmbeddedMongo     : 2021-04-14T13:32:30.408+0200 I CONTROL  [initandlisten] allocator: tcmalloc
+2021-04-14 13:32:30.416  INFO 12149 --- [Thread-3] o.s.b.a.mongo.embedded.EmbeddedMongo     : 2021-04-14T13:32:30.408+0200 I CONTROL  [initandlisten] modules: none
+2021-04-14 13:32:30.416  INFO 12149 --- [Thread-3] o.s.b.a.mongo.embedded.EmbeddedMongo     : 2021-04-14T13:32:30.409+0200 I CONTROL  [initandlisten] build environment:
+2021-04-14 13:32:30.417  INFO 12149 --- [Thread-3] o.s.b.a.mongo.embedded.EmbeddedMongo     : 2021-04-14T13:32:30.409+0200 I CONTROL  [initandlisten]     distarch: x86_64
+2021-04-14 13:32:30.417  INFO 12149 --- [Thread-3] o.s.b.a.mongo.embedded.EmbeddedMongo     : 2021-04-14T13:32:30.409+0200 I CONTROL  [initandlisten]     target_arch: x86_64
+2021-04-14 13:32:30.434  INFO 12149 --- [Thread-3] o.s.b.a.mongo.embedded.EmbeddedMongo     : 2021-04-14T13:32:30.409+0200 I CONTROL  [initandlisten] options: { net: { bindIp: "127.0.0.1", http: { enabled: false }, port: 46395 }, security: { authorization: "disabled" }, storage: { dbPath: "/tmp/embedmongo-db-e8e3105f-92f9-44d8-b17c-6666c49b310b", journal: { enabled: false }, mmapv1: { preallocDataFiles: false, smallFiles: true }, syncPeriodSecs: 0.0 } }
+2021-04-14 13:32:30.459  INFO 12149 --- [Thread-3] o.s.b.a.mongo.embedded.EmbeddedMongo     : 2021-04-14T13:32:30.459+0200 I STORAGE  [initandlisten] wiredtiger_open config: create,cache_size=1384M,session_max=20000,eviction=(threads_min=4,threads_max=4),config_base=false,statistics=(fast),log=(enabled=true,archive=true,path=journal,compressor=snappy),file_manager=(close_idle_time=100000),checkpoint=(wait=0,log_size=2GB),statistics_log=(wait=0),verbose=(recovery_progress),,log=(enabled=false),
+2021-04-14 13:32:30.493  INFO 12149 --- [Thread-3] o.s.b.a.mongo.embedded.EmbeddedMongo     : 2021-04-14T13:32:30.493+0200 W STORAGE  [initandlisten] Detected configuration for non-active storage engine mmapv1 when current storage engine is wiredTiger
+2021-04-14 13:32:30.494  INFO 12149 --- [Thread-3] o.s.b.a.mongo.embedded.EmbeddedMongo     : 2021-04-14T13:32:30.494+0200 I CONTROL  [initandlisten] 
+2021-04-14 13:32:30.496  INFO 12149 --- [Thread-3] o.s.b.a.mongo.embedded.EmbeddedMongo     : 2021-04-14T13:32:30.496+0200 I CONTROL  [initandlisten] ** NOTE: This is a development version (3.5.5) of MongoDB.
+2021-04-14 13:32:30.497  INFO 12149 --- [Thread-3] o.s.b.a.mongo.embedded.EmbeddedMongo     : 2021-04-14T13:32:30.497+0200 I CONTROL  [initandlisten] **       Not recommended for production.
+2021-04-14 13:32:30.503  INFO 12149 --- [Thread-3] o.s.b.a.mongo.embedded.EmbeddedMongo     : 2021-04-14T13:32:30.498+0200 I CONTROL  [initandlisten] 
+2021-04-14 13:32:30.510  INFO 12149 --- [Thread-3] o.s.b.a.mongo.embedded.EmbeddedMongo     : 2021-04-14T13:32:30.510+0200 I CONTROL  [initandlisten] 
+2021-04-14 13:32:30.512  INFO 12149 --- [Thread-3] o.s.b.a.mongo.embedded.EmbeddedMongo     : 2021-04-14T13:32:30.511+0200 I CONTROL  [initandlisten] ** WARNING: soft rlimits too low. rlimits set to 15121 processes, 524288 files. Number of processes should be at least 262144 : 0.5 times number of files.
+2021-04-14 13:32:30.525  INFO 12149 --- [Thread-3] o.s.b.a.mongo.embedded.EmbeddedMongo     : 2021-04-14T13:32:30.524+0200 I FTDC     [initandlisten] Initializing full-time diagnostic data capture with directory '/tmp/embedmongo-db-e8e3105f-92f9-44d8-b17c-6666c49b310b/diagnostic.data'
+2021-04-14 13:32:30.535  INFO 12149 --- [Thread-3] o.s.b.a.mongo.embedded.EmbeddedMongo     : 2021-04-14T13:32:30.535+0200 I INDEX    [initandlisten] build index on: admin.system.version properties: { v: 2, key: { version: 1 }, name: "incompatible_with_version_32", ns: "admin.system.version" }
+2021-04-14 13:32:30.538  INFO 12149 --- [Thread-3] o.s.b.a.mongo.embedded.EmbeddedMongo     : 2021-04-14T13:32:30.538+0200 I INDEX    [initandlisten] 	 building index using bulk method; build may temporarily use up to 500 megabytes of RAM
+2021-04-14 13:32:30.540  INFO 12149 --- [Thread-3] o.s.b.a.mongo.embedded.EmbeddedMongo     : 2021-04-14T13:32:30.540+0200 I INDEX    [initandlisten] build index done.  scanned 0 total records. 0 secs
+2021-04-14 13:32:30.545  INFO 12149 --- [Thread-3] o.s.b.a.mongo.embedded.EmbeddedMongo     : 2021-04-14T13:32:30.545+0200 I COMMAND  [initandlisten] setting featureCompatibilityVersion to 3.4
+2021-04-14 13:32:30.549  INFO 12149 --- [Thread-3] o.s.b.a.mongo.embedded.EmbeddedMongo     : 2021-04-14T13:32:30.548+0200 I NETWORK  [thread1] waiting for connections on port 46395
+2021-04-14 13:32:30.550  INFO 12149 --- [main] d.f.embed.mongo.MongodExecutable         : start de.flapdoodle.embed.mongo.config.MongodConfigBuilder$ImmutableMongodConfig@4d5f25e4
+2021-04-14 13:32:31.046  INFO 12149 --- [main] org.mongodb.driver.cluster               : Cluster created with settings {hosts=[localhost:46395], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms'}
+2021-04-14 13:32:31.322  INFO 12149 --- [Thread-3] o.s.b.a.mongo.embedded.EmbeddedMongo     : 2021-04-14T13:32:31.322+0200 I NETWORK  [thread1] connection accepted from 127.0.0.1:33318 #1 (1 connection now open)
+2021-04-14 13:32:31.323  INFO 12149 --- [Thread-3] o.s.b.a.mongo.embedded.EmbeddedMongo     : 2021-04-14T13:32:31.322+0200 I NETWORK  [thread1] connection accepted from 127.0.0.1:33320 #2 (2 connections now open)
+2021-04-14 13:32:31.403  INFO 12149 --- [Thread-3] o.s.b.a.mongo.embedded.EmbeddedMongo     : 2021-04-14T13:32:31.402+0200 I NETWORK  [conn1] received client metadata from 127.0.0.1:33318 conn1: { driver: { name: "mongo-java-driver|sync|spring-boot", version: "4.1.1" }, os: { type: "Linux", name: "Linux", architecture: "amd64", version: "5.11.12-arch1-1" }, platform: "Java/Oracle Corporation/11.0.10+9" }
+2021-04-14 13:32:31.414  INFO 12149 --- [Thread-3] o.s.b.a.mongo.embedded.EmbeddedMongo     : 2021-04-14T13:32:31.413+0200 I NETWORK  [conn2] received client metadata from 127.0.0.1:33320 conn2: { driver: { name: "mongo-java-driver|sync|spring-boot", version: "4.1.1" }, os: { type: "Linux", name: "Linux", architecture: "amd64", version: "5.11.12-arch1-1" }, platform: "Java/Oracle Corporation/11.0.10+9" }
+2021-04-14 13:32:31.515  INFO 12149 --- [cluster-rtt-ClusterId{value='6076d2cef690e355aae67ffc', description='null'}-localhost:46395] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:2, serverValue:1}] to localhost:46395
+2021-04-14 13:32:31.520  INFO 12149 --- [cluster-ClusterId{value='6076d2cef690e355aae67ffc', description='null'}-localhost:46395] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:1, serverValue:2}] to localhost:46395
+2021-04-14 13:32:31.524  INFO 12149 --- [cluster-ClusterId{value='6076d2cef690e355aae67ffc', description='null'}-localhost:46395] org.mongodb.driver.cluster               : Monitor thread successfully connected to server with description ServerDescription{address=localhost:46395, type=STANDALONE, state=CONNECTED, ok=true, minWireVersion=0, maxWireVersion=5, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=null, roundTripTimeNanos=171521288}
+2021-04-14 13:32:36.659  INFO 12149 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2021-04-14 13:32:38.466  INFO 12149 --- [main] o.s.s.c.ThreadPoolTaskScheduler          : Initializing ExecutorService 'taskScheduler'
+2021-04-14 13:32:38.575  INFO 12149 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 0 endpoint(s) beneath base path '/actuator'
+2021-04-14 13:32:38.790  INFO 12149 --- [main] c.c.c.CovidRadarApplicationTests         : Started CovidRadarApplicationTests in 19.595 seconds (JVM running for 32.939)
+2021-04-14 13:32:39.178  INFO 12149 --- [main] o.s.s.c.ThreadPoolTaskScheduler          : Shutting down ExecutorService 'taskScheduler'
+2021-04-14 13:32:39.189  INFO 12149 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
+2021-04-14 13:32:39.213  INFO 12149 --- [Thread-3] o.s.b.a.mongo.embedded.EmbeddedMongo     : 2021-04-14T13:32:39.213+0200 I -        [conn2] end connection 127.0.0.1:33320 (2 connections now open)
+2021-04-14 13:32:39.214  INFO 12149 --- [Thread-3] o.s.b.a.mongo.embedded.EmbeddedMongo     : 2021-04-14T13:32:39.213+0200 I -        [conn1] end connection 127.0.0.1:33318 (1 connection now open)
+2021-04-14 13:32:39.230  INFO 12149 --- [Thread-3] o.s.b.a.mongo.embedded.EmbeddedMongo     : 2021-04-14T13:32:39.230+0200 I NETWORK  [thread1] connection accepted from 127.0.0.1:33322 #3 (1 connection now open)
+2021-04-14 13:32:39.231  INFO 12149 --- [Thread-3] o.s.b.a.mongo.embedded.EmbeddedMongo     : 2021-04-14T13:32:39.230+0200 I COMMAND  [conn3] terminating, shutdown command received
+2021-04-14 13:32:39.232  INFO 12149 --- [Thread-3] o.s.b.a.mongo.embedded.EmbeddedMongo     : 2021-04-14T13:32:39.230+0200 I NETWORK  [conn3] shutdown: going to close listening sockets...
+2021-04-14 13:32:39.232  INFO 12149 --- [Thread-3] o.s.b.a.mongo.embedded.EmbeddedMongo     : 2021-04-14T13:32:39.230+0200 I NETWORK  [conn3] closing listening socket: 7
+2021-04-14 13:32:39.232  INFO 12149 --- [Thread-3] o.s.b.a.mongo.embedded.EmbeddedMongo     : 2021-04-14T13:32:39.230+0200 I NETWORK  [conn3] closing listening socket: 8
+2021-04-14 13:32:39.232  INFO 12149 --- [Thread-3] o.s.b.a.mongo.embedded.EmbeddedMongo     : 2021-04-14T13:32:39.230+0200 I NETWORK  [conn3] removing socket file: /tmp/mongodb-46395.sock
+2021-04-14 13:32:39.232  INFO 12149 --- [Thread-3] o.s.b.a.mongo.embedded.EmbeddedMongo     : 2021-04-14T13:32:39.230+0200 I NETWORK  [conn3] shutdown: going to flush diaglog...
+2021-04-14 13:32:39.233  INFO 12149 --- [Thread-3] o.s.b.a.mongo.embedded.EmbeddedMongo     : 2021-04-14T13:32:39.230+0200 I FTDC     [conn3] Shutting down full-time diagnostic data capture
+2021-04-14 13:32:39.253  INFO 12149 --- [Thread-3] o.s.b.a.mongo.embedded.EmbeddedMongo     : 2021-04-14T13:32:39.252+0200 I STORAGE  [conn3] WiredTigerKVEngine shutting down
+2021-04-14 13:32:39.262  INFO 12149 --- [Thread-3] o.s.b.a.mongo.embedded.EmbeddedMongo     : 2021-04-14T13:32:39.262+0200 I STORAGE  [conn3] shutdown: removing fs lock...
+2021-04-14 13:32:39.263  INFO 12149 --- [Thread-3] o.s.b.a.mongo.embedded.EmbeddedMongo     : 2021-04-14T13:32:39.262+0200 I CONTROL  [conn3] now exiting
+2021-04-14 13:32:39.263  INFO 12149 --- [Thread-3] o.s.b.a.mongo.embedded.EmbeddedMongo     : 2021-04-14T13:32:39.262+0200 I CONTROL  [conn3] shutting down with code:0
+2021-04-14 13:32:39.830 DEBUG 12149 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecordList size: 1
+2021-04-14 13:32:39.835 DEBUG 12149 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: test::2021-04-14
+2021-04-14 13:32:39.864 DEBUG 12149 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecordList size: 1
+2021-04-14 13:32:39.865 DEBUG 12149 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: test::2021-04-14
+2021-04-14 13:32:39.875 ERROR 12149 --- [main] c.c.c.services.DailyRecordServiceImpl    : Failed to save DailyRecord id: test::2021-04-14
+
+com.chilborne.covidradar.exceptions.DataSaveException: Failed to save DailyRecord id: test::2021-04-14
+	at com.chilborne.covidradar.services.DailyRecordServiceImpl.save(DailyRecordServiceImpl.java:40) ~[classes/:na]
+	at com.chilborne.covidradar.services.DailyRecordServiceImpl.lambda$save$0(DailyRecordServiceImpl.java:62) ~[classes/:na]
+	at java.base/java.lang.Iterable.forEach(Iterable.java:75) ~[na:na]
+	at com.chilborne.covidradar.services.DailyRecordServiceImpl.save(DailyRecordServiceImpl.java:59) ~[classes/:na]
+	at com.chilborne.covidradar.services.DailyRecordServiceImplTest.lambda$saveList_Exception$8(DailyRecordServiceImplTest.java:112) ~[test-classes/:na]
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:55) ~[junit-jupiter-api-5.7.0.jar:5.7.0]
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:37) ~[junit-jupiter-api-5.7.0.jar:5.7.0]
+	at org.junit.jupiter.api.Assertions.assertThrows(Assertions.java:3007) ~[junit-jupiter-api-5.7.0.jar:5.7.0]
+	at com.chilborne.covidradar.services.DailyRecordServiceImplTest.saveList_Exception(DailyRecordServiceImplTest.java:112) ~[test-classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566) ~[na:na]
+	at org.junit.platform.commons.util.ReflectionUtils.invokeMethod(ReflectionUtils.java:688) ~[junit-platform-commons-1.7.0.jar:1.7.0]
+	at org.junit.jupiter.engine.execution.MethodInvocation.proceed(MethodInvocation.java:60) ~[junit-jupiter-engine-5.7.0.jar:5.7.0]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$ValidatingInvocation.proceed(InvocationInterceptorChain.java:131) ~[junit-jupiter-engine-5.7.0.jar:5.7.0]
+	at org.junit.jupiter.engine.extension.TimeoutExtension.intercept(TimeoutExtension.java:149) ~[junit-jupiter-engine-5.7.0.jar:5.7.0]
+	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestableMethod(TimeoutExtension.java:140) ~[junit-jupiter-engine-5.7.0.jar:5.7.0]
+	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestMethod(TimeoutExtension.java:84) ~[junit-jupiter-engine-5.7.0.jar:5.7.0]
+	at org.junit.jupiter.engine.execution.ExecutableInvoker$ReflectiveInterceptorCall.lambda$ofVoidMethod$0(ExecutableInvoker.java:115) ~[junit-jupiter-engine-5.7.0.jar:5.7.0]
+	at org.junit.jupiter.engine.execution.ExecutableInvoker.lambda$invoke$0(ExecutableInvoker.java:105) ~[junit-jupiter-engine-5.7.0.jar:5.7.0]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$InterceptedInvocation.proceed(InvocationInterceptorChain.java:106) ~[junit-jupiter-engine-5.7.0.jar:5.7.0]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.proceed(InvocationInterceptorChain.java:64) ~[junit-jupiter-engine-5.7.0.jar:5.7.0]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.chainAndInvoke(InvocationInterceptorChain.java:45) ~[junit-jupiter-engine-5.7.0.jar:5.7.0]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.invoke(InvocationInterceptorChain.java:37) ~[junit-jupiter-engine-5.7.0.jar:5.7.0]
+	at org.junit.jupiter.engine.execution.ExecutableInvoker.invoke(ExecutableInvoker.java:104) ~[junit-jupiter-engine-5.7.0.jar:5.7.0]
+	at org.junit.jupiter.engine.execution.ExecutableInvoker.invoke(ExecutableInvoker.java:98) ~[junit-jupiter-engine-5.7.0.jar:5.7.0]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$invokeTestMethod$6(TestMethodTestDescriptor.java:210) ~[junit-jupiter-engine-5.7.0.jar:5.7.0]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.7.0.jar:1.7.0]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.invokeTestMethod(TestMethodTestDescriptor.java:206) ~[junit-jupiter-engine-5.7.0.jar:5.7.0]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:131) ~[junit-jupiter-engine-5.7.0.jar:5.7.0]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:65) ~[junit-jupiter-engine-5.7.0.jar:5.7.0]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$5(NodeTestTask.java:139) ~[junit-platform-engine-1.7.0.jar:1.7.0]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.7.0.jar:1.7.0]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$7(NodeTestTask.java:129) ~[junit-platform-engine-1.7.0.jar:1.7.0]
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137) ~[junit-platform-engine-1.7.0.jar:1.7.0]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:127) ~[junit-platform-engine-1.7.0.jar:1.7.0]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.7.0.jar:1.7.0]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:126) ~[junit-platform-engine-1.7.0.jar:1.7.0]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:84) ~[junit-platform-engine-1.7.0.jar:1.7.0]
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1541) ~[na:na]
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:38) ~[junit-platform-engine-1.7.0.jar:1.7.0]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$5(NodeTestTask.java:143) ~[junit-platform-engine-1.7.0.jar:1.7.0]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.7.0.jar:1.7.0]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$7(NodeTestTask.java:129) ~[junit-platform-engine-1.7.0.jar:1.7.0]
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137) ~[junit-platform-engine-1.7.0.jar:1.7.0]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:127) ~[junit-platform-engine-1.7.0.jar:1.7.0]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.7.0.jar:1.7.0]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:126) ~[junit-platform-engine-1.7.0.jar:1.7.0]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:84) ~[junit-platform-engine-1.7.0.jar:1.7.0]
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1541) ~[na:na]
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:38) ~[junit-platform-engine-1.7.0.jar:1.7.0]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$5(NodeTestTask.java:143) ~[junit-platform-engine-1.7.0.jar:1.7.0]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.7.0.jar:1.7.0]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$7(NodeTestTask.java:129) ~[junit-platform-engine-1.7.0.jar:1.7.0]
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137) ~[junit-platform-engine-1.7.0.jar:1.7.0]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:127) ~[junit-platform-engine-1.7.0.jar:1.7.0]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.7.0.jar:1.7.0]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:126) ~[junit-platform-engine-1.7.0.jar:1.7.0]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:84) ~[junit-platform-engine-1.7.0.jar:1.7.0]
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:32) ~[junit-platform-engine-1.7.0.jar:1.7.0]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:57) ~[junit-platform-engine-1.7.0.jar:1.7.0]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:51) ~[junit-platform-engine-1.7.0.jar:1.7.0]
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:220) ~[junit-platform-launcher-1.3.1.jar:1.3.1]
+	at org.junit.platform.launcher.core.DefaultLauncher.lambda$execute$6(DefaultLauncher.java:188) ~[junit-platform-launcher-1.3.1.jar:1.3.1]
+	at org.junit.platform.launcher.core.DefaultLauncher.withInterceptedStreams(DefaultLauncher.java:202) ~[junit-platform-launcher-1.3.1.jar:1.3.1]
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:181) ~[junit-platform-launcher-1.3.1.jar:1.3.1]
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:128) ~[junit-platform-launcher-1.3.1.jar:1.3.1]
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invokeAllTests(JUnitPlatformProvider.java:150) ~[surefire-junit-platform-2.22.2.jar:2.22.2]
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invoke(JUnitPlatformProvider.java:124) ~[surefire-junit-platform-2.22.2.jar:2.22.2]
+	at org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:384) ~[surefire-booter-2.22.2.jar:2.22.2]
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:345) ~[surefire-booter-2.22.2.jar:2.22.2]
+	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:126) ~[surefire-booter-2.22.2.jar:2.22.2]
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:418) ~[surefire-booter-2.22.2.jar:2.22.2]
+
+2021-04-14 13:32:39.933 DEBUG 12149 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: test::2021-04-14
+2021-04-14 13:32:39.944 DEBUG 12149 --- [main] c.c.c.services.DailyRecordServiceImpl    : Fetching DailyRecords for GeoCode: 01
+2021-04-14 13:32:39.952 DEBUG 12149 --- [main] c.c.c.services.DailyRecordServiceImpl    : Fetching all DailyRecords...
+2021-04-14 13:32:39.953 ERROR 12149 --- [main] c.c.c.services.DailyRecordServiceImpl    : No DailyRecords found.
+2021-04-14 13:32:39.970 DEBUG 12149 --- [main] c.c.c.services.DailyRecordServiceImpl    : Fetching all DailyRecords...
+2021-04-14 13:32:40.009 DEBUG 12149 --- [main] c.c.c.services.DailyRecordServiceImpl    : Saving dailyRecord id: test::2021-04-14
+2021-04-14 13:32:40.061 DEBUG 12149 --- [main] c.c.c.services.DailyRecordServiceImpl    : Fetching DailyRecords for GeoCode: test
+2021-04-14 13:32:40.063 ERROR 12149 --- [main] c.c.c.services.DailyRecordServiceImpl    : No data found for geocode: test
+2021-04-14 13:32:40.183 DEBUG 12149 --- [main] c.c.c.services.HealthWardServiceImpl     : Fetching data for GeoCode: 01
+2021-04-14 13:32:40.213 DEBUG 12149 --- [main] c.c.c.services.HealthWardServiceImpl     : Fetching All Health Wards
+2021-04-14 13:32:40.232 DEBUG 12149 --- [main] c.c.c.services.HealthWardServiceImpl     : Fetching All Health Wards
+2021-04-14 13:32:40.235 DEBUG 12149 --- [main] c.c.c.services.HealthWardServiceImpl     : Fetching names and geocodes
+2021-04-14 13:32:40.236 DEBUG 12149 --- [main] c.c.c.services.HealthWardServiceImpl     : Fetching All Health Wards
+2021-04-14 13:32:40.724  INFO 12149 --- [main] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2021-04-14 13:32:40.726  INFO 12149 --- [main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2021-04-14 13:32:40.728  INFO 12149 --- [main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2021-04-14 13:32:40.891 DEBUG 12149 --- [main] c.c.c.controllers.HealthWardController   : Processing Get Request --> geocode: geoCode
+2021-04-14 13:32:41.029  INFO 12149 --- [main] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2021-04-14 13:32:41.031  INFO 12149 --- [main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2021-04-14 13:32:41.032  INFO 12149 --- [main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2021-04-14 13:32:41.042 DEBUG 12149 --- [main] c.c.c.controllers.HealthWardController   : Processing Get Request --> Names and GeoCodes
+2021-04-14 13:32:41.274  INFO 12149 --- [main] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2021-04-14 13:32:41.284  INFO 12149 --- [main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2021-04-14 13:32:41.285  INFO 12149 --- [main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2021-04-14 13:32:41.322 DEBUG 12149 --- [main] c.c.c.controllers.HealthWardController   : Processing Get Request --> geocode: null
+2021-04-14 13:32:41.478  INFO 12149 --- [main] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2021-04-14 13:32:41.478  INFO 12149 --- [main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2021-04-14 13:32:41.482  INFO 12149 --- [main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2021-04-14 13:32:41.489 DEBUG 12149 --- [main] c.c.c.controllers.HealthWardController   : Processing Get Request --> All HealthWards
+2021-04-14 13:32:41.545  INFO 12149 --- [main] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2021-04-14 13:32:41.545  INFO 12149 --- [main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2021-04-14 13:32:41.547  INFO 12149 --- [main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2021-04-14 13:32:41.552 DEBUG 12149 --- [main] c.c.c.controllers.HealthWardController   : Processing Get Request --> geocode: geoCode
+2021-04-14 13:32:41.638  INFO 12149 --- [main] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2021-04-14 13:32:41.638  INFO 12149 --- [main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2021-04-14 13:32:41.640  INFO 12149 --- [main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2021-04-14 13:32:41.643 DEBUG 12149 --- [main] c.c.c.controllers.HealthWardController   : Processing Get Request --> All HealthWards
+2021-04-14 13:32:41.713  INFO 12149 --- [main] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2021-04-14 13:32:41.714  INFO 12149 --- [main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2021-04-14 13:32:41.715  INFO 12149 --- [main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2021-04-14 13:32:41.719 DEBUG 12149 --- [main] c.c.c.controllers.HealthWardController   : Processing Get Request --> All HealthWards

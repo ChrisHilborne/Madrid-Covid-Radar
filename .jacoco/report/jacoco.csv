@@ -4,7 +4,7 @@ Covid Radar,com.chilborne.covidradar.data.steps,DailyRecordConverter,0,28,0,0,0,
 Covid Radar,com.chilborne.covidradar.data.steps,DailyRecordAggregator,0,138,0,8,0,28,0,8,0,4
 Covid Radar,com.chilborne.covidradar.data.steps,DailyRecordFixer,0,70,0,4,0,23,0,5,0,3
 Covid Radar,com.chilborne.covidradar.data.steps,DailyRecordSaver,0,40,0,2,0,11,0,3,0,2
-Covid Radar,com.chilborne.covidradar.data.steps,DailyRecordSorter,0,28,0,0,0,10,0,2,0,2
+Covid Radar,com.chilborne.covidradar.data.steps,DailyRecordSorter,0,32,0,0,0,12,0,2,0,2
 Covid Radar,com.chilborne.covidradar.data.steps,DailyRecordParser,0,56,0,0,0,14,0,2,0,2
 Covid Radar,com.chilborne.covidradar.data.steps,DailyRecordMapper,9,47,1,1,3,12,1,3,0,3
 Covid Radar,com.chilborne.covidradar.model,DailyRecordDTO,126,70,10,8,27,16,22,2,13,2
@@ -23,8 +23,8 @@ Covid Radar,com.chilborne.covidradar.controllers,AppController,17,10,0,0,5,4,2,1
 Covid Radar,com.chilborne.covidradar.data.pipeline,DailyRecordsToHealthWardPipeline,0,22,0,0,0,6,0,2,0,2
 Covid Radar,com.chilborne.covidradar.data.pipeline,DailyRecordProcessingPipeline,26,25,0,0,8,9,1,2,1,2
 Covid Radar,com.chilborne.covidradar.data.pipeline,Pipeline,0,25,0,0,0,5,0,4,0,4
-Covid Radar,com.chilborne.covidradar.services,DailyRecordServiceImpl,0,153,0,8,0,37,0,12,0,8
-Covid Radar,com.chilborne.covidradar.services,HealthWardServiceImpl,5,69,0,0,2,18,1,5,1,5
+Covid Radar,com.chilborne.covidradar.services,DailyRecordServiceImpl,11,149,1,7,2,37,1,11,0,8
+Covid Radar,com.chilborne.covidradar.services,HealthWardServiceImpl,7,61,0,0,3,16,2,4,2,4
 Covid Radar,com.chilborne.covidradar,CovidRadarApplication,5,3,0,0,2,1,1,1,1,1
 Covid Radar,com.chilborne.covidradar.events,UpdatedDataEvent,4,10,0,0,2,4,1,2,1,2
 Covid Radar,com.chilborne.covidradar.events,DataEventPublisher,10,33,1,1,2,10,1,2,0,2

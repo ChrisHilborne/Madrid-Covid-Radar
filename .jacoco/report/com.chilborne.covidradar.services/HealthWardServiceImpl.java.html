@@ -11,9 +11,10 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -21,44 +22,41 @@ public class HealthWardServiceImpl implements HealthWardService {
 
     private final DailyRecordService healthWardService;
     private final DailyRecordsToHealthWardPipeline healthWardPipeline;
-<span class="fc" id="L24">    private final Logger logger = LoggerFactory.getLogger(HealthWardServiceImpl.class);</span>
+<span class="fc" id="L25">    private final Logger logger = LoggerFactory.getLogger(HealthWardServiceImpl.class);</span>
 
     public HealthWardServiceImpl(DailyRecordService dailyRecordService,
-<span class="fc" id="L27">                                 DailyRecordsToHealthWardPipeline healthWardPipeline) {</span>
-<span class="fc" id="L28">        this.healthWardService = dailyRecordService;</span>
-<span class="fc" id="L29">        this.healthWardPipeline = healthWardPipeline;</span>
-<span class="fc" id="L30">    }</span>
+<span class="fc" id="L28">                                 DailyRecordsToHealthWardPipeline healthWardPipeline) {</span>
+<span class="fc" id="L29">        this.healthWardService = dailyRecordService;</span>
+<span class="fc" id="L30">        this.healthWardPipeline = healthWardPipeline;</span>
+<span class="fc" id="L31">    }</span>
 
     @Override
     @Cacheable(&quot;healthWard-all&quot;)
     public List&lt;HealthWard&gt; getAllHealthWards() throws DataNotFoundException {
-<span class="fc" id="L35">        logger.debug(&quot;Fetching All Health Wards&quot;);</span>
-<span class="fc" id="L36">        List&lt;DailyRecord&gt; data = healthWardService.getAll();</span>
-<span class="fc" id="L37">        return healthWardPipeline.startPipeline(data);</span>
+<span class="fc" id="L36">        logger.debug(&quot;Fetching All Health Wards&quot;);</span>
+<span class="fc" id="L37">        List&lt;DailyRecord&gt; data = healthWardService.getAll();</span>
+<span class="fc" id="L38">        return healthWardPipeline.startPipeline(data);</span>
     }
 
 
     @Override
     @Cacheable(&quot;healthWard-geoCode&quot;)
     public HealthWard getHealthWardByGeoCode(String geoCode) throws DataNotFoundException {
-<span class="fc" id="L44">        logger.debug(&quot;Fetching data for GeoCode: &quot; + geoCode);</span>
-<span class="fc" id="L45">        List&lt;DailyRecord&gt; dailyRecords = healthWardService.getDailyRecordsByGeoCode(geoCode);</span>
+<span class="fc" id="L45">        logger.debug(&quot;Fetching data for GeoCode: &quot; + geoCode);</span>
+<span class="fc" id="L46">        List&lt;DailyRecord&gt; dailyRecords = healthWardService.getDailyRecordsByGeoCode(geoCode);</span>
 
-<span class="fc" id="L47">        return healthWardPipeline.startPipeline(dailyRecords).get(0);</span>
+<span class="fc" id="L48">        return healthWardPipeline.startPipeline(dailyRecords).get(0);</span>
     }
 
     @Override
     @Cacheable(&quot;namesAndGeoCodes&quot;)
     public Map&lt;String, String&gt; getHealthWardGeoCodesAndNames() {
-<span class="fc" id="L53">        logger.debug(&quot;Fetching names and geocodes&quot;);</span>
-<span class="fc" id="L54">        Map&lt;String, String&gt; namesAndGeocodes = new HashMap&lt;&gt;();</span>
-
-<span class="fc" id="L56">        List&lt;HealthWard&gt; allData = getAllHealthWards();</span>
-<span class="fc" id="L57">        allData.forEach(healthWard -&gt; {</span>
-<span class="fc" id="L58">            namesAndGeocodes.put(healthWard.getName(), healthWard.getGeoCode());</span>
-<span class="fc" id="L59">        });</span>
-
-<span class="fc" id="L61">        return namesAndGeocodes;</span>
+<span class="fc" id="L54">        logger.debug(&quot;Fetching names and geocodes&quot;);</span>
+<span class="fc" id="L55">        Map&lt;String, String&gt; namesAndGeocodes = getAllHealthWards()</span>
+<span class="fc" id="L56">                .stream()</span>
+<span class="fc" id="L57">                .collect(Collectors.toMap(HealthWard::getName, HealthWard::getGeoCode,</span>
+<span class="nc" id="L58">                        (oldValue, newValue) -&gt; oldValue, LinkedHashMap::new));</span>
+<span class="fc" id="L59">        return namesAndGeocodes;</span>
     }
 
     @Override
@@ -67,8 +65,8 @@ public class HealthWardServiceImpl implements HealthWardService {
             @CacheEvict(value = &quot;healthWard-geoCode&quot;, allEntries = true)
     })
     public void clearCache() {
-<span class="nc" id="L70">        logger.debug(&quot;Clearing caches&quot;);</span>
-<span class="nc" id="L71">    }</span>
+<span class="nc" id="L68">        logger.debug(&quot;Clearing caches&quot;);</span>
+<span class="nc" id="L69">    }</span>
 
 
 

@@ -14,18 +14,23 @@ import java.util.stream.Collectors;
 
 <span class="fc" id="L15">    private final Logger logger = LoggerFactory.getLogger(DailyRecordSorter.class);</span>
 
+<span class="fc" id="L17">    private final Comparator&lt;DailyRecord&gt; COMPARATOR = Comparator</span>
+<span class="fc" id="L18">                                                                .comparing(DailyRecord::getHealthWard)</span>
+<span class="fc" id="L19">                                                                .thenComparing(DailyRecord::getDateReported);</span>
+
     @Override
     public List&lt;DailyRecord&gt; process(List&lt;DailyRecord&gt; data) {
-<span class="fc" id="L19">        logger.debug(&quot;Sorting DailyRecord data...&quot;);</span>
+<span class="fc" id="L23">        logger.debug(&quot;Sorting DailyRecord data...&quot;);</span>
 
-<span class="fc" id="L21">        List&lt;DailyRecord&gt; sortedData = data</span>
-<span class="fc" id="L22">                .stream()</span>
-<span class="fc" id="L23">                .sorted(Comparator.comparing(DailyRecord::getDateReported)</span>
-<span class="fc" id="L24">                        .thenComparing(DailyRecord::getHealthWard))</span>
-<span class="fc" id="L25">                .collect(Collectors.toList());</span>
 
-<span class="fc" id="L27">        logger.debug(&quot;Finished sorting DailyRecord data.&quot;);</span>
-<span class="fc" id="L28">        return sortedData;</span>
+
+<span class="fc" id="L27">        List&lt;DailyRecord&gt; sortedData = data</span>
+<span class="fc" id="L28">                .stream()</span>
+<span class="fc" id="L29">                .sorted(COMPARATOR)</span>
+<span class="fc" id="L30">                .collect(Collectors.toList());</span>
+
+<span class="fc" id="L32">        logger.debug(&quot;Finished sorting DailyRecord data.&quot;);</span>
+<span class="fc" id="L33">        return sortedData;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>
