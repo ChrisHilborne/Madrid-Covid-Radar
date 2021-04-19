@@ -1,4 +1,4 @@
-package com.chilborne.covidradar.services;
+package com.chilborne.covidradar.cache;
 
 import com.chilborne.covidradar.events.UpdatedDataEvent;
 import org.slf4j.Logger;

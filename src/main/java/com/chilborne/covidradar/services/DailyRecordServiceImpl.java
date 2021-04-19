@@ -1,5 +1,6 @@
 package com.chilborne.covidradar.services;
 
+import com.chilborne.covidradar.cache.CacheService;
 import com.chilborne.covidradar.exceptions.DataNotFoundException;
 import com.chilborne.covidradar.exceptions.DataSaveException;
 import com.chilborne.covidradar.model.DailyRecord;

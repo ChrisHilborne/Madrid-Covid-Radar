@@ -1,6 +1,6 @@
 package com.chilborne.covidradar.controllers;
 
-import com.chilborne.covidradar.services.CacheService;
+import com.chilborne.covidradar.cache.CacheService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
