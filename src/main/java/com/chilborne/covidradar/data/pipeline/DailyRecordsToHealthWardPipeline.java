@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * Processes the data before it is served through the Rest API
+ */
 @Service
 public class DailyRecordsToHealthWardPipeline {
 

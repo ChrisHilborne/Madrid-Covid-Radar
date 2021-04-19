@@ -17,7 +17,10 @@ import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
 
-
+/**
+ * Fetches data from external API - either at program start-up or at set times to check for new data.
+ * If data is new - it publishes the response body as a new data event which is picked up by the relevant pipeline.
+ */
 @Component
 @Primary
 public class HttpDailyRecordFetcher implements DataFetcher {

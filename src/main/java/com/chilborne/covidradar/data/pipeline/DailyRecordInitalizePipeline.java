@@ -1,7 +1,6 @@
 package com.chilborne.covidradar.data.pipeline;
 
 import com.chilborne.covidradar.events.InitialDataEvent;
-import com.chilborne.covidradar.events.UpdatedDataEvent;
 import com.chilborne.covidradar.exceptions.PipeLineProcessException;
 import com.chilborne.covidradar.model.DailyRecord;
 import org.slf4j.Logger;
@@ -12,18 +11,19 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * Processes the data when it is fetched from the external service.
+ * Initial data is daily. Because update data is weekly - we need to transform initial data to weekly and thus this data is passed to a different pipeline.
+ */
 @Service
-public class DailyRecordProcessingPipeline {
+public class DailyRecordInitalizePipeline {
 
     private final Pipeline<String, List<DailyRecord>> initializePipeline;
-    private final Pipeline<String, List<DailyRecord>> updatePipeline;
-    private final Logger logger = LoggerFactory.getLogger(DailyRecordProcessingPipeline.class);
+    private final Logger logger = LoggerFactory.getLogger(DailyRecordInitalizePipeline.class);
 
-    public DailyRecordProcessingPipeline(
-            @Qualifier("dailyRecord-initialize-pipeline") Pipeline initializePipeline,
-            @Qualifier("dailyRecord-update-pipeline") Pipeline updatePipeline) {
+    public DailyRecordInitalizePipeline(
+            @Qualifier("dailyRecord-initialize-pipeline") Pipeline initializePipeline) {
         this.initializePipeline = initializePipeline;
-        this.updatePipeline = updatePipeline;
     }
 
     @EventListener
@@ -36,15 +36,6 @@ public class DailyRecordProcessingPipeline {
         }
     }
 
-    @EventListener
-    public void startUpdatePipeline(UpdatedDataEvent updatedDataEvent) {
-        logger.info("Starting DailyRecordPipeline - UPDATE...");
-        try {
-            updatePipeline.execute(updatedDataEvent.getData());
-        } catch (PipeLineProcessException pipeLineProcessException) {
-            logger.error(pipeLineProcessException.getMessage(), pipeLineProcessException);
-        }
-    }
 
 
 

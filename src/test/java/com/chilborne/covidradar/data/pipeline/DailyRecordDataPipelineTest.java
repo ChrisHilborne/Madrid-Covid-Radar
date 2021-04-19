@@ -1,12 +1,15 @@
 package com.chilborne.covidradar.data.pipeline;
 
-import com.chilborne.covidradar.events.UpdatedDataEvent;
+import com.chilborne.covidradar.events.InitialDataEvent;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.*;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -18,7 +21,7 @@ class DailyRecordDataPipelineTest {
     Pipeline pipeline;
 
     @InjectMocks
-    DailyRecordProcessingPipeline dailyRecordDataPipeline;
+    DailyRecordInitalizePipeline dailyRecordDataPipeline;
 
     @Captor
     ArgumentCaptor<String> argumentCaptor;
@@ -27,10 +30,10 @@ class DailyRecordDataPipelineTest {
     void startPipeline() {
         //given
         String testInput = "test";
-        UpdatedDataEvent newDataEvent = new UpdatedDataEvent(this, testInput);
+        InitialDataEvent newDataEvent = new InitialDataEvent(this, testInput);
 
         //when
-        dailyRecordDataPipeline.startUpdatePipeline(newDataEvent);
+        dailyRecordDataPipeline.startInitializePipeline(newDataEvent);
 
         //verify
         verify(pipeline, times(1)).execute(any());
