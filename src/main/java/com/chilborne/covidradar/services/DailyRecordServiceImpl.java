@@ -10,8 +10,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class DailyRecordServiceImpl implements DailyRecordService {
@@ -90,5 +93,21 @@ public class DailyRecordServiceImpl implements DailyRecordService {
                 .orElseThrow(() -> new DataNotFoundException("No data found for geocode: " + geoCode + " and dateReported: " + date.toString()));
 
     }
+
+    @Override
+    public Map<String, String> getNamesAndGeoCodes() {
+        Map<String, String> namesAndGeocodes = new LinkedHashMap<>();
+
+        LocalDate firstDateOfResults = LocalDate.of(2020, 3, 3);
+        List<DailyRecord> firstDateData = dailyRecordRepository.findByDateReported(firstDateOfResults);
+
+         namesAndGeocodes = firstDateData.stream()
+                .collect(Collectors.toMap(DailyRecord::getHealthWard, DailyRecord::getGeoCode,
+                        (oldValue, newValue) -> oldValue, LinkedHashMap::new));
+
+        return namesAndGeocodes;
+
+    }
+
 
 }

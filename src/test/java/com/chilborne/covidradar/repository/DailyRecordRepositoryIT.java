@@ -91,5 +91,19 @@ class DailyRecordRepositoryIT {
         //verify
         assertTrue(optional.isEmpty());
     }
+
+    @Test
+    void findByDateReported() {
+        //when
+        List<DailyRecord> results = dailyRecordRepository.findByDateReported(now);
+
+        //verify
+        assertAll("Get By Date Reported",
+                () -> assertNotNull(results),
+                () -> assertEquals(results.size(), 1),
+                () -> assertEquals("one", results.get(0).getHealthWard()),
+                () -> assertEquals("1", results.get(0).getGeoCode())
+        );
+    }
 }
 

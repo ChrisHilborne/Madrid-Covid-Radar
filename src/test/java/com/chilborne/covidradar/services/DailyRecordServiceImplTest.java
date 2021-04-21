@@ -14,7 +14,9 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -24,19 +26,16 @@ import static org.mockito.Mockito.*;
 class DailyRecordServiceImplTest {
 
     @Mock
-    DailyRecordRepository repository;
+    DailyRecordRepository dailyRecordRepository;
 
     @Mock
     CacheService cacheService;
 
     @InjectMocks
-    DailyRecordServiceImpl service;
+    DailyRecordServiceImpl dailyRecordService;
 
     @Captor
     ArgumentCaptor<DailyRecord> dailyRecordArgumentCaptor;
-
-    @Captor
-    ArgumentCaptor<List<DailyRecord>> listArgumentCaptor;
 
     LocalDate testDate = LocalDate.now();
 
@@ -48,11 +47,11 @@ class DailyRecordServiceImplTest {
         test.setDateReported(testDate);
 
         //when
-        when(repository.save(test)).thenReturn(test);
-        DailyRecord saved = service.save(test);
+        when(dailyRecordRepository.save(test)).thenReturn(test);
+        DailyRecord saved = dailyRecordService.save(test);
 
         //verify
-        verify(repository).save(dailyRecordArgumentCaptor.capture());
+        verify(dailyRecordRepository).save(dailyRecordArgumentCaptor.capture());
         assertAll("save",
                 () -> assertNotEquals(null, dailyRecordArgumentCaptor.getValue().getId()),
                 () -> assertEquals(test, dailyRecordArgumentCaptor.getValue()),
@@ -70,10 +69,10 @@ class DailyRecordServiceImplTest {
         test.setDateReported(testDate);
 
         //when
-        when(repository.save(test)).thenReturn(new DailyRecord());
+        when(dailyRecordRepository.save(test)).thenReturn(new DailyRecord());
 
         //verify
-        Exception e = assertThrows(DataSaveException.class, () -> service.save(test));
+        Exception e = assertThrows(DataSaveException.class, () -> dailyRecordService.save(test));
         assertEquals("Failed to save DailyRecord id: " + test.getId(), e.getMessage());
     }
 
@@ -87,11 +86,11 @@ class DailyRecordServiceImplTest {
         List<DailyRecord> toSave = List.of(test);
 
         //when
-        when(repository.save(test)).thenReturn(test);
-        List<DailyRecord> returned = service.save(toSave);
+        when(dailyRecordRepository.save(test)).thenReturn(test);
+        List<DailyRecord> returned = dailyRecordService.save(toSave);
 
         //verify
-        verify(repository).save(dailyRecordArgumentCaptor.capture());
+        verify(dailyRecordRepository).save(dailyRecordArgumentCaptor.capture());
         assertEquals(test, dailyRecordArgumentCaptor.getValue());
         assertAll("saveList",
                 () -> assertEquals(1, returned.size()),
@@ -110,10 +109,10 @@ class DailyRecordServiceImplTest {
         List<DailyRecord> toSave = List.of(test);
 
         //when
-        when(repository.save(test)).thenReturn(new DailyRecord());
+        when(dailyRecordRepository.save(test)).thenReturn(new DailyRecord());
 
         //verify
-        Exception e = assertThrows(DataSaveException.class, () -> service.save(toSave));
+        Exception e = assertThrows(DataSaveException.class, () -> dailyRecordService.save(toSave));
         assertEquals("Error when saving dailyRecordList (hashcode " + toSave.hashCode() + ")", e.getMessage());
     }
 
@@ -126,8 +125,8 @@ class DailyRecordServiceImplTest {
         List<DailyRecord> toGet = List.of(test);
 
         //when
-        when(repository.findAll()).thenReturn(toGet);
-        List<DailyRecord> returned = service.getAll();
+        when(dailyRecordRepository.findAll()).thenReturn(toGet);
+        List<DailyRecord> returned = dailyRecordService.getAll();
 
         //verify
         assertAll("getAll",
@@ -140,10 +139,10 @@ class DailyRecordServiceImplTest {
     @Test
     void getAll_Exception() {
         //when
-        when(repository.findAll()).thenReturn(List.of());
+        when(dailyRecordRepository.findAll()).thenReturn(List.of());
 
         //verify
-        Exception e = assertThrows(DataNotFoundException.class, () -> service.getAll());
+        Exception e = assertThrows(DataNotFoundException.class, () -> dailyRecordService.getAll());
         assertEquals("No Daily Records found.", e.getMessage());
     }
 
@@ -159,8 +158,8 @@ class DailyRecordServiceImplTest {
         List<DailyRecord> toGet = List.of(test);
 
         //when
-        when(repository.findByGeoCode("01")).thenReturn(toGet);
-        List<DailyRecord> returned = service.getDailyRecordsByGeoCode("01");
+        when(dailyRecordRepository.findByGeoCode("01")).thenReturn(toGet);
+        List<DailyRecord> returned = dailyRecordService.getDailyRecordsByGeoCode("01");
 
         //verify
         assertAll("getByHealthWard",
@@ -174,10 +173,10 @@ class DailyRecordServiceImplTest {
     @Test
     void getDailyRecordByGeoCode_Exception() {
             //when
-            when(repository.findByGeoCode("test")).thenReturn(List.of());
+            when(dailyRecordRepository.findByGeoCode("test")).thenReturn(List.of());
 
             //verify
-            Exception e = assertThrows(DataNotFoundException.class, () -> service.getDailyRecordsByGeoCode("test"));
+            Exception e = assertThrows(DataNotFoundException.class, () -> dailyRecordService.getDailyRecordsByGeoCode("test"));
             assertEquals("No data found for geocode: test" , e.getMessage());
     }
 
@@ -190,8 +189,8 @@ class DailyRecordServiceImplTest {
         test.setDateReported(testDate);
 
         //when
-        when(repository.findByGeoCodeAndDateReported("01", testDate)).thenReturn(Optional.of(test));
-        DailyRecord returned = service.getDailyRecordByGeoCodeAndDate("01", testDate);
+        when(dailyRecordRepository.findByGeoCodeAndDateReported("01", testDate)).thenReturn(Optional.of(test));
+        DailyRecord returned = dailyRecordService.getDailyRecordByGeoCodeAndDate("01", testDate);
 
         //verify
         assertAll("getByGeoCodeAndDate",
@@ -204,10 +203,41 @@ class DailyRecordServiceImplTest {
     @Test
     void getDailyRecordByGeoCodeAndDate_Exception() {
         //when
-        when(repository.findByGeoCodeAndDateReported("01", testDate)).thenReturn(Optional.empty());
+        when(dailyRecordRepository.findByGeoCodeAndDateReported("01", testDate)).thenReturn(Optional.empty());
 
         //verify
-        Exception e = assertThrows(DataNotFoundException.class, () -> service.getDailyRecordByGeoCodeAndDate("01", testDate));
+        Exception e = assertThrows(DataNotFoundException.class, () -> dailyRecordService.getDailyRecordByGeoCodeAndDate("01", testDate));
         assertEquals("No data found for geocode: 01 and dateReported: " + testDate.toString(), e.getMessage());
+    }
+
+    @Test
+    void getNamesAndGeoCodes() {
+        //given
+        LocalDate firstDateOfResults = LocalDate.of(2020, 3 ,3);
+
+        DailyRecord one = new DailyRecord();
+        one.setGeoCode("01");
+        one.setHealthWard("b");
+        DailyRecord two = new DailyRecord();
+        two.setGeoCode("02");
+        two.setHealthWard("a");
+        DailyRecord three = new DailyRecord();
+        three.setGeoCode("03");
+        three.setHealthWard("c");
+        List<DailyRecord> dailyRecordList = List.of(one, two, three);
+
+        Map<String, String> expectedResults = new LinkedHashMap<>();
+        expectedResults.put("b", "01");
+        expectedResults.put("a", "02");
+        expectedResults.put("c", "03");
+
+        //when
+        when(dailyRecordRepository.findByDateReported(firstDateOfResults)).thenReturn(dailyRecordList);
+        Map<String, String> results = dailyRecordService.getNamesAndGeoCodes();
+
+        //verify
+        verify(dailyRecordRepository, times(1)).findByDateReported(firstDateOfResults);
+        verify(dailyRecordRepository, times(1)).findByDateReported(any());
+        assertEquals(expectedResults, results);
     }
 }

@@ -88,16 +88,16 @@ class HealthWardServiceImplTest {
     @Test
     void getHealthWardGeoCodesAndNames() {
         //given
-        HealthWard one = new HealthWard();
+        DailyRecord one = new DailyRecord();
         one.setGeoCode("01");
-        one.setName("b");
-        HealthWard two = new HealthWard();
+        one.setHealthWard("b");
+        DailyRecord two = new DailyRecord();
         two.setGeoCode("02");
-        two.setName("a");
-        HealthWard three = new HealthWard();
+        two.setHealthWard("a");
+        DailyRecord three = new DailyRecord();
         three.setGeoCode("03");
-        three.setName("c");
-        List<HealthWard> healthWardList = List.of(one, two, three);
+        three.setHealthWard("c");
+        List<DailyRecord> dailyRecordList = List.of(one, two, three);
 
         Map<String, String> expectedResults = new LinkedHashMap<>();
         expectedResults.put("b", "01");
@@ -105,10 +105,11 @@ class HealthWardServiceImplTest {
         expectedResults.put("c", "03");
 
         //when
-        when(healthWardService.getAllHealthWards()).thenReturn(healthWardList);
+        when(dailyRecordService.getNamesAndGeoCodes()).thenReturn(expectedResults);
         Map<String, String> results = healthWardService.getHealthWardGeoCodesAndNames();
 
         //verify
+        verify(dailyRecordService, times(1)).getNamesAndGeoCodes();
         assertEquals(expectedResults, results);
     }
 }

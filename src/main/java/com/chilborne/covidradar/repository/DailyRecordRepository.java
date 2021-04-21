@@ -15,6 +15,8 @@ public interface DailyRecordRepository extends MongoRepository<DailyRecord, Stri
 
     List<DailyRecord> findByGeoCode(String geoCode);
 
+    List<DailyRecord> findByDateReported(LocalDate dateReported);
+
     Optional<DailyRecord> findByGeoCodeAndDateReported(String geoCode, LocalDate dateReported);
 
     Optional<DailyRecord> findByHealthWardAndDateReported(String healthWard, LocalDate dateReported);
