@@ -3,8 +3,8 @@ package com.chilborne.covidradar.services;
 import com.chilborne.covidradar.cache.CacheService;
 import com.chilborne.covidradar.exceptions.DataNotFoundException;
 import com.chilborne.covidradar.exceptions.DataSaveException;
-import com.chilborne.covidradar.model.DailyRecord;
-import com.chilborne.covidradar.repository.DailyRecordRepository;
+import com.chilborne.covidradar.model.WeeklyRecord;
+import com.chilborne.covidradar.repository.WeeklyRecordRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -26,35 +26,38 @@ import static org.mockito.Mockito.*;
 class WeeklyRecordServiceImplTest {
 
     @Mock
-    DailyRecordRepository dailyRecordRepository;
+    WeeklyRecordRepository weeklyRecordRepository;
 
     @Mock
     CacheService cacheService;
 
     @InjectMocks
-    WeeklyRecordServiceImpl dailyRecordService;
+    WeeklyRecordServiceImpl weeklyRecordService;
 
     @Captor
-    ArgumentCaptor<DailyRecord> dailyRecordArgumentCaptor;
+    ArgumentCaptor<WeeklyRecord> weeklyRecordArgumentCaptor;
+
+    @Captor
+    ArgumentCaptor<List<WeeklyRecord>> listArgumentCaptor;
 
     LocalDate testDate = LocalDate.now();
 
     @Test
     void save() {
         //given
-        DailyRecord test = new DailyRecord();
+        WeeklyRecord test = new WeeklyRecord();
         test.setHealthWard("test");
         test.setDateReported(testDate);
 
         //when
-        when(dailyRecordRepository.save(test)).thenReturn(test);
-        DailyRecord saved = dailyRecordService.save(test);
+        when(weeklyRecordRepository.save(test)).thenReturn(test);
+        WeeklyRecord saved = weeklyRecordService.save(test);
 
         //verify
-        verify(dailyRecordRepository).save(dailyRecordArgumentCaptor.capture());
+        verify(weeklyRecordRepository).save(weeklyRecordArgumentCaptor.capture());
         assertAll("save",
-                () -> assertNotEquals(null, dailyRecordArgumentCaptor.getValue().getId()),
-                () -> assertEquals(test, dailyRecordArgumentCaptor.getValue()),
+                () -> assertNotEquals(null, weeklyRecordArgumentCaptor.getValue().getId()),
+                () -> assertEquals(test, weeklyRecordArgumentCaptor.getValue()),
                 () -> assertEquals("test", saved.getHealthWard()),
                 () -> assertEquals(testDate, saved.getDateReported())
         );
@@ -64,34 +67,34 @@ class WeeklyRecordServiceImplTest {
     @Test
     void save_Exception() {
         //given
-        DailyRecord test = new DailyRecord();
+        WeeklyRecord test = new WeeklyRecord();
         test.setHealthWard("test");
         test.setDateReported(testDate);
 
         //when
-        when(dailyRecordRepository.save(test)).thenReturn(new DailyRecord());
+        when(weeklyRecordRepository.save(test)).thenReturn(new WeeklyRecord());
 
         //verify
-        Exception e = assertThrows(DataSaveException.class, () -> dailyRecordService.save(test));
-        assertEquals("Failed to save DailyRecord id: " + test.getId(), e.getMessage());
+        Exception e = assertThrows(DataSaveException.class, () -> weeklyRecordService.save(test));
+        assertEquals("Failed to save WeeklyRecord id: " + test.getId(), e.getMessage());
     }
 
 
     @Test
     void saveList() {
         //given
-        DailyRecord test = new DailyRecord();
+        WeeklyRecord test = new WeeklyRecord();
         test.setHealthWard("test");
         test.setDateReported(testDate);
-        List<DailyRecord> toSave = List.of(test);
+        List<WeeklyRecord> toSave = List.of(test);
 
         //when
-        when(dailyRecordRepository.save(test)).thenReturn(test);
-        List<DailyRecord> returned = dailyRecordService.save(toSave);
+        when(weeklyRecordRepository.save(test)).thenReturn(test);
+        List<WeeklyRecord> returned = weeklyRecordService.save(toSave);
 
         //verify
-        verify(dailyRecordRepository).save(dailyRecordArgumentCaptor.capture());
-        assertEquals(test, dailyRecordArgumentCaptor.getValue());
+        verify(weeklyRecordRepository).save(weeklyRecordArgumentCaptor.capture());
+        assertEquals(test, weeklyRecordArgumentCaptor.getValue());
         assertAll("saveList",
                 () -> assertEquals(1, returned.size()),
                 () -> assertEquals("test", returned.get(0).getHealthWard()),
@@ -103,30 +106,30 @@ class WeeklyRecordServiceImplTest {
     @Test
     void saveList_Exception() {
         //given
-        DailyRecord test = new DailyRecord();
+        WeeklyRecord test = new WeeklyRecord();
         test.setHealthWard("test");
         test.setDateReported(testDate);
-        List<DailyRecord> toSave = List.of(test);
+        List<WeeklyRecord> toSave = List.of(test);
 
         //when
-        when(dailyRecordRepository.save(test)).thenReturn(new DailyRecord());
+        when(weeklyRecordRepository.save(test)).thenReturn(new WeeklyRecord());
 
         //verify
-        Exception e = assertThrows(DataSaveException.class, () -> dailyRecordService.save(toSave));
-        assertEquals("Error when saving dailyRecordList (hashcode " + toSave.hashCode() + ")", e.getMessage());
+        Exception e = assertThrows(DataSaveException.class, () -> weeklyRecordService.save(toSave));
+        assertEquals("Error when saving WeeklyRecordList (hashcode " + toSave.hashCode() + ")", e.getMessage());
     }
 
     @Test
     void getAll() {
         //given
-        DailyRecord test = new DailyRecord();
+        WeeklyRecord test = new WeeklyRecord();
         test.setHealthWard("test");
         test.setDateReported(testDate);
-        List<DailyRecord> toGet = List.of(test);
+        List<WeeklyRecord> toGet = List.of(test);
 
         //when
-        when(dailyRecordRepository.findAll()).thenReturn(toGet);
-        List<DailyRecord> returned = dailyRecordService.getAll();
+        when(weeklyRecordRepository.findAll()).thenReturn(toGet);
+        List<WeeklyRecord> returned = weeklyRecordService.getAll();
 
         //verify
         assertAll("getAll",
@@ -139,27 +142,27 @@ class WeeklyRecordServiceImplTest {
     @Test
     void getAll_Exception() {
         //when
-        when(dailyRecordRepository.findAll()).thenReturn(List.of());
+        when(weeklyRecordRepository.findAll()).thenReturn(List.of());
 
         //verify
-        Exception e = assertThrows(DataNotFoundException.class, () -> dailyRecordService.getAll());
-        assertEquals("No Daily Records found.", e.getMessage());
+        Exception e = assertThrows(DataNotFoundException.class, () -> weeklyRecordService.getAll());
+        assertEquals("No Weekly Records found.", e.getMessage());
     }
 
 
 
     @Test
-    void getDailyRecordsByGeoCode() {
+    void getWeeklyRecordsByGeoCode() {
         //given
-        DailyRecord test = new DailyRecord();
+        WeeklyRecord test = new WeeklyRecord();
         test.setGeoCode("01");
         test.setHealthWard("test");
         test.setDateReported(testDate);
-        List<DailyRecord> toGet = List.of(test);
+        List<WeeklyRecord> toGet = List.of(test);
 
         //when
-        when(dailyRecordRepository.findByGeoCode("01")).thenReturn(toGet);
-        List<DailyRecord> returned = dailyRecordService.getDailyRecordsByGeoCode("01");
+        when(weeklyRecordRepository.findByGeoCode("01")).thenReturn(toGet);
+        List<WeeklyRecord> returned = weeklyRecordService.getWeeklyRecordsByGeoCode("01");
 
         //verify
         assertAll("getByHealthWard",
@@ -171,26 +174,26 @@ class WeeklyRecordServiceImplTest {
     }
 
     @Test
-    void getDailyRecordByGeoCode_Exception() {
+    void getWeeklyRecordByGeoCode_Exception() {
             //when
-            when(dailyRecordRepository.findByGeoCode("test")).thenReturn(List.of());
+            when(weeklyRecordRepository.findByGeoCode("test")).thenReturn(List.of());
 
             //verify
-            Exception e = assertThrows(DataNotFoundException.class, () -> dailyRecordService.getDailyRecordsByGeoCode("test"));
+            Exception e = assertThrows(DataNotFoundException.class, () -> weeklyRecordService.getWeeklyRecordsByGeoCode("test"));
             assertEquals("No data found for geocode: test" , e.getMessage());
     }
 
     @Test
-    void getDailyRecordByGeoCodeAndDate() {
+    void getWeeklyRecordByGeoCodeAndDate() {
         //given
-        DailyRecord test = new DailyRecord();
+        WeeklyRecord test = new WeeklyRecord();
         test.setGeoCode("01");
         test.setHealthWard("test");
         test.setDateReported(testDate);
 
         //when
-        when(dailyRecordRepository.findByGeoCodeAndDateReported("01", testDate)).thenReturn(Optional.of(test));
-        DailyRecord returned = dailyRecordService.getDailyRecordByGeoCodeAndDate("01", testDate);
+        when(weeklyRecordRepository.findByGeoCodeAndDateReported("01", testDate)).thenReturn(Optional.of(test));
+        WeeklyRecord returned = weeklyRecordService.getWeeklyRecordByGeoCodeAndDate("01", testDate);
 
         //verify
         assertAll("getByGeoCodeAndDate",
@@ -201,12 +204,12 @@ class WeeklyRecordServiceImplTest {
     }
 
     @Test
-    void getDailyRecordByGeoCodeAndDate_Exception() {
+    void getWeeklyRecordByGeoCodeAndDate_Exception() {
         //when
-        when(dailyRecordRepository.findByGeoCodeAndDateReported("01", testDate)).thenReturn(Optional.empty());
+        when(weeklyRecordRepository.findByGeoCodeAndDateReported("01", testDate)).thenReturn(Optional.empty());
 
         //verify
-        Exception e = assertThrows(DataNotFoundException.class, () -> dailyRecordService.getDailyRecordByGeoCodeAndDate("01", testDate));
+        Exception e = assertThrows(DataNotFoundException.class, () -> weeklyRecordService.getWeeklyRecordByGeoCodeAndDate("01", testDate));
         assertEquals("No data found for geocode: 01 and dateReported: " + testDate.toString(), e.getMessage());
     }
 
@@ -215,16 +218,16 @@ class WeeklyRecordServiceImplTest {
         //given
         LocalDate firstDateOfResults = LocalDate.of(2020, 3 ,3);
 
-        DailyRecord one = new DailyRecord();
+        WeeklyRecord one = new WeeklyRecord();
         one.setGeoCode("01");
         one.setHealthWard("b");
-        DailyRecord two = new DailyRecord();
+        WeeklyRecord two = new WeeklyRecord();
         two.setGeoCode("02");
         two.setHealthWard("a");
-        DailyRecord three = new DailyRecord();
+        WeeklyRecord three = new WeeklyRecord();
         three.setGeoCode("03");
         three.setHealthWard("c");
-        List<DailyRecord> dailyRecordList = List.of(one, two, three);
+        List<WeeklyRecord> weeklyRecordList = List.of(one, two, three);
 
         Map<String, String> expectedResults = new LinkedHashMap<>();
         expectedResults.put("b", "01");
@@ -232,12 +235,12 @@ class WeeklyRecordServiceImplTest {
         expectedResults.put("c", "03");
 
         //when
-        when(dailyRecordRepository.findByDateReported(firstDateOfResults)).thenReturn(dailyRecordList);
-        Map<String, String> results = dailyRecordService.getNamesAndGeoCodes();
+        when(weeklyRecordRepository.findByDateReported(firstDateOfResults)).thenReturn(weeklyRecordList);
+        Map<String, String> results = weeklyRecordService.getNamesAndGeoCodes();
 
         //verify
-        verify(dailyRecordRepository, times(1)).findByDateReported(firstDateOfResults);
-        verify(dailyRecordRepository, times(1)).findByDateReported(any());
+        verify(weeklyRecordRepository, times(1)).findByDateReported(firstDateOfResults);
+        verify(weeklyRecordRepository, times(1)).findByDateReported(any());
         assertEquals(expectedResults, results);
     }
 }

@@ -1,6 +1,6 @@
 package com.chilborne.covidradar.services;
 
-import com.chilborne.covidradar.model.DailyRecord;
+import com.chilborne.covidradar.model.WeeklyRecord;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -8,15 +8,15 @@ import java.util.Map;
 
 public interface WeeklyRecordService {
 
-    DailyRecord save(DailyRecord dailyRecord);
+    WeeklyRecord save(WeeklyRecord WeeklyRecord);
 
-    List<DailyRecord> getAll();
+    List<WeeklyRecord> getAll();
 
-    List<DailyRecord> save(List<DailyRecord> dailyRecordList);
+    List<WeeklyRecord> save(List<WeeklyRecord> WeeklyRecordList);
 
-    List<DailyRecord> getDailyRecordsByGeoCode(String geoCode);
+    List<WeeklyRecord> getWeeklyRecordsByGeoCode(String geoCode);
 
-    DailyRecord getDailyRecordByGeoCodeAndDate(String geoCode, LocalDate date);
+    WeeklyRecord getWeeklyRecordByGeoCodeAndDate(String geoCode, LocalDate date);
 
     Map<String, String> getNamesAndGeoCodes();
 }

@@ -1,7 +1,7 @@
 package com.chilborne.covidradar.services;
 
-import com.chilborne.covidradar.data.pipeline.DailyRecordsToHealthWardPipeline;
-import com.chilborne.covidradar.model.DailyRecord;
+import com.chilborne.covidradar.data.pipeline.WeeklyRecordsToHealthWardPipeline;
+import com.chilborne.covidradar.model.WeeklyRecord;
 import com.chilborne.covidradar.model.HealthWard;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -24,7 +24,7 @@ class HealthWardServiceImplTest {
     WeeklyRecordService weeklyRecordService;
 
     @Mock
-    DailyRecordsToHealthWardPipeline pipeline;
+    WeeklyRecordsToHealthWardPipeline pipeline;
 
     @InjectMocks
     HealthWardServiceImpl healthWardService;
@@ -34,29 +34,29 @@ class HealthWardServiceImplTest {
     @Test
     void getAllHealthWards() {
         //given
-        DailyRecord dailyRecordOne = new DailyRecord();
-        dailyRecordOne.setHealthWard("a");
-        dailyRecordOne.setDateReported(testDate);
-        dailyRecordOne.setGeoCode("01");
-        DailyRecord dailyRecordTwo = new DailyRecord();
-        dailyRecordTwo.setHealthWard("b");
-        dailyRecordTwo.setDateReported(testDate);
-        dailyRecordTwo.setGeoCode("02");
-        List<DailyRecord> dailyRecordList = List.of(dailyRecordOne, dailyRecordTwo);
+        WeeklyRecord weeklyRecordOne = new WeeklyRecord();
+        weeklyRecordOne.setHealthWard("a");
+        weeklyRecordOne.setDateReported(testDate);
+        weeklyRecordOne.setGeoCode("01");
+        WeeklyRecord weeklyRecordTwo = new WeeklyRecord();
+        weeklyRecordTwo.setHealthWard("b");
+        weeklyRecordTwo.setDateReported(testDate);
+        weeklyRecordTwo.setGeoCode("02");
+        List<WeeklyRecord> weeklyRecordList = List.of(weeklyRecordOne, weeklyRecordTwo);
 
-        HealthWard healthWardOne = new HealthWard(List.of(dailyRecordOne));
-        HealthWard healthWardTwo = new HealthWard(List.of(dailyRecordTwo));
+        HealthWard healthWardOne = new HealthWard(List.of(weeklyRecordOne));
+        HealthWard healthWardTwo = new HealthWard(List.of(weeklyRecordTwo));
         List<HealthWard> healthWardList = List.of(healthWardOne, healthWardTwo);
 
         //when
-        when(weeklyRecordService.getAll()).thenReturn(dailyRecordList);
-        when(pipeline.startPipeline(List.of(dailyRecordOne, dailyRecordTwo))).thenReturn(healthWardList);
+        when(weeklyRecordService.getAll()).thenReturn(weeklyRecordList);
+        when(pipeline.startPipeline(List.of(weeklyRecordOne, weeklyRecordTwo))).thenReturn(healthWardList);
         List<HealthWard> returned = healthWardService.getAllHealthWards();
 
         //verify
         verify(weeklyRecordService, times(1)).getAll();
         verify(pipeline, times(1)).startPipeline(anyList());
-        verify(pipeline, times(1)).startPipeline(dailyRecordList);
+        verify(pipeline, times(1)).startPipeline(weeklyRecordList);
         assertEquals(healthWardList, returned);
 
     }
@@ -64,40 +64,40 @@ class HealthWardServiceImplTest {
     @Test
     void getHealthWardByGeoCode() {
         //given
-        DailyRecord dailyRecordOne = new DailyRecord();
-        dailyRecordOne.setHealthWard("one");
-        dailyRecordOne.setDateReported(testDate);
-        dailyRecordOne.setGeoCode("01");
-        List<DailyRecord> dailyRecordList = List.of(dailyRecordOne);
+        WeeklyRecord weeklyRecordOne = new WeeklyRecord();
+        weeklyRecordOne.setHealthWard("one");
+        weeklyRecordOne.setDateReported(testDate);
+        weeklyRecordOne.setGeoCode("01");
+        List<WeeklyRecord> weeklyRecordList = List.of(weeklyRecordOne);
 
-        HealthWard healthWard = new HealthWard(dailyRecordList);
+        HealthWard healthWard = new HealthWard(weeklyRecordList);
 
         //when
-        when(weeklyRecordService.getDailyRecordsByGeoCode("01")).thenReturn(dailyRecordList);
-        when(pipeline.startPipeline(dailyRecordList)).thenReturn(List.of(healthWard));
+        when(weeklyRecordService.getWeeklyRecordsByGeoCode("01")).thenReturn(weeklyRecordList);
+        when(pipeline.startPipeline(weeklyRecordList)).thenReturn(List.of(healthWard));
         HealthWard result = healthWardService.getHealthWardByGeoCode("01");
 
         //verify
-        verify(weeklyRecordService, times(1)).getDailyRecordsByGeoCode(anyString());
-        verify(weeklyRecordService, times(1)).getDailyRecordsByGeoCode("01");
+        verify(weeklyRecordService, times(1)).getWeeklyRecordsByGeoCode(anyString());
+        verify(weeklyRecordService, times(1)).getWeeklyRecordsByGeoCode("01");
         verify(pipeline, times(1)).startPipeline(anyList());
-        verify(pipeline, times(1)).startPipeline(dailyRecordList);
+        verify(pipeline, times(1)).startPipeline(weeklyRecordList);
         assertEquals(healthWard, result);
     }
 
     @Test
     void getHealthWardGeoCodesAndNames() {
         //given
-        DailyRecord one = new DailyRecord();
+        WeeklyRecord one = new WeeklyRecord();
         one.setGeoCode("01");
         one.setHealthWard("b");
-        DailyRecord two = new DailyRecord();
+        WeeklyRecord two = new WeeklyRecord();
         two.setGeoCode("02");
         two.setHealthWard("a");
-        DailyRecord three = new DailyRecord();
+        WeeklyRecord three = new WeeklyRecord();
         three.setGeoCode("03");
         three.setHealthWard("c");
-        List<DailyRecord> dailyRecordList = List.of(one, two, three);
+        List<WeeklyRecord> WeeklyRecordList = List.of(one, two, three);
 
         Map<String, String> expectedResults = new LinkedHashMap<>();
         expectedResults.put("b", "01");
