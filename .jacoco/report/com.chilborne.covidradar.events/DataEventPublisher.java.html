@@ -18,7 +18,7 @@ public class DataEventPublisher {
 <span class="fc" id="L18">    }</span>
 
     public void publishDataEvent(final String data, DataFetchAction eventType) {
-<span class="fc" id="L21">        logger.debug(&quot;Publishing&quot; + eventType + &quot; DataEvent with data &quot; + data.hashCode() + &quot; (hashcode)&quot;);</span>
+<span class="fc" id="L21">        logger.debug(&quot;Publishing &quot; + eventType + &quot; DataEvent with data &quot; + data.hashCode() + &quot; (hashcode)&quot;);</span>
 
 <span class="pc bpc" id="L23" title="1 of 2 branches missed.">        if (eventType.equals(DataFetchAction.UPDATE)) {</span>
 <span class="fc" id="L24">            UpdatedDataEvent updatedDataEvent = new UpdatedDataEvent(this, data);</span>

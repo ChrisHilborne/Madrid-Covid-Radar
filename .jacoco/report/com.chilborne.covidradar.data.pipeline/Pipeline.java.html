@@ -3,19 +3,24 @@
 import com.chilborne.covidradar.data.steps.Step;
 import com.chilborne.covidradar.exceptions.PipeLineProcessException;
 
-
+/**
+ * Pipeline is a modular class which takes input data and passes it through a number of transformative steps.
+ * This design pattern was chosen because the data we use is fetched from an external service and is not uniform.
+ * Likewise we serve the data through our API in a different form and need to perform multiple checks and transformations
+ * The pipeline pattern allows us to decouple each step in the process and easily add new or remove steps as is needed.
+ */
 public class Pipeline&lt;I, O&gt; {
     private final Step&lt;I, O&gt; current;
-<span class="fc" id="L9">    public Pipeline(Step&lt;I, O&gt; current) {</span>
-<span class="fc" id="L10">        this.current = current;</span>
-<span class="fc" id="L11">    }</span>
+<span class="fc" id="L14">    public Pipeline(Step&lt;I, O&gt; current) {</span>
+<span class="fc" id="L15">        this.current = current;</span>
+<span class="fc" id="L16">    }</span>
 
     public &lt;NewO&gt; Pipeline&lt;I, NewO&gt; pipe(Step&lt;O, NewO&gt; next) {
-<span class="fc" id="L14">        return new Pipeline&lt;&gt;(input -&gt; next.process(current.process(input)));</span>
+<span class="fc" id="L19">        return new Pipeline&lt;&gt;(input -&gt; next.process(current.process(input)));</span>
     }
 
     public O execute(I input) throws PipeLineProcessException {
-<span class="fc" id="L18">        return current.process(input);</span>
+<span class="fc" id="L23">        return current.process(input);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

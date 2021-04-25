@@ -21,18 +21,18 @@ public class HealthWard {
     private LocalDate lastUpdated;
     private int recordCount;
     @NotEmpty
-    private List&lt;DailyRecordDTO&gt; weeklyRecords;
+    private List&lt;WeeklyRecordDTO&gt; WeeklyRecords;
 
-<span class="fc" id="L26">    public HealthWard(List&lt;DailyRecord&gt; weeklyRecords) {</span>
-<span class="fc" id="L27">        DailyRecord lastRecord = weeklyRecords.get(weeklyRecords.size() - 1);</span>
+<span class="fc" id="L26">    public HealthWard(List&lt;WeeklyRecord&gt; weeklyRecords) {</span>
+<span class="fc" id="L27">        WeeklyRecord lastRecord = weeklyRecords.get(weeklyRecords.size() - 1);</span>
 <span class="fc" id="L28">        this.geoCode = lastRecord.getGeoCode();</span>
 <span class="fc" id="L29">        this.name = lastRecord.getHealthWard();</span>
 <span class="fc" id="L30">        this.totalCases = lastRecord.getTotalCases();</span>
 <span class="fc" id="L31">        this.lastUpdated = lastRecord.getDateReported();</span>
 <span class="fc" id="L32">        this.recordCount = weeklyRecords.size();</span>
-<span class="fc" id="L33">        this.weeklyRecords = weeklyRecords</span>
+<span class="fc" id="L33">        this.WeeklyRecords = weeklyRecords</span>
 <span class="fc" id="L34">                .stream()</span>
-<span class="fc" id="L35">                .map(DailyRecordDTO::new)</span>
+<span class="fc" id="L35">                .map(WeeklyRecordDTO::new)</span>
 <span class="fc" id="L36">                .collect(Collectors.toList());</span>
 <span class="fc" id="L37">    }</span>
 
@@ -49,9 +49,9 @@ public class HealthWard {
 <span class="fc" id="L49">        this.geoCode = geoCode;</span>
 <span class="fc" id="L50">    }</span>
 
-<span class="fc" id="L52">    public List&lt;DailyRecordDTO&gt; getDailyRecords() { return weeklyRecords; }</span>
+<span class="fc" id="L52">    public List&lt;WeeklyRecordDTO&gt; getWeeklyRecords() { return WeeklyRecords; }</span>
 
-<span class="nc" id="L54">    public void setDailyRecords(List&lt;DailyRecordDTO&gt; weeklyRecords) { this.weeklyRecords = weeklyRecords; }</span>
+<span class="nc" id="L54">    public void setWeeklyRecords(List&lt;WeeklyRecordDTO&gt; weeklyRecords) { this.WeeklyRecords = weeklyRecords; }</span>
 
     public void setName(String name) {
 <span class="fc" id="L57">        this.name = name;</span>
@@ -92,7 +92,7 @@ public class HealthWard {
 <span class="pc bpc" id="L92" title="1 of 2 branches missed.">        if (!Objects.equals(geoCode, that.geoCode)) return false;</span>
 <span class="pc bpc" id="L93" title="1 of 2 branches missed.">        if (!Objects.equals(name, that.name)) return false;</span>
 <span class="pc bpc" id="L94" title="1 of 2 branches missed.">        if (!Objects.equals(lastUpdated, that.lastUpdated)) return false;</span>
-<span class="fc" id="L95">        return Objects.equals(weeklyRecords, that.weeklyRecords);</span>
+<span class="fc" id="L95">        return Objects.equals(WeeklyRecords, that.WeeklyRecords);</span>
     }
 
     @Override
@@ -101,7 +101,7 @@ public class HealthWard {
 <span class="nc bnc" id="L101" title="All 2 branches missed.">        result = 31 * result + (name != null ? name.hashCode() : 0);</span>
 <span class="nc" id="L102">        result = 31 * result + totalCases;</span>
 <span class="nc bnc" id="L103" title="All 2 branches missed.">        result = 31 * result + (lastUpdated != null ? lastUpdated.hashCode() : 0);</span>
-<span class="nc bnc" id="L104" title="All 2 branches missed.">        result = 31 * result + (weeklyRecords != null ? weeklyRecords.hashCode() : 0);</span>
+<span class="nc bnc" id="L104" title="All 2 branches missed.">        result = 31 * result + (WeeklyRecords != null ? WeeklyRecords.hashCode() : 0);</span>
 <span class="nc" id="L105">        return result;</span>
     }
 
@@ -112,7 +112,7 @@ public class HealthWard {
                 &quot;, name='&quot; + name + '\'' +
                 &quot;, totalCases=&quot; + totalCases +
                 &quot;, lastUpdated=&quot; + lastUpdated +
-                &quot;, weeklyRecords=&quot; + weeklyRecords +
+                &quot;, weeklyRecords=&quot; + WeeklyRecords +
                 '}';
     }
 }

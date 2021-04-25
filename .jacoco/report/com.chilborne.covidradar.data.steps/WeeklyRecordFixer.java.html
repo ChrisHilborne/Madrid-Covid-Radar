@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>WeeklyRecordFixer.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Covid Radar</a> &gt; <a href="index.source.html" class="el_package">com.chilborne.covidradar.data.steps</a> &gt; <span class="el_source">WeeklyRecordFixer.java</span></div><h1>WeeklyRecordFixer.java</h1><pre class="source lang-java linenums">package com.chilborne.covidradar.data.steps;
+
+import com.chilborne.covidradar.exceptions.PipeLineProcessException;
+import com.chilborne.covidradar.model.WeeklyRecord;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
+
+@Component
+<span class="fc" id="L13">public class WeeklyRecordFixer implements Step&lt;List&lt;WeeklyRecord&gt;, List&lt;WeeklyRecord&gt;&gt; {</span>
+
+<span class="fc" id="L15">    private final Logger logger = LoggerFactory.getLogger(WeeklyRecordFixer.class);</span>
+
+    @Override
+    public List&lt;WeeklyRecord&gt; process(List&lt;WeeklyRecord&gt; data) {
+<span class="fc" id="L19">        logger.debug(&quot;Trimming WeeklyRecord data...&quot;);</span>
+<span class="fc" id="L20">        logger.debug(&quot;Formatting GeoCodes...&quot;);</span>
+<span class="fc" id="L21">        logger.debug(&quot;Rounding infection rates to 2 decimal places...&quot;);</span>
+
+<span class="fc" id="L23">        data.forEach(weeklyRecordRecord -&gt;</span>
+                {
+
+                    //write lowercase name as geocode
+<span class="fc" id="L27">                    String healthWard = weeklyRecordRecord.getHealthWard()</span>
+<span class="fc" id="L28">                            .toLowerCase()</span>
+<span class="fc" id="L29">                            .replace(' ', '_');</span>
+<span class="fc" id="L30">                    weeklyRecordRecord.setGeoCode(StringUtils.stripAccents(healthWard));</span>
+
+                    //round
+<span class="fc" id="L33">                    int infectionRate2Weeks = (int) weeklyRecordRecord.getInfectionRateLastTwoWeeks();</span>
+<span class="fc" id="L34">                    weeklyRecordRecord.setInfectionRateLastTwoWeeks(infectionRate2Weeks);</span>
+<span class="fc bfc" id="L35" title="All 2 branches covered.">                    if (weeklyRecordRecord.getInfectionRateLastTwoWeeks() &lt; 0) {</span>
+<span class="fc" id="L36">                        throw new PipeLineProcessException(&quot;Two Week Infection Rate rounded to less than zero&quot;);</span>
+                    }
+
+                    //round
+<span class="fc" id="L40">                    int infectionRateTotal = (int) weeklyRecordRecord.getInfectionRateTotal();</span>
+<span class="fc" id="L41">                    weeklyRecordRecord.setInfectionRateTotal(infectionRateTotal);</span>
+<span class="fc bfc" id="L42" title="All 2 branches covered.">                    if (weeklyRecordRecord.getInfectionRateTotal() &lt; 0) {</span>
+<span class="fc" id="L43">                        throw new PipeLineProcessException(&quot;Total Infection Rate rounded to less than zero&quot;);</span>
+                    }
+
+<span class="fc" id="L46">                });</span>
+<span class="fc" id="L47">        logger.debug(&quot;Finished trimming WeeklyRecord data.&quot;);</span>
+<span class="fc" id="L48">        return data;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

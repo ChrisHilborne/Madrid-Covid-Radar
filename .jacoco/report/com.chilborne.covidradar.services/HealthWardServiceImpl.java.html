@@ -6,71 +6,52 @@ import com.chilborne.covidradar.model.WeeklyRecord;
 import com.chilborne.covidradar.model.HealthWard;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 
 @Service
 public class HealthWardServiceImpl implements HealthWardService {
 
-    private final DailyRecordService healthWardService;
-    private final DailyRecordsToHealthWardPipeline healthWardPipeline;
-<span class="fc" id="L25">    private final Logger logger = LoggerFactory.getLogger(HealthWardServiceImpl.class);</span>
+    private final WeeklyRecordService weeklyRecordService;
+    private final WeeklyRecordsToHealthWardPipeline healthWardPipeline;
+<span class="fc" id="L21">    private final Logger logger = LoggerFactory.getLogger(HealthWardServiceImpl.class);</span>
 
-    public HealthWardServiceImpl(DailyRecordService weeklyRecordService,
-<span class="fc" id="L28">                                 DailyRecordsToHealthWardPipeline healthWardPipeline) {</span>
-<span class="fc" id="L29">        this.healthWardService = weeklyRecordService;</span>
-<span class="fc" id="L30">        this.healthWardPipeline = healthWardPipeline;</span>
-<span class="fc" id="L31">    }</span>
+    public HealthWardServiceImpl(WeeklyRecordService weeklyRecordService,
+<span class="fc" id="L24">                                 WeeklyRecordsToHealthWardPipeline healthWardPipeline) {</span>
+<span class="fc" id="L25">        this.weeklyRecordService = weeklyRecordService;</span>
+<span class="fc" id="L26">        this.healthWardPipeline = healthWardPipeline;</span>
+<span class="fc" id="L27">    }</span>
 
     @Override
     @Cacheable(&quot;healthWard-all&quot;)
     public List&lt;HealthWard&gt; getAllHealthWards() throws DataNotFoundException {
-<span class="fc" id="L36">        logger.debug(&quot;Fetching All Health Wards&quot;);</span>
-<span class="fc" id="L37">        List&lt;DailyRecord&gt; data = healthWardService.getAll();</span>
-<span class="fc" id="L38">        return healthWardPipeline.startPipeline(data);</span>
+<span class="fc" id="L32">        logger.debug(&quot;Fetching All Health Wards&quot;);</span>
+<span class="fc" id="L33">        List&lt;WeeklyRecord&gt; data = weeklyRecordService.getAll();</span>
+
+<span class="fc" id="L35">        return healthWardPipeline.startPipeline(data);</span>
     }
 
 
     @Override
     @Cacheable(&quot;healthWard-geoCode&quot;)
     public HealthWard getHealthWardByGeoCode(String geoCode) throws DataNotFoundException {
-<span class="fc" id="L45">        logger.debug(&quot;Fetching data for GeoCode: &quot; + geoCode);</span>
-<span class="fc" id="L46">        List&lt;DailyRecord&gt; weeklyRecords = healthWardService.getDailyRecordsByGeoCode(geoCode);</span>
+<span class="fc" id="L42">        logger.debug(&quot;Fetching data for GeoCode: &quot; + geoCode);</span>
+<span class="fc" id="L43">        List&lt;WeeklyRecord&gt; weeklyRecords = weeklyRecordService.getWeeklyRecordsByGeoCode(geoCode);</span>
 
-<span class="fc" id="L48">        return healthWardPipeline.startPipeline(weeklyRecords).get(0);</span>
+
+<span class="fc" id="L46">        return healthWardPipeline.startPipeline(weeklyRecords).get(0);</span>
     }
 
     @Override
     @Cacheable(&quot;namesAndGeoCodes&quot;)
     public Map&lt;String, String&gt; getHealthWardGeoCodesAndNames() {
-<span class="fc" id="L54">        logger.debug(&quot;Fetching names and geocodes&quot;);</span>
-<span class="fc" id="L55">        Map&lt;String, String&gt; namesAndGeocodes = getAllHealthWards()</span>
-<span class="fc" id="L56">                .stream()</span>
-<span class="fc" id="L57">                .collect(Collectors.toMap(HealthWard::getName, HealthWard::getGeoCode,</span>
-<span class="nc" id="L58">                        (oldValue, newValue) -&gt; oldValue, LinkedHashMap::new));</span>
-<span class="fc" id="L59">        return namesAndGeocodes;</span>
+<span class="fc" id="L52">        logger.debug(&quot;Fetching names and geocodes&quot;);</span>
+<span class="fc" id="L53">        return weeklyRecordService.getNamesAndGeoCodes();</span>
     }
-
-    @Override
-    @Caching(evict = {
-            @CacheEvict(value = &quot;healthWard-all&quot;, allEntries = true),
-            @CacheEvict(value = &quot;healthWard-geoCode&quot;, allEntries = true)
-    })
-    public void clearCache() {
-<span class="nc" id="L68">        logger.debug(&quot;Clearing caches&quot;);</span>
-<span class="nc" id="L69">    }</span>
-
-
-
-
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

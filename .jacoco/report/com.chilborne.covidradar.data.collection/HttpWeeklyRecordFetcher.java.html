@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>HttpWeeklyRecordFetcher.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Covid Radar</a> &gt; <a href="index.source.html" class="el_package">com.chilborne.covidradar.data.collection</a> &gt; <span class="el_source">HttpWeeklyRecordFetcher.java</span></div><h1>HttpWeeklyRecordFetcher.java</h1><pre class="source lang-java linenums">package com.chilborne.covidradar.data.collection;
+
+import com.chilborne.covidradar.events.DataEventPublisher;
+import com.chilborne.covidradar.exceptions.DataFetchException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Primary;
+import org.springframework.http.HttpHeaders;
+import org.springframework.stereotype.Component;
+
+import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.time.OffsetDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Map;
+
+/**
+ * Fetches data from external API - either at program start-up or at set times to check for new data.
+ * If data is new - it publishes the response body as a new data event which is picked up by the relevant pipeline.
+ */
+@Component
+@Primary
+public class HttpWeeklyRecordFetcher implements DataFetcher {
+
+
+    private final HttpClient httpClient;
+    private final Map&lt;DataFetchAction, URI&gt; uriMap;
+    private final DataEventPublisher dataEventPublisher;
+<span class="fc" id="L32">    private final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.RFC_1123_DATE_TIME;</span>
+
+    private OffsetDateTime lastModified;
+    private int dataHash;
+
+<span class="fc" id="L37">    private final Logger logger = LoggerFactory.getLogger(DataFetcher.class);</span>
+
+    public HttpWeeklyRecordFetcher(HttpClient httpClient,
+                                   Map&lt;DataFetchAction, URI&gt; uriMap,
+<span class="fc" id="L41">                                   DataEventPublisher newDataEventPublisher) {</span>
+<span class="fc" id="L42">        this.httpClient = httpClient;</span>
+<span class="fc" id="L43">        this.uriMap = uriMap;</span>
+<span class="fc" id="L44">        this.dataEventPublisher = newDataEventPublisher;</span>
+<span class="fc" id="L45">    }</span>
+
+    @Override
+    public void fetchData(DataFetchAction actionType) throws DataFetchException {
+<span class="nc" id="L49">        logger.debug(&quot;Fetching data...&quot;);</span>
+<span class="nc" id="L50">        HttpRequest httpRequest = buildHttpRequest(actionType);</span>
+<span class="nc" id="L51">        HttpResponse&lt;String&gt; httpResponse = makeHttpRequest(httpRequest);</span>
+
+<span class="nc bnc" id="L53" title="All 2 branches missed.">        if (dataIsNew(httpResponse)) {</span>
+<span class="nc" id="L54">            lastModified = getLastModified(httpResponse);</span>
+<span class="nc" id="L55">            dataHash = httpResponse.body().hashCode();</span>
+<span class="nc" id="L56">            publishData(httpResponse.body(), actionType);</span>
+        }
+<span class="nc" id="L58">    }</span>
+
+    private boolean dataIsNew(HttpResponse httpResponse) {
+<span class="nc bnc" id="L61" title="All 2 branches missed.">        int fetchedDataHashCode = httpResponse.body() != null ?</span>
+<span class="nc" id="L62">                httpResponse.body().hashCode() :</span>
+<span class="nc" id="L63">                &quot;&quot;.hashCode();</span>
+
+<span class="nc bnc" id="L65" title="All 2 branches missed.">        if(httpResponse.statusCode() == 304) {</span>
+<span class="nc" id="L66">            logger.debug(&quot;No new data: 304 status code received.&quot;);</span>
+<span class="nc" id="L67">            return false;</span>
+        }
+<span class="nc bnc" id="L69" title="All 2 branches missed.">        else if (dataHash == fetchedDataHashCode) {</span>
+<span class="nc" id="L70">            logger.debug(&quot;No new data: hashcode for fetched data matched hashcode of last update.&quot;);</span>
+<span class="nc" id="L71">            return false;</span>
+        }
+<span class="nc" id="L73">        return true;</span>
+    }
+
+    private HttpResponse&lt;String&gt; makeHttpRequest(HttpRequest httpRequest) throws DataFetchException {
+        try {
+<span class="nc" id="L78">            logger.debug(&quot;Making HTTP Request: &quot; + httpRequest.toString());</span>
+<span class="nc" id="L79">            HttpResponse&lt;String&gt; httpResponse = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());</span>
+<span class="nc" id="L80">            logger.debug(&quot;HTTP Request successfully made - data received.&quot;);</span>
+<span class="nc" id="L81">            logger.debug(String.format(&quot;HTTP Response Headers: %s&quot;, httpResponse.headers().toString()));</span>
+<span class="nc" id="L82">            return httpResponse;</span>
+
+<span class="nc" id="L84">        } catch (IOException e) {</span>
+<span class="nc" id="L85">            logger.error(&quot;Problem when making HTTP Request&quot;, e);</span>
+<span class="nc" id="L86">            throw new DataFetchException(e.getMessage(), e);</span>
+<span class="nc" id="L87">        } catch (InterruptedException e) {</span>
+<span class="nc" id="L88">            logger.error(&quot;HTTP Request interrupted&quot;, e);</span>
+<span class="nc" id="L89">            throw new DataFetchException(e.getMessage(), e);</span>
+        }
+    }
+
+    private HttpRequest buildHttpRequest(DataFetchAction actionType) {
+<span class="nc" id="L94">        logger.debug(&quot;Building HttpRequest type: &quot; + actionType);</span>
+        HttpRequest request;
+<span class="nc bnc" id="L96" title="All 2 branches missed.">        if (lastModified != null) {</span>
+             request = HttpRequest
+<span class="nc" id="L98">                    .newBuilder()</span>
+<span class="nc" id="L99">                    .GET()</span>
+<span class="nc" id="L100">                    .uri(uriMap.get(actionType))</span>
+<span class="nc" id="L101">                    .header(HttpHeaders.IF_MODIFIED_SINCE,</span>
+<span class="nc" id="L102">                            dateTimeFormatter.format(lastModified))</span>
+<span class="nc" id="L103">                    .build();</span>
+        }
+        else {
+            request = HttpRequest
+<span class="nc" id="L107">                    .newBuilder()</span>
+<span class="nc" id="L108">                    .GET()</span>
+<span class="nc" id="L109">                    .uri(uriMap.get(actionType))</span>
+<span class="nc" id="L110">                    .build();</span>
+            }
+<span class="nc" id="L112">        logger.debug(String.format(&quot;HttpRequest Built: headers = %s -- body = %s&quot;, request.headers().toString(), request.toString()));</span>
+<span class="nc" id="L113">        return request;</span>
+    }
+
+    private OffsetDateTime getLastModified(HttpResponse&lt;String&gt; httpResponse) {
+<span class="nc" id="L117">        return OffsetDateTime.parse(</span>
+                httpResponse
+<span class="nc" id="L119">                        .headers()</span>
+<span class="nc" id="L120">                        .map()</span>
+<span class="nc" id="L121">                        .get(&quot;Last-Modified&quot;).get(0),</span>
+                dateTimeFormatter
+        );
+    }
+
+    @Override
+    public void publishData(String responseBody, DataFetchAction action) {
+<span class="nc" id="L128">        dataEventPublisher.publishDataEvent(responseBody, action);</span>
+<span class="nc" id="L129">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

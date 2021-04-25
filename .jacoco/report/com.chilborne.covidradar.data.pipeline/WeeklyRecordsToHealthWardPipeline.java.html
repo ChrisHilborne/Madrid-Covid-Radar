@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>WeeklyRecordsToHealthWardPipeline.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Covid Radar</a> &gt; <a href="index.source.html" class="el_package">com.chilborne.covidradar.data.pipeline</a> &gt; <span class="el_source">WeeklyRecordsToHealthWardPipeline.java</span></div><h1>WeeklyRecordsToHealthWardPipeline.java</h1><pre class="source lang-java linenums">package com.chilborne.covidradar.data.pipeline;
+
+import com.chilborne.covidradar.model.WeeklyRecord;
+import com.chilborne.covidradar.model.HealthWard;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+/**
+ * Processes the data before it is served through the Rest API
+ */
+@Service
+public class WeeklyRecordsToHealthWardPipeline {
+
+    private final Pipeline&lt;List&lt;WeeklyRecord&gt;, List&lt;HealthWard&gt;&gt; pipeline;
+
+<span class="fc" id="L20">    private final Logger logger = LoggerFactory.getLogger(WeeklyRecordsToHealthWardPipeline.class);</span>
+
+<span class="fc" id="L22">    public WeeklyRecordsToHealthWardPipeline(@Qualifier(&quot;weeklyRecord-to-healthWard-Pipeline&quot;) Pipeline pipeline) {</span>
+<span class="fc" id="L23">        this.pipeline = pipeline;</span>
+<span class="fc" id="L24">    }</span>
+
+    public List&lt;HealthWard&gt; startPipeline(List&lt;WeeklyRecord&gt; weeklyRecords) {
+<span class="fc" id="L27">        logger.debug(&quot;Starting to convert WeeklyRecords (hashcode: &quot; + weeklyRecords.hashCode() + &quot;) to HealthWard&quot;);</span>
+
+<span class="fc" id="L29">        return pipeline.execute(weeklyRecords);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>
