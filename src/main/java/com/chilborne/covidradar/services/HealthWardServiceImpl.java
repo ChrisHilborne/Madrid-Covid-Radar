@@ -16,13 +16,13 @@ import java.util.Map;
 @Service
 public class HealthWardServiceImpl implements HealthWardService {
 
-    private final WeeklyRecordService healthWardService;
+    private final WeeklyRecordService weeklyRecordService;
     private final WeeklyRecordsToHealthWardPipeline healthWardPipeline;
     private final Logger logger = LoggerFactory.getLogger(HealthWardServiceImpl.class);
 
     public HealthWardServiceImpl(WeeklyRecordService weeklyRecordService,
                                  WeeklyRecordsToHealthWardPipeline healthWardPipeline) {
-        this.healthWardService = weeklyRecordService;
+        this.weeklyRecordService = weeklyRecordService;
         this.healthWardPipeline = healthWardPipeline;
     }
 
@@ -30,7 +30,7 @@ public class HealthWardServiceImpl implements HealthWardService {
     @Cacheable("healthWard-all")
     public List<HealthWard> getAllHealthWards() throws DataNotFoundException {
         logger.debug("Fetching All Health Wards");
-        List<WeeklyRecord> data = healthWardService.getAll();
+        List<WeeklyRecord> data = weeklyRecordService.getAll();
         return healthWardPipeline.startPipeline(data);
     }
 
@@ -39,7 +39,7 @@ public class HealthWardServiceImpl implements HealthWardService {
     @Cacheable("healthWard-geoCode")
     public HealthWard getHealthWardByGeoCode(String geoCode) throws DataNotFoundException {
         logger.debug("Fetching data for GeoCode: " + geoCode);
-        List<WeeklyRecord> weeklyRecords = healthWardService.getWeeklyRecordsByGeoCode(geoCode);
+        List<WeeklyRecord> weeklyRecords = weeklyRecordService.getWeeklyRecordsByGeoCode(geoCode);
 
         return healthWardPipeline.startPipeline(weeklyRecords).get(0);
     }
@@ -48,7 +48,7 @@ public class HealthWardServiceImpl implements HealthWardService {
     @Cacheable("namesAndGeoCodes")
     public Map<String, String> getHealthWardGeoCodesAndNames() {
         logger.debug("Fetching names and geocodes");
-        return dailyRecordService.getNamesAndGeoCodes();
+        return weeklyRecordService.getNamesAndGeoCodes();
     }
 
 }
