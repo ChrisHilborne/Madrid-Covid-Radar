@@ -24,9 +24,9 @@ public class HealthWardServiceImpl implements HealthWardService {
     private final DailyRecordsToHealthWardPipeline healthWardPipeline;
 <span class="fc" id="L25">    private final Logger logger = LoggerFactory.getLogger(HealthWardServiceImpl.class);</span>
 
-    public HealthWardServiceImpl(DailyRecordService dailyRecordService,
+    public HealthWardServiceImpl(DailyRecordService weeklyRecordService,
 <span class="fc" id="L28">                                 DailyRecordsToHealthWardPipeline healthWardPipeline) {</span>
-<span class="fc" id="L29">        this.healthWardService = dailyRecordService;</span>
+<span class="fc" id="L29">        this.healthWardService = weeklyRecordService;</span>
 <span class="fc" id="L30">        this.healthWardPipeline = healthWardPipeline;</span>
 <span class="fc" id="L31">    }</span>
 

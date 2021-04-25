@@ -21,7 +21,7 @@ import static org.mockito.Mockito.*;
 class HealthWardServiceImplTest {
 
     @Mock
-    DailyRecordService dailyRecordService;
+    WeeklyRecordService weeklyRecordService;
 
     @Mock
     DailyRecordsToHealthWardPipeline pipeline;
@@ -49,12 +49,12 @@ class HealthWardServiceImplTest {
         List<HealthWard> healthWardList = List.of(healthWardOne, healthWardTwo);
 
         //when
-        when(dailyRecordService.getAll()).thenReturn(dailyRecordList);
+        when(weeklyRecordService.getAll()).thenReturn(dailyRecordList);
         when(pipeline.startPipeline(List.of(dailyRecordOne, dailyRecordTwo))).thenReturn(healthWardList);
         List<HealthWard> returned = healthWardService.getAllHealthWards();
 
         //verify
-        verify(dailyRecordService, times(1)).getAll();
+        verify(weeklyRecordService, times(1)).getAll();
         verify(pipeline, times(1)).startPipeline(anyList());
         verify(pipeline, times(1)).startPipeline(dailyRecordList);
         assertEquals(healthWardList, returned);
@@ -73,13 +73,13 @@ class HealthWardServiceImplTest {
         HealthWard healthWard = new HealthWard(dailyRecordList);
 
         //when
-        when(dailyRecordService.getDailyRecordsByGeoCode("01")).thenReturn(dailyRecordList);
+        when(weeklyRecordService.getDailyRecordsByGeoCode("01")).thenReturn(dailyRecordList);
         when(pipeline.startPipeline(dailyRecordList)).thenReturn(List.of(healthWard));
         HealthWard result = healthWardService.getHealthWardByGeoCode("01");
 
         //verify
-        verify(dailyRecordService, times(1)).getDailyRecordsByGeoCode(anyString());
-        verify(dailyRecordService, times(1)).getDailyRecordsByGeoCode("01");
+        verify(weeklyRecordService, times(1)).getDailyRecordsByGeoCode(anyString());
+        verify(weeklyRecordService, times(1)).getDailyRecordsByGeoCode("01");
         verify(pipeline, times(1)).startPipeline(anyList());
         verify(pipeline, times(1)).startPipeline(dailyRecordList);
         assertEquals(healthWard, result);
@@ -105,11 +105,11 @@ class HealthWardServiceImplTest {
         expectedResults.put("c", "03");
 
         //when
-        when(dailyRecordService.getNamesAndGeoCodes()).thenReturn(expectedResults);
+        when(weeklyRecordService.getNamesAndGeoCodes()).thenReturn(expectedResults);
         Map<String, String> results = healthWardService.getHealthWardGeoCodesAndNames();
 
         //verify
-        verify(dailyRecordService, times(1)).getNamesAndGeoCodes();
+        verify(weeklyRecordService, times(1)).getNamesAndGeoCodes();
         assertEquals(expectedResults, results);
     }
 }

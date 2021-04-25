@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class DailyRecordServiceImplTest {
+class WeeklyRecordServiceImplTest {
 
     @Mock
     DailyRecordRepository dailyRecordRepository;
@@ -32,7 +32,7 @@ class DailyRecordServiceImplTest {
     CacheService cacheService;
 
     @InjectMocks
-    DailyRecordServiceImpl dailyRecordService;
+    WeeklyRecordServiceImpl dailyRecordService;
 
     @Captor
     ArgumentCaptor<DailyRecord> dailyRecordArgumentCaptor;

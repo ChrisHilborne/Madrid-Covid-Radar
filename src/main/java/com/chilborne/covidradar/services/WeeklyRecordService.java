@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
-public interface DailyRecordService  {
+public interface WeeklyRecordService {
 
     DailyRecord save(DailyRecord dailyRecord);
 

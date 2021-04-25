@@ -2,7 +2,7 @@ package com.chilborne.covidradar.data.steps;
 
 import com.chilborne.covidradar.exceptions.PipeLineProcessException;
 import com.chilborne.covidradar.model.DailyRecord;
-import com.chilborne.covidradar.services.DailyRecordService;
+import com.chilborne.covidradar.services.WeeklyRecordService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -22,7 +22,7 @@ import static org.mockito.Mockito.when;
 class DailyRecordSaverTest {
 
     @Mock
-    DailyRecordService service;
+    WeeklyRecordService service;
 
     @InjectMocks
     DailyRecordSaver saver;

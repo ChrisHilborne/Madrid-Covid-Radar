@@ -17,13 +17,13 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
-public class DailyRecordServiceImpl implements DailyRecordService {
+public class WeeklyRecordServiceImpl implements WeeklyRecordService {
 
     private final DailyRecordRepository dailyRecordRepository;
     private final CacheService cacheService;
-    private final Logger logger = LoggerFactory.getLogger(DailyRecordServiceImpl.class);
+    private final Logger logger = LoggerFactory.getLogger(WeeklyRecordServiceImpl.class);
 
-    public DailyRecordServiceImpl(DailyRecordRepository dailyRecordRepository, CacheService cacheService) {
+    public WeeklyRecordServiceImpl(DailyRecordRepository dailyRecordRepository, CacheService cacheService) {
         this.dailyRecordRepository = dailyRecordRepository;
         this.cacheService = cacheService;
     }
