@@ -25,7 +25,7 @@ jobs:
           name: upload test coverage report
           command: |
             export CODECOV_TOKEN='80264ac9-4da7-4af5-b555-1c9e3c53de8f'
-            curl -s https://codecov.io/bash 
+            bash <(curl -s https://codecov.io/bash) 
 
   deploy:
     docker:
