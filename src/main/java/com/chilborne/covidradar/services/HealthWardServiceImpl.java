@@ -1,12 +1,11 @@
 package com.chilborne.covidradar.services;
 
-import com.chilborne.covidradar.data.pipeline.DailyRecordsToHealthWardPipeline;
+import com.chilborne.covidradar.data.pipeline.WeeklyRecordsToHealthWardPipeline;
 import com.chilborne.covidradar.exceptions.DataNotFoundException;
-import com.chilborne.covidradar.model.DailyRecord;
+import com.chilborne.covidradar.model.WeeklyRecord;
 import com.chilborne.covidradar.model.HealthWard;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -19,13 +18,13 @@ import java.util.stream.Collectors;
 @Service
 public class HealthWardServiceImpl implements HealthWardService {
 
-    private final DailyRecordService healthWardService;
-    private final DailyRecordsToHealthWardPipeline healthWardPipeline;
+    private final WeeklyRecordService healthWardService;
+    private final WeeklyRecordsToHealthWardPipeline healthWardPipeline;
     private final Logger logger = LoggerFactory.getLogger(HealthWardServiceImpl.class);
 
-    public HealthWardServiceImpl(DailyRecordService dailyRecordService,
-                                 DailyRecordsToHealthWardPipeline healthWardPipeline) {
-        this.healthWardService = dailyRecordService;
+    public HealthWardServiceImpl(WeeklyRecordService weeklyRecordService,
+                                 WeeklyRecordsToHealthWardPipeline healthWardPipeline) {
+        this.healthWardService = weeklyRecordService;
         this.healthWardPipeline = healthWardPipeline;
     }
 
@@ -33,7 +32,7 @@ public class HealthWardServiceImpl implements HealthWardService {
     @Cacheable("healthWard-all")
     public List<HealthWard> getAllHealthWards() throws DataNotFoundException {
         logger.debug("Fetching All Health Wards");
-        List<DailyRecord> data = healthWardService.getAll();
+        List<WeeklyRecord> data = healthWardService.getAll();
         return healthWardPipeline.startPipeline(data);
     }
 
@@ -42,9 +41,9 @@ public class HealthWardServiceImpl implements HealthWardService {
     @Cacheable("healthWard-geoCode")
     public HealthWard getHealthWardByGeoCode(String geoCode) throws DataNotFoundException {
         logger.debug("Fetching data for GeoCode: " + geoCode);
-        List<DailyRecord> dailyRecords = healthWardService.getDailyRecordsByGeoCode(geoCode);
+        List<WeeklyRecord> weeklyRecords = healthWardService.getWeeklyRecordsByGeoCode(geoCode);
 
-        return healthWardPipeline.startPipeline(dailyRecords).get(0);
+        return healthWardPipeline.startPipeline(weeklyRecords).get(0);
     }
 
     @Override
