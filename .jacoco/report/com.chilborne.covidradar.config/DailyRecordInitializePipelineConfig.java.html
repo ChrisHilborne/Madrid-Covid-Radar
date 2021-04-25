@@ -31,7 +31,7 @@ public class DailyRecordInitializePipelineConfig {
 <span class="fc" id="L31">        this.aggregator = aggregator;</span>
 <span class="fc" id="L32">        this.saver = saver;</span>
 <span class="fc" id="L33">    }</span>
-    @Bean(&quot;dailyRecord-initialize-pipeline&quot;)
+    @Bean(&quot;weeklyRecord-initialize-pipeline&quot;)
     public Pipeline pipeline() {
 <span class="fc" id="L36">        return new Pipeline&lt;&gt;(parser)</span>
 <span class="fc" id="L37">                .pipe(filter)</span>

@@ -18,15 +18,15 @@ public class DailyRecordDTO {
     @Past
     private LocalDate date;
 
-<span class="fc" id="L21">    public DailyRecordDTO(DailyRecord dailyRecord) {</span>
-<span class="pc bpc" id="L22" title="1 of 2 branches missed.">        if (dailyRecord == null) {</span>
+<span class="fc" id="L21">    public DailyRecordDTO(DailyRecord weeklyRecord) {</span>
+<span class="pc bpc" id="L22" title="1 of 2 branches missed.">        if (weeklyRecord == null) {</span>
 <span class="nc" id="L23">            throw new RuntimeException(&quot;No Data Provided&quot;);</span>
         }
-<span class="fc" id="L25">        this.totalCases = dailyRecord.getTotalCases();</span>
-<span class="fc" id="L26">        this.totalRate = dailyRecord.getInfectionRateTotal();</span>
-<span class="fc" id="L27">        this.twoWeekCases = dailyRecord.getCasesLastTwoWeeks();</span>
-<span class="fc" id="L28">        this.twoWeekRate = dailyRecord.getInfectionRateLastTwoWeeks();</span>
-<span class="fc" id="L29">        this.date = dailyRecord.getDateReported();</span>
+<span class="fc" id="L25">        this.totalCases = weeklyRecord.getTotalCases();</span>
+<span class="fc" id="L26">        this.totalRate = weeklyRecord.getInfectionRateTotal();</span>
+<span class="fc" id="L27">        this.twoWeekCases = weeklyRecord.getCasesLastTwoWeeks();</span>
+<span class="fc" id="L28">        this.twoWeekRate = weeklyRecord.getInfectionRateLastTwoWeeks();</span>
+<span class="fc" id="L29">        this.date = weeklyRecord.getDateReported();</span>
 <span class="fc" id="L30">    }</span>
 <span class="nc" id="L31">    public DailyRecordDTO() {</span>
 <span class="nc" id="L32">    }</span>

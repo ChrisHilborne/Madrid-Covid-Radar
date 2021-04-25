@@ -21,18 +21,18 @@ public class HealthWard {
     private LocalDate lastUpdated;
     private int recordCount;
     @NotEmpty
-    private List<DailyRecordDTO> dailyRecords;
+    private List<WeeklyRecordDTO> WeeklyRecords;
 
-    public HealthWard(List<DailyRecord> dailyRecords) {
-        DailyRecord lastRecord = dailyRecords.get(dailyRecords.size() - 1);
+    public HealthWard(List<WeeklyRecord> weeklyRecords) {
+        WeeklyRecord lastRecord = weeklyRecords.get(weeklyRecords.size() - 1);
         this.geoCode = lastRecord.getGeoCode();
         this.name = lastRecord.getHealthWard();
         this.totalCases = lastRecord.getTotalCases();
         this.lastUpdated = lastRecord.getDateReported();
-        this.recordCount = dailyRecords.size();
-        this.dailyRecords = dailyRecords
+        this.recordCount = weeklyRecords.size();
+        this.WeeklyRecords = weeklyRecords
                 .stream()
-                .map(DailyRecordDTO::new)
+                .map(WeeklyRecordDTO::new)
                 .collect(Collectors.toList());
     }
 
@@ -49,9 +49,9 @@ public class HealthWard {
         this.geoCode = geoCode;
     }
 
-    public List<DailyRecordDTO> getDailyRecords() { return dailyRecords; }
+    public List<WeeklyRecordDTO> getWeeklyRecords() { return WeeklyRecords; }
 
-    public void setDailyRecords(List<DailyRecordDTO> dailyRecords) { this.dailyRecords = dailyRecords; }
+    public void setWeeklyRecords(List<WeeklyRecordDTO> weeklyRecords) { this.WeeklyRecords = weeklyRecords; }
 
     public void setName(String name) {
         this.name = name;
@@ -92,7 +92,7 @@ public class HealthWard {
         if (!Objects.equals(geoCode, that.geoCode)) return false;
         if (!Objects.equals(name, that.name)) return false;
         if (!Objects.equals(lastUpdated, that.lastUpdated)) return false;
-        return Objects.equals(dailyRecords, that.dailyRecords);
+        return Objects.equals(WeeklyRecords, that.WeeklyRecords);
     }
 
     @Override
@@ -101,7 +101,7 @@ public class HealthWard {
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + totalCases;
         result = 31 * result + (lastUpdated != null ? lastUpdated.hashCode() : 0);
-        result = 31 * result + (dailyRecords != null ? dailyRecords.hashCode() : 0);
+        result = 31 * result + (WeeklyRecords != null ? WeeklyRecords.hashCode() : 0);
         return result;
     }
 
@@ -112,7 +112,7 @@ public class HealthWard {
                 ", name='" + name + '\'' +
                 ", totalCases=" + totalCases +
                 ", lastUpdated=" + lastUpdated +
-                ", dailyRecords=" + dailyRecords +
+                ", weeklyRecords=" + WeeklyRecords +
                 '}';
     }
 }

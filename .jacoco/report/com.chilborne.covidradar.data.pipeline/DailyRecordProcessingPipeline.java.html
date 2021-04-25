@@ -3,7 +3,7 @@
 import com.chilborne.covidradar.events.InitialDataEvent;
 import com.chilborne.covidradar.events.UpdatedDataEvent;
 import com.chilborne.covidradar.exceptions.PipeLineProcessException;
-import com.chilborne.covidradar.model.DailyRecord;
+import com.chilborne.covidradar.model.WeeklyRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -20,8 +20,8 @@ public class DailyRecordProcessingPipeline {
 <span class="fc" id="L20">    private final Logger logger = LoggerFactory.getLogger(DailyRecordProcessingPipeline.class);</span>
 
     public DailyRecordProcessingPipeline(
-            @Qualifier(&quot;dailyRecord-initialize-pipeline&quot;) Pipeline initializePipeline,
-<span class="fc" id="L24">            @Qualifier(&quot;dailyRecord-update-pipeline&quot;) Pipeline updatePipeline) {</span>
+            @Qualifier(&quot;weeklyRecord-initialize-pipeline&quot;) Pipeline initializePipeline,
+<span class="fc" id="L24">            @Qualifier(&quot;weeklyRecord-update-pipeline&quot;) Pipeline updatePipeline) {</span>
 <span class="fc" id="L25">        this.initializePipeline = initializePipeline;</span>
 <span class="fc" id="L26">        this.updatePipeline = updatePipeline;</span>
 <span class="fc" id="L27">    }</span>
