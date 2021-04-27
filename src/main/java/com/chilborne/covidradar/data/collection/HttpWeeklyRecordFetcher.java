@@ -100,4 +100,5 @@ public class HttpWeeklyRecordFetcher implements DataFetcher {
     public void publishData(String responseBody, DataFetchAction action) {
         dataEventPublisher.publishDataEvent(responseBody, action);
     }
+    
 }
