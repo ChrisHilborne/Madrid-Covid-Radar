@@ -53,6 +53,7 @@ public class WeeklyRecordServiceImpl implements WeeklyRecordService {
     @Override
     public List<WeeklyRecord> save(List<WeeklyRecord> WeeklyRecordList) {
         logger.debug("Saving WeeklyRecordList size: " + WeeklyRecordList.size());
+        cacheService.clearCache();
         List<WeeklyRecord> savedList = new LinkedList<>();
         WeeklyRecordList.forEach(WeeklyRecord -> {
 
@@ -63,9 +64,6 @@ public class WeeklyRecordServiceImpl implements WeeklyRecordService {
             catch (DataSaveException e) {
                 logger.error(e.getMessage(), e);
                 throw new DataSaveException("Error when saving WeeklyRecordList (hashcode " + WeeklyRecordList.hashCode() + ")");
-            }
-            finally {
-                cacheService.clearCache();
             }
         });
         if (!savedList.equals(WeeklyRecordList)) {

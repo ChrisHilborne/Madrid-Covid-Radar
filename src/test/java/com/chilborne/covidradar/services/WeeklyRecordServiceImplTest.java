@@ -94,6 +94,7 @@ class WeeklyRecordServiceImplTest {
 
         //verify
         verify(weeklyRecordRepository).save(weeklyRecordArgumentCaptor.capture());
+        verify(cacheService, times(1)).clearCache();
         assertEquals(test, weeklyRecordArgumentCaptor.getValue());
         assertAll("saveList",
                 () -> assertEquals(1, returned.size()),
@@ -116,6 +117,7 @@ class WeeklyRecordServiceImplTest {
 
         //verify
         Exception e = assertThrows(DataSaveException.class, () -> weeklyRecordService.save(toSave));
+        verify(cacheService, times(1)).clearCache();
         assertEquals("Error when saving WeeklyRecordList (hashcode " + toSave.hashCode() + ")", e.getMessage());
     }
 
