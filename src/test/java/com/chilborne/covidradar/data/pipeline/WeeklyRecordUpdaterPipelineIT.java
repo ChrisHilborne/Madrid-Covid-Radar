@@ -1,6 +1,7 @@
 package com.chilborne.covidradar.data.pipeline;
 
 import com.chilborne.covidradar.config.WeeklyUpdatePipelineConfig;
+import com.chilborne.covidradar.data.steps.HttpResponseValidator;
 import com.chilborne.covidradar.data.steps.WeeklyRecordFixer;
 import com.chilborne.covidradar.data.steps.WeeklyRecordParser;
 import com.chilborne.covidradar.data.steps.WeeklyRecordSaver;
@@ -14,16 +15,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.net.http.HttpResponse;
 import java.time.LocalDate;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @ActiveProfiles("test")
 @ExtendWith(MockitoExtension.class)
 @SpringBootTest
 class WeeklyRecordUpdaterPipelineIT {
+
+    @Mock
+    HttpResponseValidator validator;
 
     @Autowired
     WeeklyRecordParser parser;
@@ -52,6 +58,7 @@ class WeeklyRecordUpdaterPipelineIT {
     @BeforeEach
     void init() {
         config = new WeeklyUpdatePipelineConfig(
+                validator,
                 parser,
                 trimmer,
                 saver
@@ -60,6 +67,9 @@ class WeeklyRecordUpdaterPipelineIT {
 
     @Test
     void pipeline() {
+        //given
+        HttpResponse<String> mockResponse = mock(HttpResponse.class);
+
         WeeklyRecord expectedWeeklyRecord = new WeeklyRecord();
         expectedWeeklyRecord.setGeoCode("test");
         expectedWeeklyRecord.setHealthWard("Test");
@@ -72,10 +82,11 @@ class WeeklyRecordUpdaterPipelineIT {
         List<WeeklyRecord> expectedResults = List.of(expectedWeeklyRecord);
 
         //when
-        Pipeline<String, List<WeeklyRecord>> actualPipeline = config.pipeline();
+        Pipeline<HttpResponse<String>, List<WeeklyRecord>> actualPipeline = config.pipeline();
+        when(validator.process(mockResponse)).thenReturn(testJSON);
         when(saver.process(expectedResults)).thenReturn(expectedResults);
 
-        List<WeeklyRecord> actualResults = actualPipeline.execute(testJSON);
+        List<WeeklyRecord> actualResults = actualPipeline.execute(mockResponse);
 
         //verify
         assertEquals(expectedResults, actualResults);

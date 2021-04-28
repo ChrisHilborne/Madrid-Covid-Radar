@@ -1,9 +1,11 @@
 package com.chilborne.covidradar.data.collection;
 
-public interface DataFetcher {
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 
-    void fetchData(DataFetchAction type) ;
+public interface DataFetcher<D> {
 
-    void publishData(String data, DataFetchAction action);
+    HttpResponse<D> fetchData(HttpRequest httpRequest) ;
+
 }
 
