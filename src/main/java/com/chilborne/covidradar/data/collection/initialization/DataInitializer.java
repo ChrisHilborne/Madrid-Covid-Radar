@@ -1,8 +1,6 @@
 package com.chilborne.covidradar.data.collection.initialization;
 
-import org.springframework.boot.CommandLineRunner;
-
-public interface DataInitializer extends CommandLineRunner {
+public interface DataInitializer {
 
     void initializeData() throws Exception;
 
