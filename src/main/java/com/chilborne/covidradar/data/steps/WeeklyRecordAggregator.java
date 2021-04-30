@@ -23,7 +23,6 @@ public class WeeklyRecordAggregator implements Step<Map<String,List<WeeklyRecord
 
         for (List<WeeklyRecord> weeklyRecordList : input.values()) {
 
-
             for (int i = 0; i < weeklyRecordList.size(); i += 7) {
                 WeeklyRecord firstRecord = weeklyRecordList.get(i);
                 ArrayList<WeeklyRecord> toAggregate = new ArrayList<>(6);
