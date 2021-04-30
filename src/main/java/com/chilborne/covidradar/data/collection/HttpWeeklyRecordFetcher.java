@@ -33,7 +33,7 @@ public class HttpWeeklyRecordFetcher implements DataFetcher<String> {
             logger.debug("Making HTTP Request: " + httpRequest.toString());
             HttpResponse<String> httpResponse = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
             logger.debug("HTTP Request successfully made - data received.");
-            logger.debug(String.format("HTTP Response Headers: %s", httpResponse.headers().toString()));
+            checkHttpResponse(httpResponse);
             return httpResponse;
 
         } catch (IOException e) {
@@ -42,6 +42,12 @@ public class HttpWeeklyRecordFetcher implements DataFetcher<String> {
         } catch (InterruptedException e) {
             logger.error("HTTP Request interrupted", e);
             throw new DataFetchException(e.getMessage(), e);
+        }
+    }
+
+    private void checkHttpResponse(HttpResponse response) {
+        if (response.statusCode() != 200) {
+            throw new DataFetchException("HttpResponse Status Code is: " + response.statusCode());
         }
     }
 

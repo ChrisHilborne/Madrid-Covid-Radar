@@ -37,8 +37,6 @@ class WeeklyRecordServiceImplTest {
     @Captor
     ArgumentCaptor<WeeklyRecord> weeklyRecordArgumentCaptor;
 
-    @Captor
-    ArgumentCaptor<List<WeeklyRecord>> listArgumentCaptor;
 
     LocalDate testDate = LocalDate.now();
 

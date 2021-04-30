@@ -2,6 +2,8 @@ package com.chilborne.covidradar.data.collection.update;
 
 import com.chilborne.covidradar.data.collection.DataFetcher;
 import com.chilborne.covidradar.data.pipeline.PipelineManager;
+import com.chilborne.covidradar.exceptions.DataFetchException;
+import com.chilborne.covidradar.exceptions.PipeLineProcessException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -36,9 +38,8 @@ public class WeeklyRecordDataUpdater implements DataUpdater {
         try {
             HttpResponse response = dataFetcher.fetchData(updateRequest);
             updatePipeline.startPipeline(response);
-
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+        } catch (DataFetchException | PipeLineProcessException exception) {
+            logger.error(exception.getMessage(), exception);
         }
         logger.debug("WeeklyRecord Successfully updated");
     }
