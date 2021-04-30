@@ -47,6 +47,7 @@ class WeeklyRecordDataInitializerTest {
         initializer.initializeData();
 
         //verify
+        verify(fetcher, times(1)).fetchData(mockRequest);
         verify(fetcher, times(1)).fetchData(any(HttpRequest.class));
         verify(pipelineManager, times(1)).startPipeline(anyString());
         verify(pipelineManager).startPipeline(httpResponseBodyCaptor.capture());
