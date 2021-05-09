@@ -26,7 +26,7 @@ import static org.mockito.Mockito.when;
 @ActiveProfiles("test")
 @ExtendWith(MockitoExtension.class)
 @SpringBootTest
-class WeeklyRecordUpdaterPipelineIT {
+class WeeklyRecordUpdaterPipelineManagerIT {
 
     @Mock
     HttpResponseValidator validator;
@@ -41,6 +41,8 @@ class WeeklyRecordUpdaterPipelineIT {
     WeeklyRecordSaver saver;
 
     WeeklyUpdatePipelineConfig config;
+
+    WeeklyRecordUpdatePipelineManager manager;
 
     private final String testJSON = "{\n" +
             "  \"data\": [\n" +
@@ -63,6 +65,10 @@ class WeeklyRecordUpdaterPipelineIT {
                 trimmer,
                 saver
         );
+
+        manager = new WeeklyRecordUpdatePipelineManager(
+                config.pipeline()
+        );
     }
 
     @Test
@@ -82,11 +88,10 @@ class WeeklyRecordUpdaterPipelineIT {
         List<WeeklyRecord> expectedResults = List.of(expectedWeeklyRecord);
 
         //when
-        Pipeline<HttpResponse<String>, List<WeeklyRecord>> actualPipeline = config.pipeline();
         when(validator.process(mockResponse)).thenReturn(testJSON);
         when(saver.process(expectedResults)).thenReturn(expectedResults);
 
-        List<WeeklyRecord> actualResults = actualPipeline.execute(mockResponse);
+        List<WeeklyRecord> actualResults = manager.startPipeline(mockResponse);
 
         //verify
         assertEquals(expectedResults, actualResults);

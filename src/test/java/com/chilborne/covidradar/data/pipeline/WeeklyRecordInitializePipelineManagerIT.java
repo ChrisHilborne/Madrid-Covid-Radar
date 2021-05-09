@@ -25,7 +25,7 @@ import static org.mockito.Mockito.when;
 @SpringBootTest
 @ActiveProfiles("test")
 @ExtendWith(MockitoExtension.class)
-public class WeeklyRecordInitializePipelineIT {
+public class WeeklyRecordInitializePipelineManagerIT {
 
     @Autowired
     WeeklyRecordParser parser;
@@ -46,6 +46,8 @@ public class WeeklyRecordInitializePipelineIT {
     WeeklyRecordSaver saver;
 
     WeeklyRecordInitializePipelineConfig config;
+
+    WeeklyRecordInitalizePipelineManager manager;
 
     @Captor
     ArgumentCaptor<List<WeeklyRecord>> weeklyRecordCaptor;
@@ -74,6 +76,10 @@ public class WeeklyRecordInitializePipelineIT {
                 saver
         );
 
+        manager = new WeeklyRecordInitalizePipelineManager(
+                config.pipeline()
+        );
+
     }
 
     @Test
@@ -91,10 +97,9 @@ public class WeeklyRecordInitializePipelineIT {
         List<WeeklyRecord> expectedResults = List.of(expectedWeeklyRecord);
 
         //when
-        Pipeline<String, List<WeeklyRecord>> pipeline = config.pipeline();
         when(saver.process(any())).thenReturn(expectedResults);
 
-        List<WeeklyRecord> actualResults = pipeline.execute(testJSON);
+        List<WeeklyRecord> actualResults = manager.startPipeline(testJSON);
 
         //verify
         verify(saver).process(weeklyRecordCaptor.capture());

@@ -14,7 +14,7 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class WeeklyRecordUpdatePipelineTest {
+class WeeklyRecordUpdatePipelineManagerTest {
 
     @Mock
     Pipeline pipeline;
@@ -23,7 +23,7 @@ class WeeklyRecordUpdatePipelineTest {
     ArgumentCaptor<HttpResponse<String>> httpResponseCaptor;
 
     @InjectMocks
-    WeeklyRecordUpdatePipeline weeklyRecordUpdatePipeline;
+    WeeklyRecordUpdatePipelineManager weeklyRecordUpdatePipelineManager;
 
     @Test
     void startPipeline() {
@@ -31,7 +31,7 @@ class WeeklyRecordUpdatePipelineTest {
         HttpResponse<String> mockResponse = mock(HttpResponse.class);
 
         //when
-        weeklyRecordUpdatePipeline.startPipeline(mockResponse);
+        weeklyRecordUpdatePipelineManager.startPipeline(mockResponse);
 
         //verify
         verify(pipeline, times(1)).execute(any(HttpResponse.class));

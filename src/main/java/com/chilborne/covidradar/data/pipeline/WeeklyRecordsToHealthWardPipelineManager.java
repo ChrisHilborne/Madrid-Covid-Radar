@@ -12,14 +12,14 @@ import java.util.List;
 /**
  * Processes the data before it is served through the Rest API
  */
-@Service
-public class WeeklyRecordsToHealthWardPipeline {
+@Service("weeklyRecords-to-HealthWard-Pipeline-Manager")
+public class WeeklyRecordsToHealthWardPipelineManager implements PipelineManager<List<WeeklyRecord>, List<HealthWard>> {
 
     private final Pipeline<List<WeeklyRecord>, List<HealthWard>> pipeline;
 
-    private final Logger logger = LoggerFactory.getLogger(WeeklyRecordsToHealthWardPipeline.class);
+    private final Logger logger = LoggerFactory.getLogger(WeeklyRecordsToHealthWardPipelineManager.class);
 
-    public WeeklyRecordsToHealthWardPipeline(@Qualifier("weeklyRecord-to-healthWard-Pipeline") Pipeline pipeline) {
+    public WeeklyRecordsToHealthWardPipelineManager(@Qualifier("weeklyRecord-to-healthWard-Pipeline") Pipeline pipeline) {
         this.pipeline = pipeline;
     }
 

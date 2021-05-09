@@ -1,6 +1,6 @@
 package com.chilborne.covidradar.data.pipeline;
 
-public interface PipelineManager<S> {
+public interface PipelineManager<S, V> {
 
-    public void startPipeline(S input);
+    public V startPipeline(S input);
 }

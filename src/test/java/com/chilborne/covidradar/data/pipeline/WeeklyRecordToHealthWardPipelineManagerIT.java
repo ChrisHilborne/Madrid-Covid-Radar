@@ -2,6 +2,7 @@ package com.chilborne.covidradar.data.pipeline;
 import com.chilborne.covidradar.config.WeeklyRecordToHealthWardPipelineConfig;
 import com.chilborne.covidradar.model.WeeklyRecord;
 import com.chilborne.covidradar.model.HealthWard;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,10 +15,19 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ActiveProfiles("test")
 @SpringBootTest
-class WeeklyRecordToHealthWardPipelineIT {
+class WeeklyRecordToHealthWardPipelineManagerIT {
 
     @Autowired
     WeeklyRecordToHealthWardPipelineConfig config;
+
+    WeeklyRecordsToHealthWardPipelineManager manager;
+
+    @BeforeEach
+    void init() {
+        manager = new WeeklyRecordsToHealthWardPipelineManager(
+                config.pipeline()
+        );
+    }
 
     @Test
     void pipeline() {
@@ -35,8 +45,7 @@ class WeeklyRecordToHealthWardPipelineIT {
         List<HealthWard> expectedResults = List.of(new HealthWard(List.of(two)), new HealthWard(List.of(one)));
 
         //when
-        Pipeline<List<WeeklyRecord>, List<HealthWard>> actualPipeline = config.pipeline();
-        List<HealthWard> actualResults = actualPipeline.execute(testInput);
+        List<HealthWard> actualResults = manager.startPipeline(testInput);
 
         //verify
         assertEquals(expectedResults, actualResults);

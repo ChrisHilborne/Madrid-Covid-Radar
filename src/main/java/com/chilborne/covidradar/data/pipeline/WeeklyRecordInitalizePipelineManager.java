@@ -1,5 +1,6 @@
 package com.chilborne.covidradar.data.pipeline;
 
+import com.chilborne.covidradar.exceptions.PipeLineProcessException;
 import com.chilborne.covidradar.model.WeeklyRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +14,7 @@ import java.util.List;
  * Initial data is daily. Because update data is weekly - we need to transform initial daily data to weekly and thus this data is passed to a different pipeline.
  */
 @Service("initialize-Pipeline-Manager")
-public class WeeklyRecordInitalizePipelineManager implements PipelineManager<String> {
+public class WeeklyRecordInitalizePipelineManager implements PipelineManager<String, List<WeeklyRecord>> {
 
     private final Pipeline<String, List<WeeklyRecord>> initializePipeline;
     private final Logger logger = LoggerFactory.getLogger(WeeklyRecordInitalizePipelineManager.class);
@@ -23,8 +24,14 @@ public class WeeklyRecordInitalizePipelineManager implements PipelineManager<Str
         this.initializePipeline = initializePipeline;
     }
 
-    public void startPipeline(String input) {
-        initializePipeline.execute(input);
+    public List<WeeklyRecord> startPipeline(String input) {
+        try {
+            return initializePipeline.execute(input);
+        }
+        catch (PipeLineProcessException e) {
+            logger.error(e.getMessage(), e);
+            throw e;
+        }
     }
 
 

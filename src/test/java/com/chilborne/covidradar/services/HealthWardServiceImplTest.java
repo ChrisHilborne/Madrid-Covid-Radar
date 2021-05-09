@@ -1,6 +1,6 @@
 package com.chilborne.covidradar.services;
 
-import com.chilborne.covidradar.data.pipeline.WeeklyRecordsToHealthWardPipeline;
+import com.chilborne.covidradar.data.pipeline.WeeklyRecordsToHealthWardPipelineManager;
 import com.chilborne.covidradar.model.WeeklyRecord;
 import com.chilborne.covidradar.model.HealthWard;
 import org.junit.jupiter.api.Test;
@@ -24,7 +24,7 @@ class HealthWardServiceImplTest {
     WeeklyRecordService weeklyRecordService;
 
     @Mock
-    WeeklyRecordsToHealthWardPipeline pipeline;
+    WeeklyRecordsToHealthWardPipelineManager pipeline;
 
     @InjectMocks
     HealthWardServiceImpl healthWardService;

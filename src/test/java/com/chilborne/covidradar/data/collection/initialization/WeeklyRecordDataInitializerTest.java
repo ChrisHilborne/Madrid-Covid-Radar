@@ -2,6 +2,7 @@ package com.chilborne.covidradar.data.collection.initialization;
 
 import com.chilborne.covidradar.data.collection.DataFetcher;
 import com.chilborne.covidradar.data.pipeline.PipelineManager;
+import com.chilborne.covidradar.model.WeeklyRecord;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,6 +14,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.List;
 
 import static org.mockito.Mockito.*;
 
@@ -26,7 +28,7 @@ class WeeklyRecordDataInitializerTest {
     HttpRequest mockRequest;
 
     @Mock
-    PipelineManager<String> pipelineManager;
+    PipelineManager<String, List<WeeklyRecord>> pipelineManager;
 
     @Captor
     ArgumentCaptor<String> httpResponseBodyCaptor;

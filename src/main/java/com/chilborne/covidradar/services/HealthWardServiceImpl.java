@@ -1,11 +1,12 @@
 package com.chilborne.covidradar.services;
 
-import com.chilborne.covidradar.data.pipeline.WeeklyRecordsToHealthWardPipeline;
+import com.chilborne.covidradar.data.pipeline.WeeklyRecordsToHealthWardPipelineManager;
 import com.chilborne.covidradar.exceptions.DataNotFoundException;
 import com.chilborne.covidradar.model.WeeklyRecord;
 import com.chilborne.covidradar.model.HealthWard;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -17,11 +18,11 @@ import java.util.Map;
 public class HealthWardServiceImpl implements HealthWardService {
 
     private final WeeklyRecordService weeklyRecordService;
-    private final WeeklyRecordsToHealthWardPipeline healthWardPipeline;
+    private final WeeklyRecordsToHealthWardPipelineManager healthWardPipeline;
     private final Logger logger = LoggerFactory.getLogger(HealthWardServiceImpl.class);
 
     public HealthWardServiceImpl(WeeklyRecordService weeklyRecordService,
-                                 WeeklyRecordsToHealthWardPipeline healthWardPipeline) {
+                                 @Qualifier("weeklyRecords-to-HealthWard-Pipeline-Manager") WeeklyRecordsToHealthWardPipelineManager healthWardPipeline) {
         this.weeklyRecordService = weeklyRecordService;
         this.healthWardPipeline = healthWardPipeline;
     }

@@ -12,6 +12,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
@@ -26,7 +27,7 @@ class WeeklyRecordDataUpdaterTest {
     HttpRequest mockRequest;
 
     @Mock
-    PipelineManager<HttpResponse> pipelineManager;
+    PipelineManager<HttpResponse<String>, List<WeeklyRecordDataUpdater>> pipelineManager;
 
     @Captor
     ArgumentCaptor<HttpResponse> httpResponseCaptor;

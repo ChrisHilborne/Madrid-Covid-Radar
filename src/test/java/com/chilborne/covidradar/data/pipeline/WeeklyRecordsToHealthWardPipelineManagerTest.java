@@ -17,13 +17,13 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
-class WeeklyRecordsToHealthWardPipelineTest {
+class WeeklyRecordsToHealthWardPipelineManagerTest {
 
     @Mock
     Pipeline pipeline;
 
     @InjectMocks
-    WeeklyRecordsToHealthWardPipeline weeklyRecordsToHealthWardPipeline;
+    WeeklyRecordsToHealthWardPipelineManager weeklyRecordsToHealthWardPipelineManager;
 
     @Captor
     ArgumentCaptor<List<WeeklyRecord>> captor;
@@ -40,7 +40,7 @@ class WeeklyRecordsToHealthWardPipelineTest {
         List<WeeklyRecord> toPipe = List.of(one, two);
 
         //when
-        weeklyRecordsToHealthWardPipeline.startPipeline(toPipe);
+        weeklyRecordsToHealthWardPipelineManager.startPipeline(toPipe);
 
         //verify
         verify(pipeline, times(1)).execute(any());
