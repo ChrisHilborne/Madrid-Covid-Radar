@@ -13,12 +13,12 @@ import java.util.List;
  * Initial data is daily. Because update data is weekly - we need to transform initial daily data to weekly and thus this data is passed to a different pipeline.
  */
 @Service("initialize-Pipeline-Manager")
-public class WeeklyRecordInitalizePipeline implements PipelineManager<String> {
+public class WeeklyRecordInitalizePipelineManager implements PipelineManager<String> {
 
     private final Pipeline<String, List<WeeklyRecord>> initializePipeline;
-    private final Logger logger = LoggerFactory.getLogger(WeeklyRecordInitalizePipeline.class);
+    private final Logger logger = LoggerFactory.getLogger(WeeklyRecordInitalizePipelineManager.class);
 
-    public WeeklyRecordInitalizePipeline(
+    public WeeklyRecordInitalizePipelineManager(
             @Qualifier("weeklyRecord-initialize-pipeline") Pipeline initializePipeline) {
         this.initializePipeline = initializePipeline;
     }

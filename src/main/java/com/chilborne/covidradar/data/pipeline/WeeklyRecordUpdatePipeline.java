@@ -12,7 +12,7 @@ import java.net.http.HttpResponse;
 public class WeeklyRecordUpdatePipeline implements PipelineManager<HttpResponse<String>> {
 
     private final Pipeline updatePipeline;
-    private final Logger logger = LoggerFactory.getLogger(WeeklyRecordInitalizePipeline.class);
+    private final Logger logger = LoggerFactory.getLogger(WeeklyRecordInitalizePipelineManager.class);
 
     public WeeklyRecordUpdatePipeline(
             @Qualifier("weeklyRecord-update-pipeline") Pipeline updatePipeline) {
