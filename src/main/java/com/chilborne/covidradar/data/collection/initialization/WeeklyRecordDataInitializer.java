@@ -8,14 +8,12 @@ import com.chilborne.covidradar.model.WeeklyRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.List;
 
-@Profile("!test")
 @Component
 public class WeeklyRecordDataInitializer implements DataInitializer {
 
