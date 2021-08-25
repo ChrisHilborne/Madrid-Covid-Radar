@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>WeeklyUpdatePipelineConfig.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Covid Radar</a> &gt; <a href="index.source.html" class="el_package">com.chilborne.covidradar.config</a> &gt; <span class="el_source">WeeklyUpdatePipelineConfig.java</span></div><h1>WeeklyUpdatePipelineConfig.java</h1><pre class="source lang-java linenums">package com.chilborne.covidradar.config;
 
 import com.chilborne.covidradar.data.pipeline.Pipeline;
+import com.chilborne.covidradar.data.steps.HttpResponseValidator;
 import com.chilborne.covidradar.data.steps.WeeklyRecordFixer;
 import com.chilborne.covidradar.data.steps.WeeklyRecordParser;
 import com.chilborne.covidradar.data.steps.WeeklyRecordSaver;
@@ -10,26 +11,28 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class WeeklyUpdatePipelineConfig {
 
-
+    private final HttpResponseValidator validator;
     private final WeeklyRecordParser parser;
     private final WeeklyRecordFixer trimmer;
     private final WeeklyRecordSaver saver;
 
 
     public WeeklyUpdatePipelineConfig(
-            WeeklyRecordParser parser,
+            HttpResponseValidator validator, WeeklyRecordParser parser,
             WeeklyRecordFixer trimmer,
-<span class="fc" id="L22">            WeeklyRecordSaver saver) {</span>
-<span class="fc" id="L23">        this.parser = parser;</span>
-<span class="fc" id="L24">        this.trimmer = trimmer;</span>
-<span class="fc" id="L25">        this.saver = saver;</span>
-<span class="fc" id="L26">    }</span>
+<span class="fc" id="L23">            WeeklyRecordSaver saver) {</span>
+<span class="fc" id="L24">        this.validator = validator;</span>
+<span class="fc" id="L25">        this.parser = parser;</span>
+<span class="fc" id="L26">        this.trimmer = trimmer;</span>
+<span class="fc" id="L27">        this.saver = saver;</span>
+<span class="fc" id="L28">    }</span>
 
     @Bean(&quot;weeklyRecord-update-pipeline&quot;)
     public Pipeline pipeline() {
-<span class="fc" id="L30">        return new Pipeline&lt;&gt;(parser)</span>
-<span class="fc" id="L31">                .pipe(trimmer)</span>
-<span class="fc" id="L32">                .pipe(saver);</span>
+<span class="fc" id="L32">        return new Pipeline&lt;&gt;(validator)</span>
+<span class="fc" id="L33">                .pipe(parser)</span>
+<span class="fc" id="L34">                .pipe(trimmer)</span>
+<span class="fc" id="L35">                .pipe(saver);</span>
     }
 
 }

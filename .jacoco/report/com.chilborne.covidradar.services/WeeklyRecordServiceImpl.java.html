@@ -53,59 +53,57 @@ public class WeeklyRecordServiceImpl implements WeeklyRecordService {
     @Override
     public List&lt;WeeklyRecord&gt; save(List&lt;WeeklyRecord&gt; WeeklyRecordList) {
 <span class="fc" id="L55">        logger.debug(&quot;Saving WeeklyRecordList size: &quot; + WeeklyRecordList.size());</span>
-<span class="fc" id="L56">        List&lt;WeeklyRecord&gt; savedList = new LinkedList&lt;&gt;();</span>
-<span class="fc" id="L57">        WeeklyRecordList.forEach(WeeklyRecord -&gt; {</span>
+<span class="fc" id="L56">        cacheService.clearCache();</span>
+<span class="fc" id="L57">        List&lt;WeeklyRecord&gt; savedList = new LinkedList&lt;&gt;();</span>
+<span class="fc" id="L58">        WeeklyRecordList.forEach(WeeklyRecord -&gt; {</span>
 
             try {
-<span class="fc" id="L60">                WeeklyRecord saved = save(WeeklyRecord);</span>
-<span class="fc" id="L61">                savedList.add(saved);</span>
+<span class="fc" id="L61">                WeeklyRecord saved = save(WeeklyRecord);</span>
+<span class="fc" id="L62">                savedList.add(saved);</span>
             }
-<span class="fc" id="L63">            catch (DataSaveException e) {</span>
-<span class="fc" id="L64">                logger.error(e.getMessage(), e);</span>
-<span class="fc" id="L65">                throw new DataSaveException(&quot;Error when saving WeeklyRecordList (hashcode &quot; + WeeklyRecordList.hashCode() + &quot;)&quot;);</span>
-            }
-            finally {
-<span class="fc" id="L68">                cacheService.clearCache();</span>
-            }
-<span class="fc" id="L70">        });</span>
-<span class="pc bpc" id="L71" title="1 of 2 branches missed.">        if (!savedList.equals(WeeklyRecordList)) {</span>
-<span class="nc" id="L72">            logger.error(&quot;WeeklyRecordList to save and returned list to not match.&quot;);</span>
-<span class="nc" id="L73">            throw new DataSaveException(&quot;Error when saving WeeklyRecordList (hashcode &quot; + WeeklyRecordList.hashCode() + &quot;)&quot;);</span>
+<span class="fc" id="L64">            catch (DataSaveException e) {</span>
+<span class="fc" id="L65">                logger.error(e.getMessage(), e);</span>
+<span class="fc" id="L66">                throw new DataSaveException(&quot;Error when saving WeeklyRecordList (hashcode &quot; + WeeklyRecordList.hashCode() + &quot;)&quot;);</span>
+<span class="fc" id="L67">            }</span>
+<span class="fc" id="L68">        });</span>
+<span class="pc bpc" id="L69" title="1 of 2 branches missed.">        if (!savedList.equals(WeeklyRecordList)) {</span>
+<span class="nc" id="L70">            logger.error(&quot;WeeklyRecordList to save and returned list to not match.&quot;);</span>
+<span class="nc" id="L71">            throw new DataSaveException(&quot;Error when saving WeeklyRecordList (hashcode &quot; + WeeklyRecordList.hashCode() + &quot;)&quot;);</span>
         }
-<span class="fc" id="L75">        return savedList;</span>
+<span class="fc" id="L73">        return savedList;</span>
     }
 
     @Override
     public List&lt;WeeklyRecord&gt; getWeeklyRecordsByGeoCode(String geoCode) {
-<span class="fc" id="L80">        logger.debug(&quot;Fetching WeeklyRecords for GeoCode: &quot; + geoCode);</span>
-<span class="fc" id="L81">        List&lt;WeeklyRecord&gt; results = weeklyRecordRepository.findByGeoCode(geoCode);</span>
-<span class="fc bfc" id="L82" title="All 2 branches covered.">        if (results.isEmpty()) {</span>
-<span class="fc" id="L83">            logger.error(&quot;No data found for geocode: &quot; + geoCode);</span>
-<span class="fc" id="L84">            throw new DataNotFoundException(&quot;No data found for geocode: &quot; + geoCode);</span>
+<span class="fc" id="L78">        logger.debug(&quot;Fetching WeeklyRecords for GeoCode: &quot; + geoCode);</span>
+<span class="fc" id="L79">        List&lt;WeeklyRecord&gt; results = weeklyRecordRepository.findByGeoCode(geoCode);</span>
+<span class="fc bfc" id="L80" title="All 2 branches covered.">        if (results.isEmpty()) {</span>
+<span class="fc" id="L81">            logger.error(&quot;No data found for geocode: &quot; + geoCode);</span>
+<span class="fc" id="L82">            throw new DataNotFoundException(&quot;No data found for geocode: &quot; + geoCode);</span>
         }
-<span class="fc" id="L86">        return results;</span>
+<span class="fc" id="L84">        return results;</span>
     }
 
     @Override
     public WeeklyRecord getWeeklyRecordByGeoCodeAndDate(String geoCode, LocalDate date) {
-<span class="fc" id="L91">        return weeklyRecordRepository</span>
-<span class="fc" id="L92">                .findByGeoCodeAndDateReported(geoCode, date)</span>
-<span class="fc" id="L93">                .orElseThrow(() -&gt; new DataNotFoundException(&quot;No data found for geocode: &quot; + geoCode + &quot; and dateReported: &quot; + date.toString()));</span>
+<span class="fc" id="L89">        return weeklyRecordRepository</span>
+<span class="fc" id="L90">                .findByGeoCodeAndDateReported(geoCode, date)</span>
+<span class="fc" id="L91">                .orElseThrow(() -&gt; new DataNotFoundException(&quot;No data found for geocode: &quot; + geoCode + &quot; and dateReported: &quot; + date.toString()));</span>
 
     }
 
     @Override
     public Map&lt;String, String&gt; getNamesAndGeoCodes() {
-<span class="fc" id="L99">        Map&lt;String, String&gt; namesAndGeocodes = new LinkedHashMap&lt;&gt;();</span>
+<span class="fc" id="L97">        Map&lt;String, String&gt; namesAndGeocodes = new LinkedHashMap&lt;&gt;();</span>
 
-<span class="fc" id="L101">        LocalDate firstDateOfResults = LocalDate.of(2020, 3, 3);</span>
-<span class="fc" id="L102">        List&lt;WeeklyRecord&gt; firstDateData = weeklyRecordRepository.findByDateReported(firstDateOfResults);</span>
+<span class="fc" id="L99">        LocalDate firstDateOfResults = LocalDate.of(2020, 3, 3);</span>
+<span class="fc" id="L100">        List&lt;WeeklyRecord&gt; firstDateData = weeklyRecordRepository.findByDateReported(firstDateOfResults);</span>
 
-<span class="fc" id="L104">         namesAndGeocodes = firstDateData.stream()</span>
-<span class="fc" id="L105">                .collect(Collectors.toMap(WeeklyRecord::getHealthWard, WeeklyRecord::getGeoCode,</span>
-<span class="nc" id="L106">                        (oldValue, newValue) -&gt; oldValue, LinkedHashMap::new));</span>
+<span class="fc" id="L102">         namesAndGeocodes = firstDateData.stream()</span>
+<span class="fc" id="L103">                .collect(Collectors.toMap(WeeklyRecord::getHealthWard, WeeklyRecord::getGeoCode,</span>
+<span class="nc" id="L104">                        (oldValue, newValue) -&gt; oldValue, LinkedHashMap::new));</span>
 
-<span class="fc" id="L108">        return namesAndGeocodes;</span>
+<span class="fc" id="L106">        return namesAndGeocodes;</span>
 
     }
 

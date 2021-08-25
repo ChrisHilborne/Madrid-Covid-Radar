@@ -40,7 +40,7 @@ jobs:
       - run:
           name: Install awscli
           command: |
-            sudo pip install awsebcli --upgrade
+            sudo pip install awsebcli botocore==1.21.0
       - run:
           name: Create AWS credentials manually
           command: |

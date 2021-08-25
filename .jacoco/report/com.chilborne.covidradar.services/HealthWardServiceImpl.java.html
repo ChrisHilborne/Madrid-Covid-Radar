@@ -6,6 +6,7 @@ import com.chilborne.covidradar.model.WeeklyRecord;
 import com.chilborne.covidradar.model.HealthWard;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -17,40 +18,40 @@ import java.util.Map;
 public class HealthWardServiceImpl implements HealthWardService {
 
     private final WeeklyRecordService weeklyRecordService;
-    private final WeeklyRecordsToHealthWardPipeline healthWardPipeline;
-<span class="fc" id="L21">    private final Logger logger = LoggerFactory.getLogger(HealthWardServiceImpl.class);</span>
+    private final WeeklyRecordsToHealthWardPipelineManager healthWardPipeline;
+<span class="fc" id="L22">    private final Logger logger = LoggerFactory.getLogger(HealthWardServiceImpl.class);</span>
 
     public HealthWardServiceImpl(WeeklyRecordService weeklyRecordService,
-<span class="fc" id="L24">                                 WeeklyRecordsToHealthWardPipeline healthWardPipeline) {</span>
-<span class="fc" id="L25">        this.weeklyRecordService = weeklyRecordService;</span>
-<span class="fc" id="L26">        this.healthWardPipeline = healthWardPipeline;</span>
-<span class="fc" id="L27">    }</span>
+<span class="fc" id="L25">                                 @Qualifier(&quot;weeklyRecords-to-HealthWard-Pipeline-Manager&quot;) WeeklyRecordsToHealthWardPipelineManager healthWardPipeline) {</span>
+<span class="fc" id="L26">        this.weeklyRecordService = weeklyRecordService;</span>
+<span class="fc" id="L27">        this.healthWardPipeline = healthWardPipeline;</span>
+<span class="fc" id="L28">    }</span>
 
     @Override
     @Cacheable(&quot;healthWard-all&quot;)
     public List&lt;HealthWard&gt; getAllHealthWards() throws DataNotFoundException {
-<span class="fc" id="L32">        logger.debug(&quot;Fetching All Health Wards&quot;);</span>
-<span class="fc" id="L33">        List&lt;WeeklyRecord&gt; data = weeklyRecordService.getAll();</span>
+<span class="fc" id="L33">        logger.debug(&quot;Fetching All Health Wards&quot;);</span>
+<span class="fc" id="L34">        List&lt;WeeklyRecord&gt; data = weeklyRecordService.getAll();</span>
 
-<span class="fc" id="L35">        return healthWardPipeline.startPipeline(data);</span>
+<span class="fc" id="L36">        return healthWardPipeline.startPipeline(data);</span>
     }
 
 
     @Override
     @Cacheable(&quot;healthWard-geoCode&quot;)
     public HealthWard getHealthWardByGeoCode(String geoCode) throws DataNotFoundException {
-<span class="fc" id="L42">        logger.debug(&quot;Fetching data for GeoCode: &quot; + geoCode);</span>
-<span class="fc" id="L43">        List&lt;WeeklyRecord&gt; weeklyRecords = weeklyRecordService.getWeeklyRecordsByGeoCode(geoCode);</span>
+<span class="fc" id="L43">        logger.debug(&quot;Fetching data for GeoCode: &quot; + geoCode);</span>
+<span class="fc" id="L44">        List&lt;WeeklyRecord&gt; weeklyRecords = weeklyRecordService.getWeeklyRecordsByGeoCode(geoCode);</span>
 
 
-<span class="fc" id="L46">        return healthWardPipeline.startPipeline(weeklyRecords).get(0);</span>
+<span class="fc" id="L47">        return healthWardPipeline.startPipeline(weeklyRecords).get(0);</span>
     }
 
     @Override
     @Cacheable(&quot;namesAndGeoCodes&quot;)
     public Map&lt;String, String&gt; getHealthWardGeoCodesAndNames() {
-<span class="fc" id="L52">        logger.debug(&quot;Fetching names and geocodes&quot;);</span>
-<span class="fc" id="L53">        return weeklyRecordService.getNamesAndGeoCodes();</span>
+<span class="fc" id="L53">        logger.debug(&quot;Fetching names and geocodes&quot;);</span>
+<span class="fc" id="L54">        return weeklyRecordService.getNamesAndGeoCodes();</span>
     }
 
 }
