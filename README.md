@@ -1,6 +1,6 @@
 [![Header](https://i.ibb.co/bLw269H/Covid-Radar-Madrid.png "Header")](https://covidradarmadrid.es)
 
-[![Chilborne](https://circleci.com/gh/Chris_Hilborne/Madrid-Covid-Radar.svg?style=shield&circle-token=69bf70dda01cc3a4435e16a147fd1f475b4a9202)](https://app.circleci.com/pipelines/github/ChrisHilborne/Madrid-Covid-Radar)
+[![CircleCI](https://circleci.com/gh/ChrisHilborne/Madrid-Covid-Radar.svg?style=shield&circle-token=efaef2f4e13a7303cc8bba9824c7a92398397433)](https://app.circleci.com/pipelines/github/ChrisHilborne/Madrid-Covid-Radar)
 ![](https://img.shields.io/badge/Java_11-informational?style=flat&log=java&logoColor=white)
 ![](https://img.shields.io/badge/Spring_Boot-informational?style=flat&log=springboot&logoColor=white)
 <a href="https://covidradarmadrid.es">
