@@ -29,7 +29,7 @@ jobs:
 
   deploy:
     docker:
-      - image: circleci/python:2.7
+      - image: circleci/python
     steps:
       - checkout
       - attach_workspace:
@@ -40,7 +40,7 @@ jobs:
       - run:
           name: Install awscli
           command: |
-            sudo pip install awsebcli botocore==1.21.20
+            sudo pip install awsebcli --upgrade
       - run:
           name: Create AWS credentials manually
           command: |
