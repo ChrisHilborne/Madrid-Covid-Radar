@@ -1,12 +1,11 @@
-<img align="center" src="https://i.ibb.co/bLw269H/Covid-Radar-Madrid.png" width="400px" height ="150px"></img>
+[![Header](https://i.ibb.co/bLw269H/Covid-Radar-Madrid.png "Header")](https://covidradarmadrid.es)
 
+[![Chilborne](https://circleci.com/gh/Chris_Hilborne/Madrid-Covid-Radar.svg?style=shield)](https://app.circleci.com/pipelines/github/ChrisHilborne/Madrid-Covid-Radar)
 ![](https://img.shields.io/badge/Java_11-informational?style=flat&log=java&logoColor=white)
 ![](https://img.shields.io/badge/Spring_Boot-informational?style=flat&log=springboot&logoColor=white)
-<p>
-    <a href="https://covidradarmadrid.es">
-        <img src="https://img.shields.io/badge/Frontend-informational?style=flat&logoColor=white&log=data:image/svg;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0OCA0OCI+PGRlZnM+PHN0eWxlPi5he2ZpbGw6IzQxOGZkZTt9PC9zdHlsZT48L2RlZnM+PHBhdGggY2xhc3M9ImEiIGQ9Ik00Ni41LDE5QTEuNDk5NzcsMS40OTk3NywwLDAsMCw0NSwyMC41VjIySDQwLjg3MjI1YTE2LjksMTYuOSwwLDAsMC0zLjUzLTguNTEzNjdsMi45MjEyMS0yLjkyMTM5LDEuMTc1ODIuOTk1NjFhMS40OTk5MywxLjQ5OTkzLDAsMSwwLDIuMTIxMzQtMi4xMjExbC00Ljk5OTkxLTVhMS40OTk5LDEuNDk5OSwwLDAsMC0yLjEyMTI3LDIuMTIxMWwuOTk1NjUsMS4xNzU3OC0yLjkyMTM5LDIuOTIxMzhBMTYuOTAyMDUsMTYuOTAyMDUsMCwwLDAsMjYsNy4xMjc5M1YzaDEuNWExLjUsMS41LDAsMCwwLDAtM2gtN2ExLjUsMS41LDAsMCwwLDAsM0gyMlY3LjEyNzkzYTE2LjkwMjA1LDE2LjkwMjA1LDAsMCwwLTguNTEzNjcsMy41Mjk3OEwxMC41NjQ5NCw3LjczNjMzbC45OTU2NS0xLjE3NTc4YTEuNDk5OSwxLjQ5OTksMCwwLDAtMi4xMjEyNy0yLjEyMTFsLTQuODg0NzUsNWExLjQ5OTkzLDEuNDk5OTMsMCwwLDAsMi4xMjEzMywyLjEyMTFsMS4wNjA2Ny0uOTk1NjEsMi45MjEyMSwyLjkyMTM5QTE2LjksMTYuOSwwLDAsMCw3LjEyNzc1LDIySDNWMjAuNWExLjUsMS41LDAsMCwwLTMsMHY3YTEuNSwxLjUsMCwwLDAsMywwVjI2SDcuMTI3NzVhMTYuOSwxNi45LDAsMCwwLDMuNTMsOC41MTM2N0w3LjczNjU3LDM3LjQzNTA2bC0xLjE3NTgyLS45OTU2MWExLjQ5OTkzLDEuNDk5OTMsMCwwLDAtMi4xMjEzNCwyLjEyMTFsNC45OTk5MSw1YTEuNDk5OSwxLjQ5OTksMCwxLDAsMi4xMjEyNy0yLjEyMTFsLS45OTU2NS0xLjE3NTc4LDIuOTIxMjctMi45MjEzOEExNi45MDIsMTYuOTAyLDAsMCwwLDIyLDQwLjg3MjA3VjQ1SDIwLjVhMS41LDEuNSwwLDAsMCwwLDNoN2ExLjUsMS41LDAsMCwwLDAtM0gyNlY0MC44NzIwN2ExNi45MDIsMTYuOTAyLDAsMCwwLDguNTEzNzktMy41Mjk3OGwyLjkyMTI3LDIuOTIxMzgtLjk5NTY1LDEuMTc1NzhhMS40OTk5LDEuNDk5OSwwLDAsMCwyLjEyMTI3LDIuMTIxMWw0Ljk5OTkxLTVhMS40OTk5MywxLjQ5OTkzLDAsMSwwLTIuMTIxMzQtMi4xMjExbC0xLjE3NTgyLjk5NTYxLTIuOTIxMjEtMi45MjEzOUExNi45LDE2LjksMCwwLDAsNDAuODcyMjUsMjZINDV2MS41YTEuNSwxLjUsMCwwLDAsMywwdi03QTEuNDk5NzcsMS40OTk3NywwLDAsMCw0Ni41LDE5Wm0tMjgsMUEzLjUsMy41LDAsMSwxLDIyLDE2LjUsMy40OTk5NCwzLjQ5OTk0LDAsMCwxLDE4LjUsMjBaTTMwLDMzYTIsMiwwLDEsMSwyLTJBMi4wMDAwNiwyLjAwMDA2LDAsMCwxLDMwLDMzWiIvPjwvc3ZnPg==">
-    </a>
-</p>
+<a href="https://covidradarmadrid.es">
+    <img src="https://img.shields.io/badge/Frontend-informational?style=flat&log=react&logoColor=white">
+</a>
 
 
 ## Table of contents
