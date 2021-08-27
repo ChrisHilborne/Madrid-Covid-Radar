@@ -53,7 +53,7 @@ jobs:
       - run:
           name: Deploy to EB if branch is Production
           command: |
-            eb deploy --debug  -l $CIRCLE_BUILD_NUM-deploy 
+            eb deploy Covidradarmadrid-env  --debug -l $CIRCLE_BUILD_NUM-deploy 
 
          
  
