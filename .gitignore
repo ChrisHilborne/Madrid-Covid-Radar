@@ -8,6 +8,9 @@ HELP.md
 ### Jacoco Test Coverage ###
 .jacoco
 
+### Prometheus ###
+.prometheus/
+
 ### IntelliJ IDEA ###
 .idea
 *.iws
@@ -20,6 +23,6 @@ HELP.md
 ### Application ###
 /logs/*
 
-# Elastic Beanstalk Files
+### Elastic Beanstalk Files ###
 !.elasticbeanstalk/*.config.yml
 !.elasticbeanstalk/*.global.yml
