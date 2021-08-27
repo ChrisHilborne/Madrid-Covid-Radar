@@ -14,6 +14,9 @@
 * [General info](#general-info)
 * [Technologies](#technologies)
 * [Setup](#setup)
+* [Consuming the API](#consuming-the-api)
+* [Dataflow](#dataflow)
+* [Licence](#licence)
 
 ## General info
 This project is a Spring Boot web server that fetches Covid-19 data from The Ayunamiento de Madrid, processes it, and serves it as a REST API.
@@ -45,6 +48,31 @@ Now that it is installed navigate to the `./target` folder and run the program w
 ```
 $ java -jar covidradar-madrid-1.0.jar
 ```
+
+## Consuming the API
+
+Once you have started the program, you will be able to make GET requests to fetch Covid-19 data for Healthwards (zona basic de salud) in Madrid:
+
+* To get all Healthward data:
+```
+curl http:localhost:8080/api/all
+```
+
+* To get a list of all Healthward names and geocodes:
+```
+curl http:localhost:8080/api/names&geocodes
+```
+
+* To get data for only one Healthward:
+```
+curl http:localhost:8080/api/geocode/{geocode}
+``` 
+
+## Dataflow
+
+The below diagram illustrates the flow of data through the program and to the client.
+
+<img src = https://i.ibb.co/6mDx0Z3/Madrid-Covid-Radar-Data-Flow-1.png>
 
 ## Licence
 [MIT](https://github.com/ChrisHilborne/Madrid-Covid-Radar/blob/production/LICENCE)
