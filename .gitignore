@@ -5,6 +5,9 @@ HELP.md
 !**/src/test/**/target/
 /logs/
 
+### Jacoco Test Coverage ###
+.jacoco
+
 ### IntelliJ IDEA ###
 .idea
 *.iws
