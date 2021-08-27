@@ -26,3 +26,4 @@ HELP.md
 ### Elastic Beanstalk Files ###
 !.elasticbeanstalk/*.config.yml
 !.elasticbeanstalk/*.global.yml
+
