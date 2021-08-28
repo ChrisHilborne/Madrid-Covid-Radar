@@ -72,7 +72,9 @@ curl http:localhost:8080/api/geocode/{geocode}
 
 The below diagram illustrates the flow of data through the program and to the client.
 
-<img src = https://i.ibb.co/6mDx0Z3/Madrid-Covid-Radar-Data-Flow-1.png>
+<img src="https://i.ibb.co/7n0ZWp4/Madrid-Covid-Radar-Data-Flow-2.png" style="max-height: 790px">
+
+
 
 ## Licence
 [MIT](https://github.com/ChrisHilborne/Madrid-Covid-Radar/blob/production/LICENCE)
