@@ -6,13 +6,13 @@ HELP.md
 /logs/
 
 ### Jacoco Test Coverage ###
-.jacoco
+.jacoco/
 
 ### Prometheus ###
 .prometheus/
 
 ### IntelliJ IDEA ###
-.idea
+.idea/
 *.iws
 *.iml
 *.ipr
