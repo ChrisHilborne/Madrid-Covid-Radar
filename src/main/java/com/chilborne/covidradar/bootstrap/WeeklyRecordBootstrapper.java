@@ -4,9 +4,8 @@ import com.chilborne.covidradar.data.collection.initialization.DataInitializer;
 import com.chilborne.covidradar.data.collection.update.DataUpdater;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 
-@Component
+//@Component
 public class WeeklyRecordBootstrapper implements Bootstrapper {
 
     private final DataInitializer initializer;
